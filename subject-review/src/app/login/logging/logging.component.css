@@ -16,5 +16,26 @@
 {
     border:0px;
     font-size:18px;
+    padding-left:40px;
 }
 
+.keep-bottom-space
+{
+    margin-bottom:35px;
+}
+
+.fixed-user
+{
+    position:absolute;
+    top:6px;
+    left:20px;
+    zoom:1.25;
+}
+
+.fixed-password
+{
+    position:absolute;
+    left:20px;
+    zoom:1.25;
+    margin-top:8px;
+}
