@@ -6,6 +6,7 @@ import { LoggingComponent } from './logging/logging.component';
   imports: [
     CommonModule
   ],
-  declarations: [LoggingComponent]
+  declarations: [LoggingComponent],
+  exports :[LoggingComponent]
 })
 export class LoginModule { }
