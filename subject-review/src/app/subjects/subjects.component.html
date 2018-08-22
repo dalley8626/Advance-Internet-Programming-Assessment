@@ -1,0 +1,21 @@
+<h2>My Subjects</h2>
+
+<div>
+  <label>Subject name:
+    <input #subjectName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(subjectName.value); subjectName.value=''">
+    add
+  </button>
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let subject of subjects">
+    <a routerLink="/detail/{{subject.id}}">
+      <span class="badge">{{subject.id}}</span> {{subject.name}}
+    </a>
+    <button class="delete" title="delete subject"
+            (click)="delete(subject)">x</button>
+  </li>
+</ul>
