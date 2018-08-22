@@ -15,17 +15,17 @@ export class SubjectDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private heroService: SubjectService,
+    private subjectService: SubjectService,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    this.getHero();
+    this.getSubject();
   }
 
-  getHero(): void {
+  getSubject(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.heroService.getSubject(id)
+    this.subjectService.getSubject(id)
       .subscribe(hero => this.subject = hero);
   }
 
@@ -34,7 +34,7 @@ export class SubjectDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.heroService.updateSubject(this.subject)
+    this.subjectService.updateSubject(this.subject)
       .subscribe(() => this.goBack());
   }
 }
