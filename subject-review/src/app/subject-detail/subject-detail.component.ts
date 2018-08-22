@@ -26,7 +26,7 @@ export class SubjectDetailComponent implements OnInit {
   getSubject(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.subjectService.getSubject(id)
-      .subscribe(hero => this.subject = hero);
+      .subscribe(subject => this.subject = subject);
   }
 
   goBack(): void {
