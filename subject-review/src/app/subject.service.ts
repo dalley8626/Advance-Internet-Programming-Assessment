@@ -22,11 +22,7 @@ export class SubjectService {
 
   /** GET subjects from the server */
   getSubjects (): Observable<Subject[]> {
-    return this.http.get<Subject[]>(this.subjectsUrl)
-      .pipe(
-        tap(subjects => this.log('fetched subjects')),
-        catchError(this.handleError('getSubjects', []))
-      );
+    return this.http.get<Subject[]>(this.subjectsUrl);
   }
 
   /** GET subject by id. Return `undefined` when id not found */
