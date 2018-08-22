@@ -1,0 +1,82 @@
+<app-subject-search></app-subject-search>
+<h3>High Rated Subjects</h3>
+<div class="row">
+  <div class="card text-center" style="width: 15rem;" *ngFor="let subject of subjects" >
+    <div class="card-header">
+      <h5>{{subject.id}}</h5>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title" >
+        <span class="badge badge-pill badge-danger">Hot!</span>
+      </h5>
+      <p class="card-text">{{subject.name}}</p>
+      <p class="card-text">
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>
+      </p>
+      <a routerLink="/detail/{{subject.id}}" class="btn btn-primary">Rate now!</a>
+    </div>
+  </div>
+</div>
+<br>
+<h3>Most Recent Comments</h3>
+<div class="card-group">
+  <div class="card border-primary mb-3" style="max-width: 18rem;">
+    <div class="card-header">30124</div>
+    <div class="card-body text-primary">
+      <h5 class="card-title">Programming fundamentals</h5>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <p class="card-text">I really liked this subject mainly because..</p>
+    </div>
+  </div>
+  <div class="card border-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-header">34234</div>
+    <div class="card-body text-secondary">
+      <h5 class="card-title">Data Structure and Algorithm</h5>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <p class="card-text">Not too bad subject, but really difficult..</p>
+    </div>
+  </div>
+  <div class="card border-success mb-3" style="max-width: 18rem;">
+    <div class="card-header">32344</div>
+    <div class="card-body text-success">
+      <h5 class="card-title">Introduction to Agriculture</h5>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <p class="card-text">It is a must subject, hi I am Sally and my dream is to become a farmer..</p>
+    </div>
+  </div>
+  <div class="card border-danger mb-3" style="max-width: 18rem;">
+    <div class="card-header">43232</div>
+    <div class="card-body text-danger">
+      <h5 class="card-title">Advanced Artificial Intelligence</h5>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+      <p class="card-text">GET OUT OF HERE. I took this subject because..</p>
+    </div>
+  </div>
+</div>
+
+
+<!--
+Copyright 2017-2018 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->
