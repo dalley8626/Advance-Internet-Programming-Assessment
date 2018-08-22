@@ -1,34 +1,33 @@
 <div class="container">
-<div class="modal-dialog">
-  <div class="col-sm-10">
-    <div class="modal-content bg-dark text-center">
-      <div class="col-12">
-        <img class="login-head" src="~/../src/assets/images/Login_Image.png"/>
-      </div> 
-      <form class="col-12">
-        <div class="form-group">
-          <i class="fa fa-user fixed-user"></i>
-          <input type="text" class="form-control" placeholder="Enter Username / Email" />
-        </div>
-        <div class="form-group">
-            <i class="fa fa-lock fixed-password"></i>
-            <input type="password" class="form-control" placeholder="Enter Password">
-        </div>
-        <button type="submit" class="btn btn-success" style="margin-bottom:15px;">
-        <i class="fa fa-sign-in"></i>
-          Login
-        </button>
-        <div class="col-12 keep-bottom-space" >
-          <a routerLink="/login" >Forgot Password?</a>
-        </div>
-      </form>
-    </div>  
-  
+  <div class="modal-dialog">
+    <div class="col-sm-10">
+      <div class="modal-content bg-dark text-center">
+        <div class="col-12">
+          <img class="login-head" src="~/../src/assets/images/Login_Image.png"/>
+        </div> 
+        <form class="col-12">
+          <div class="form-group">
+            <i class="fa fa-user fixed-user"></i>
+            <input type="text" class="form-control" placeholder="Enter Username / Email" />
+          </div>
+          <div class="form-group">
+              <i class="fa fa-lock fixed-password"></i>
+              <input type="password" class="form-control" placeholder="Enter Password">
+          </div>
+          <button type="submit" class="btn btn-success" style="margin-bottom:15px;">
+          <i class="fa fa-sign-in"></i>
+            Login
+          </button>
+          <div class="col-12 keep-bottom-space" >
+            <a routerLink="/login" >Forgot Password?</a>
+          </div>
+        </form>
+      </div>  
+    </div>
+    </div>
+  <hr>   
+  <div class="col-sm-10 text-center">
+    Don't have a account?
+    <a routerLink="/register" >Register Here</a>
+  </div>
 </div>
-<hr>   
-<div class="col-sm-10 text-center">
-  Don't have a account?
-  <a routerLink="/register" >Register Here</a>
-</div>
-</div>
-<router-outlet></router-outlet>
