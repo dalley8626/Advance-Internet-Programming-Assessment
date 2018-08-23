@@ -11,9 +11,12 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+import { UiModule } from '../ui/ui.module';
+
 @NgModule({
   imports: [
     CommonModule,
+    UiModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
