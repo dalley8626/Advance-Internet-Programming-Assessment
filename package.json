@@ -1,0 +1,30 @@
+{
+  "name": "Advance-Internet-Programming-Assessment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "*",
+    "mongoose": "*",
+    "bcryptjs": "*",
+    "cors": "*",
+    "jsonwebtoken": "*",
+    "body-parser": "*",
+    "passport": "*",
+    "passport-jwt": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://dalley8626@github.com/dalley8626/Advance-Internet-Programming-Assessment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dalley8626/Advance-Internet-Programming-Assessment/issues"
+  },
+  "homepage": "https://github.com/dalley8626/Advance-Internet-Programming-Assessment#readme"
+}
