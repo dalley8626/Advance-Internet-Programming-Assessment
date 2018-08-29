@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "bcryptjs": "*",
-    "body-parser": "*",
+    "body-parser": "^1.18.3",
     "cors": "*",
     "express": "*",
     "jsonwebtoken": "*",
