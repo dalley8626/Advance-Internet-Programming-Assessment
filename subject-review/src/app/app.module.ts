@@ -8,6 +8,7 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { AppRoutingModule } from './/app-routing.module';
 import { SubjectModule } from './subject/subject.module';
+import { UserModule } from './user/user.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SubjectModule } from './subject/subject.module';
     LoginModule,
     RegisterModule,
     AppRoutingModule,
-    SubjectModule
+    SubjectModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
