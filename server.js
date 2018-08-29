@@ -33,11 +33,17 @@ app.use(express.static(path.join(__dirname,'subject-review')))
 //Body parse that allows forms to be accepted as data
 app.use(bodyParser.json());
 
+//Passport 
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
 app.use('/users', users);
 
 //index route
-app.get('/', () => {
-    res.send('hello world');
+app.get('/', (req,res) => {
+    res.send('Invalid end point');
 })
 
 //start server
