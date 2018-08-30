@@ -8,7 +8,6 @@ module.exports = function(passport) {
     //This function is used to create the endpoint of JWT token
     //And we use BearerToken to create our JWT with a schema 'bearer'
     //If there is a user ID match, therefore we provide them with a Json web token
-    
     var opts = {}
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
     opts.secretOrKey = config.secret;

@@ -13,7 +13,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { UiModule } from '../ui/ui.module';
 import { BrowserModule } from '@angular/platform-browser';
-
+/**
+ * This module consists of subject components.
+ */
 @NgModule({
   imports: [
     CommonModule,

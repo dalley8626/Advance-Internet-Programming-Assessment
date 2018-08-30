@@ -46,9 +46,11 @@ module.exports.addUser = (newUser, callback) => {
     })
 }
 
-//Compares if the user's credential in the database matches in the input 
+
 module.exports.comparePassword = function(candidatePassword, hash, callback) {
+    //Compares if the user's credential in the database matches with the user's current input 
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+        //If the password does not match, throw an error
         if(err) throw err;
         callback(null, isMatch);
     });
