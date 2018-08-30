@@ -4,7 +4,7 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { SubjectDetailComponent } from './subject-detail/subject-detail.component';
 import { SubjectSearchComponent } from './subject-search/subject-search.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -19,7 +19,6 @@ import { BrowserModule } from '@angular/platform-browser';
     CommonModule,
     UiModule,
     AppRoutingModule,
-    FormsModule,
     BrowserModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
