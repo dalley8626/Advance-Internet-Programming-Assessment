@@ -1,4 +1,4 @@
-import {Subject} from './subject';
+import {Subject} from '../models/subject';
 
 export const SUBJECTS: Subject[] = [
     {id:1,name:"Rohit"},

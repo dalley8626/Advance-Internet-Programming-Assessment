@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from '../subject';
-import { SubjectService } from '../subject.service';
+import { Subject } from '../../models/subject';
+import { SubjectService } from '../../services/subject.service';
 
+/**
+ * This component displays subject components.
+ */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,6 +21,7 @@ export class DashboardComponent implements OnInit {
 
   getSubjects(): void {
     this.subjectService.getSubjects()
-      .subscribe(subjects => this.subjects = subjects.slice(1, 5));
+    // TODO, it is shoing first four subjects but later it is to display the best rated subjects
+      .subscribe(subjects => this.subjects = subjects.slice(1, 5)); 
   }
 }

@@ -5,6 +5,9 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from '../app-routing.module';
 
+/**
+ * This module is to provide layout, header, and footer to the application.
+ */
 @NgModule({
   imports: [
     CommonModule,

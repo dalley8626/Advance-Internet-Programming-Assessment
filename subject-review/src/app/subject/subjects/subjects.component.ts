@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Subject } from '../subject';
-import { SubjectService } from '../subject.service';
+import { Subject } from '../../models/subject';
+import { SubjectService } from '../../services/subject.service';
 
+/**
+ * This component allows user to add/delete subject.
+ */
 @Component({
   selector: 'app-subjects',
   templateUrl: './subjects.component.html',

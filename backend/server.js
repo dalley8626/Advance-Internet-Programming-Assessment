@@ -33,7 +33,8 @@ app.use(express.static(path.join(__dirname,'subject-review')))
 //Body parse that allows forms to be accepted as data
 app.use(bodyParser.json());
 
-//Passport 
+//Initialize the passport
+//Use the session
 app.use(passport.initialize());
 app.use(passport.session());
 

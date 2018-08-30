@@ -31,10 +31,12 @@ module.exports.getUserByEmailAddress = (email,callback) => {
     User.findOne(query,callback);
 }
 
+
+
+//This function is to ensure that when the user creates an account, no password would be leaked
 //Add user to the mongodb database
-//Hash the user's password with 10 rounds of salt
-//This would ensure that when the they created an account, no password would be leaked
 module.exports.addUser = (newUser, callback) => {
+    //Hash the user's password with 10 rounds of salt
     bcrypt.genSalt(10, (err,salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             if(err) throw err;
