@@ -13,7 +13,8 @@ export class LoggingComponent implements OnInit {
   password: String;
 
   constructor(
-    private authService : AuthService
+    private authService : AuthService,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -27,10 +28,13 @@ export class LoggingComponent implements OnInit {
 
     this.authService.authenticateUser(user).subscribe(data => {
         if (data.success) {
-
+          this.authService.storeUserData(data.token, data.user);
+          console.log('You are logged in');
+          this.router.navigate(['subject']);
         }
         else {
-          console.log(data.msg)
+          console.log(data.msg);
+          this.router.navigate(['login']);
         }
     })
   }
