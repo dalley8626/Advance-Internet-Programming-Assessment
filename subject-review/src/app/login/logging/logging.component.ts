@@ -30,7 +30,7 @@ export class LoggingComponent implements OnInit {
         if (data.success) {
           this.authService.storeUserData(data.token, data.user);
           console.log('You are logged in');
-          this.router.navigate(['subject']);
+          this.router.navigate(['dashboard']);
         }
         else {
           console.log(data.msg);
