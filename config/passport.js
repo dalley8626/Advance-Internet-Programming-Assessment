@@ -5,6 +5,11 @@ const config = require('../config/database');
 
 
 module.exports = function(passport) {
+    //This function is used to create the endpoint of JWT token
+    //And we use BearerToken to create our JWT with a schema 'bearer'
+    //If there is an error, provide false
+    //If there is a user, provide the JWT
+    //Else, provide nothing
     var opts = {}
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
     opts.secretOrKey = config.secret;
