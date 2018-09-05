@@ -10,8 +10,6 @@ import {User} from '../../models/user';
   styleUrls: ['./logging.component.css']
 })
 export class LoggingComponent implements OnInit {
-  email: String;
-  password: String;
 
   constructor(
     private authService: AuthService,
