@@ -1,10 +1,16 @@
 <nav class="navbar navbar-dark bg-dark mb-5">
-    <a class="navbar-brand" href="/">Subject Review</a>
+  <a class="navbar-brand" href="/">Subject Review</a>
 
   <!-- navigation bar -->
-    <ul class="nav navbar-nav navbar-right">
-      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Login</a></li>
-      <li [routerLinkActive]= "['Active']" [routerLinkActiveOptions]= "{exact:true}"><a [routerLink]="['/register']">Register</a></li>
-      <li><a (click)="onLogoutClick()" href="#">Logout</a></li>
-    </ul>
-  </nav>
+  <ul class="nav nav-pills float-right">>
+    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <button class="btn btn-primary" [routerLink]="['/login']">Login</button>
+    </li>
+    <li class="nav-item" [routerLinkActive]="['Active']" [routerLinkActiveOptions]="{exact:true}">
+      <button class="btn btn-link" [routerLink]="['/register']">Register</button>
+    </li>
+    <li class="nav-item">
+      <button class="btn btn-link" (click)="onLogoutClick()" href="#">Logout</button>
+    </li>
+  </ul>
+</nav>
