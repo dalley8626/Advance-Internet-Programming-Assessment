@@ -6,9 +6,12 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { Subject as SubjectM } from '../subject';
-import { SubjectService } from '../subject.service';
+import { Subject as SubjectM } from '../../models/subject';
+import { SubjectService } from '../../services/subject.service';
 
+/**
+ * This component enables user to search subjects.
+ */
 @Component({
   selector: 'app-subject-search',
   templateUrl: './subject-search.component.html',

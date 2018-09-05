@@ -4,7 +4,7 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { SubjectDetailComponent } from './subject-detail/subject-detail.component';
 import { SubjectSearchComponent } from './subject-search/subject-search.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { FormsModule } from '@angular/forms';
+
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -12,13 +12,16 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { UiModule } from '../ui/ui.module';
-
+import { BrowserModule } from '@angular/platform-browser';
+/**
+ * This module consists of subject components.
+ */
 @NgModule({
   imports: [
     CommonModule,
     UiModule,
     AppRoutingModule,
-    FormsModule,
+    BrowserModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }

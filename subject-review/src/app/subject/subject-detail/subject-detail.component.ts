@@ -2,9 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Subject }         from '../subject';
-import { SubjectService }  from '../subject.service';
+import { Subject }         from '../../models/subject';
+import { SubjectService } from '../../services/subject.service';
 
+/**
+ * This component displays the detail of the subject, 
+ * and allows to edit the subject information.
+ */
 @Component({
   selector: 'app-subject-detail',
   templateUrl: './subject-detail.component.html',
@@ -24,6 +28,7 @@ export class SubjectDetailComponent implements OnInit {
   }
 
   getSubject(): void {
+    // show the specific subject by capturing the id from the route
     const id = +this.route.snapshot.paramMap.get('id');
     this.subjectService.getSubject(id)
       .subscribe(subject => this.subject = subject);
