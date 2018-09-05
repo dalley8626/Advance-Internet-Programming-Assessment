@@ -12,6 +12,10 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { AppRoutingModule } from './/app-routing.module';
 import { SubjectModule } from './subject/subject.module';
+import { ValidateService } from './services/validate.service';
+import { AuthService } from './services/auth.service';
+// import { AuthGuard } from './guards/auth.guard';
+import { JwtHelperService } from '@auth0/angular-jwt'
 
 
 @NgModule({
@@ -25,11 +29,11 @@ import { SubjectModule } from './subject/subject.module';
     RegisterModule,
     AppRoutingModule,
     SubjectModule,
-    FormsModule,
+    FormsModule, 
     HttpModule
   ],
   
-  providers: [],
+  providers: [ValidateService, JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
