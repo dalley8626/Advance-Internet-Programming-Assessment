@@ -14,7 +14,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { SubjectModule } from './subject/subject.module';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
-// import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { ProfileComponent } from './profile/profile.component';
 
@@ -35,7 +35,7 @@ import { ProfileComponent } from './profile/profile.component';
     HttpModule
   ],
   
-  providers: [ValidateService, AuthService, JwtHelperService],
+  providers: [ValidateService, AuthService, JwtHelperService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
