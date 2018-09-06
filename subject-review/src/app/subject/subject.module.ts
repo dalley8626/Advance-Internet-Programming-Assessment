@@ -5,14 +5,12 @@ import { SubjectDetailComponent } from './subject-detail/subject-detail.componen
 import { SubjectSearchComponent } from './subject-search/subject-search.component';
 import { AppRoutingModule } from '../app-routing.module';
 
-
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { UiModule } from '../ui/ui.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { SubjectAddComponent } from './subject-add/subject-add.component';
+import {FormsModule} from '@angular/forms';
 /**
  * This module consists of subject components.
  */
@@ -22,12 +20,9 @@ import { BrowserModule } from '@angular/platform-browser';
     UiModule,
     AppRoutingModule,
     BrowserModule,
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    FormsModule
   ],
-  declarations: [SubjectsComponent, SubjectDetailComponent, SubjectSearchComponent, DashboardComponent],
+  declarations: [SubjectsComponent, SubjectDetailComponent, SubjectSearchComponent, DashboardComponent, SubjectAddComponent],
   exports: [SubjectsComponent, SubjectDetailComponent, SubjectSearchComponent]
 })
 export class SubjectModule { }

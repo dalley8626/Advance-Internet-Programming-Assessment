@@ -1,4 +1,9 @@
 export class Subject {
-    id: number;
-    name: string;
+  public subjectCode;
+  public subjectName;
+
+  constructor() {
+    this.subjectCode = '';
+    this.subjectName = '';
+  }
 }

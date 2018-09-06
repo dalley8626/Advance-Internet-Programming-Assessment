@@ -1,9 +1,9 @@
 <div *ngIf="subject">
-  <h2>{{subject.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{subject.id}}</div>
+  <h2>{{subject.subjectName | uppercase}} Details</h2>
+  <div><span>id: </span>{{subject.subjectCode}}</div>
   <div>
     <label>name:
-      <!-- <input [(ngModel)]="subject.name" placeholder="name"/> -->
+      <!-- <input [(ngModel)]="subject.subjectName" placeholder="subjectName"/> -->
     </label>
   </div>
   <button (click)="goBack()">go back</button>

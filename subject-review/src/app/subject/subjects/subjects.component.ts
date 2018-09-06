@@ -22,13 +22,13 @@ export class SubjectsComponent implements OnInit {
 
   getSubjects(): void {
     this.subjectService.getSubjects()
-      .subscribe(subjects => this.subjects = subjects);
+      .subscribe(result => this.subjects = result['data']);
   }
 
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.subjectService.addSubject({ name } as Subject)
+    this.subjectService.addSubject({ subjectName: name } as Subject)
       .subscribe(subject => {
         this.subjects.push(subject);
       });

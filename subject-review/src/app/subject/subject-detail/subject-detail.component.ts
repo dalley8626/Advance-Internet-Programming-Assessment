@@ -28,7 +28,7 @@ export class SubjectDetailComponent implements OnInit {
   }
 
   getSubject(): void {
-    // show the specific subject by capturing the id from the route
+    // show the specific subject by capturing the subjectCode from the route
     const id = +this.route.snapshot.paramMap.get('id');
     this.subjectService.getSubject(id)
       .subscribe(subject => this.subject = subject);

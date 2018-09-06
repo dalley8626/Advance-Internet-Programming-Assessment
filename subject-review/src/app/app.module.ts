@@ -12,6 +12,7 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { AppRoutingModule } from './/app-routing.module';
 import { SubjectModule } from './subject/subject.module';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SubjectModule } from './subject/subject.module';
     AppRoutingModule,
     SubjectModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    HttpClientModule
   ],
   
   providers: [],

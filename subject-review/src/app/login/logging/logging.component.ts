@@ -29,6 +29,7 @@ export class LoggingComponent implements OnInit {
           this.router.navigate(['dashboard']);
         }
         else {
+          alert('Wrong username password');
           console.log(data.msg);
           this.router.navigate(['login']);
         }

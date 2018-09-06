@@ -14,7 +14,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class SubjectService {
 
-  private subjectsUrl = 'api/subjects';  // URL to web api
+  private subjectsUrl = 'http://localhost:3000/subjects';  // URL to web api
 
   constructor(
     private http: HttpClient,
@@ -26,25 +26,25 @@ export class SubjectService {
   }
 
   /** GET subject by id. Return `undefined` when id not found */
-  getSubjectNo404<Data>(id: number): Observable<Subject> {
-    const url = `${this.subjectsUrl}/?id=${id}`;
+  getSubjectNo404<Data>(subjectCode: number): Observable<Subject> {
+    const url = `${this.subjectsUrl}/?id=${subjectCode}`;
     return this.http.get<Subject[]>(url)
       .pipe(
         map(subjects => subjects[0]), // returns a {0|1} element array
         tap(h => {
           const outcome = h ? `fetched` : `did not find`;
-          this.log(`${outcome} subject id=${id}`);
+          this.log(`${outcome} subject id=${subjectCode}`);
         }),
-        catchError(this.handleError<Subject>(`getSubject id=${id}`))
+        catchError(this.handleError<Subject>(`getSubject subjectCode=${subjectCode}`))
       );
   }
 
   /** GET subject by id. Will 404 if id not found */
-  getSubject(id: number): Observable<Subject> {
-    const url = `${this.subjectsUrl}/${id}`;
+  getSubject(subjectCode: number): Observable<Subject> {
+    const url = `${this.subjectsUrl}/detail/${subjectCode}`;
     return this.http.get<Subject>(url).pipe(
-      tap(_ => this.log(`fetched subject id=${id}`)),
-      catchError(this.handleError<Subject>(`getSubject id=${id}`))
+      tap(_ => this.log(`fetched subject id=${subjectCode}`)),
+      catchError(this.handleError<Subject>(`getSubject id=${subjectCode}`))
     );
   }
 
@@ -64,19 +64,19 @@ export class SubjectService {
 
   /** POST: add a new subject to the server */
   addSubject (subject: Subject): Observable<Subject> {
-    return this.http.post<Subject>(this.subjectsUrl, subject, httpOptions).pipe(
-      tap((subject: Subject) => this.log(`added subject w/ id=${subject.id}`)),
+    return this.http.post<Subject>(`${this.subjectsUrl}/add/`, subject, httpOptions).pipe(
+      tap((subject: Subject) => this.log(`added subject w/ id=${subject.subjectCode}`)),
       catchError(this.handleError<Subject>('addSubject'))
     );
   }
 
   /** DELETE: delete the subject from the server */
   deleteSubject (subject: Subject | number): Observable<Subject> {
-    const id = typeof subject === 'number' ? subject : subject.id;
-    const url = `${this.subjectsUrl}/${id}`;
+    const subjectCode = typeof subject === 'number' ? subject : subject.subjectCode;
+    const url = `${this.subjectsUrl}/${subjectCode}`;
 
     return this.http.delete<Subject>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted subject id=${id}`)),
+      tap(_ => this.log(`deleted subject subjectCode=${subjectCode}`)),
       catchError(this.handleError<Subject>('deleteSubject'))
     );
   }
@@ -84,7 +84,7 @@ export class SubjectService {
   /** PUT: update the subject on the server */
   updateSubject (subject: Subject): Observable<any> {
     return this.http.put(this.subjectsUrl, subject, httpOptions).pipe(
-      tap(_ => this.log(`updated subject id=${subject.id}`)),
+      tap(_ => this.log(`updated subject subjectCode=${subject.subjectCode}`)),
       catchError(this.handleError<any>('updateSubject'))
     );
   }
