@@ -3,17 +3,18 @@ import { Http, Headers } from '@angular/http';
 import { map } from 'rxjs/operators/'
 import { JwtHelperService } from '@auth0/angular-jwt'
 
+const helper = new JwtHelperService();
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   authToken: any;
   user: any;
 
-
   constructor(
-    private http:Http,
-    private jwtHelper: JwtHelperService
+    private http:Http
   ) { }
 
   registerUser(user) {
@@ -32,6 +33,16 @@ export class AuthService {
       .pipe(map(res => res.json()));
   }
 
+  getProfile() {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type', 'application/json');
+    return this.http
+      .get('http://localhost:3000/users/profile', {headers: headers})
+      .pipe(map(res => res.json()));
+  }
+
   storeUserData(token, user) {
     localStorage.setItem('id_token', token);
     //Local storage can only store string
@@ -45,8 +56,9 @@ export class AuthService {
     this.authToken = token;
   }
 
-  loggedIn() {
-    return (this.jwtHelper.isTokenExpired);
+  notLoggedIn(){
+    const isExpired = helper.isTokenExpired(localStorage.getItem('id_token'));
+    return isExpired;
   }
 
   logout() {

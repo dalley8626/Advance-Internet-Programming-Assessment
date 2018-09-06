@@ -4,15 +4,16 @@ import { RegisteringComponent } from './register/registering/registering.compone
 import { LoggingComponent } from './login/logging/logging.component'
 import { DashboardComponent } from './subject/dashboard/dashboard.component'
 import { SubjectsComponent } from './subject/subjects/subjects.component'
-// import {AuthGuard} from './guards/auth.guard'
-import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import { ProfileComponent } from './profile/profile.component';
+// import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoggingComponent },
   { path: 'register', component: RegisteringComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'subject', component: SubjectsComponent}
+  { path: 'dashboard', component: DashboardComponent},
+  { path: 'subject', component: SubjectsComponent},
+  { path: 'profile', component: ProfileComponent}
   
 
 ]
