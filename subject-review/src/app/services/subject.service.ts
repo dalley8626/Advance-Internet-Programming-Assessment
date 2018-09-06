@@ -71,12 +71,11 @@ export class SubjectService {
   }
 
   /** DELETE: delete the subject from the server */
-  deleteSubject (subject: Subject | number): Observable<Subject> {
-    const subjectCode = typeof subject === 'number' ? subject : subject.subjectCode;
-    const url = `${this.subjectsUrl}/delete/${subjectCode}`;
-
+  deleteSubject (subject: Subject): Observable<Subject> {
+    const _id = subject._id;
+    const url = `${this.subjectsUrl}/delete/${_id}`;
     return this.http.delete<Subject>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted subject subjectCode=${subjectCode}`)),
+      tap(_ => this.log(`deleted subject subjectCode=${_id}`)),
       catchError(this.handleError<Subject>('deleteSubject'))
     );
   }
