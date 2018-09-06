@@ -21,7 +21,7 @@ export class SubjectDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private subjectService: SubjectService,
     private location: Location
-  ) {}
+  ) { this.subject = new Subject(); }
 
   ngOnInit(): void {
     this.getSubject();
@@ -31,7 +31,7 @@ export class SubjectDetailComponent implements OnInit {
     // show the specific subject by capturing the subjectCode from the route
     const id = +this.route.snapshot.paramMap.get('id');
     this.subjectService.getSubject(id)
-      .subscribe(subject => this.subject = subject);
+      .subscribe(subject => this.subject = subject['data']);
   }
 
   goBack(): void {
@@ -42,4 +42,9 @@ export class SubjectDetailComponent implements OnInit {
     this.subjectService.updateSubject(this.subject)
       .subscribe(() => this.goBack());
   }
+  delete(): void {
+    this.subjectService.deleteSubject(this.subject)
+      .subscribe(() => this.goBack());
+  }
 }
+

@@ -73,7 +73,7 @@ export class SubjectService {
   /** DELETE: delete the subject from the server */
   deleteSubject (subject: Subject | number): Observable<Subject> {
     const subjectCode = typeof subject === 'number' ? subject : subject.subjectCode;
-    const url = `${this.subjectsUrl}/${subjectCode}`;
+    const url = `${this.subjectsUrl}/delete/${subjectCode}`;
 
     return this.http.delete<Subject>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted subject subjectCode=${subjectCode}`)),
@@ -83,7 +83,7 @@ export class SubjectService {
 
   /** PUT: update the subject on the server */
   updateSubject (subject: Subject): Observable<any> {
-    return this.http.put(this.subjectsUrl, subject, httpOptions).pipe(
+    return this.http.put(`${this.subjectsUrl}/update`, subject, httpOptions).pipe(
       tap(_ => this.log(`updated subject subjectCode=${subject.subjectCode}`)),
       catchError(this.handleError<any>('updateSubject'))
     );
