@@ -21,3 +21,13 @@ module.exports.getSubjectBySubjectCode = (subjectCode,callback) => {
     const query = {subjectCode: subjectCode }
     Subject.findOne({subjectCode: subjectCode },callback);
 }
+module.exports.update = (subject, callback) => {
+    let myquery = { _id : subject._id }
+    let newvalues = { $set: { subjectCode: subject.subjectCode, subjectName: subject.subjectName}}
+    Subject.updateOne(myquery, newvalues, callback);
+
+}
+module.exports.findByIdAndRemove = (subject_id, callback) => {
+    let myquery = { _id : subject_id }
+    Subject.deleteOne(myquery, callback);
+}
