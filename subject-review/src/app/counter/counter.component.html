@@ -1,0 +1,18 @@
+<p >
+
+
+</p>
+<h5>Compare the code</h5>
+
+
+<div>
+  <input type="text"  #titleInput>
+  <button type="submit" (click) = 'addTodo(titleInput.value)'>Compare</button>
+</div>
+<div *ngIf="flag == true">
+  <p>Perfect</p>
+
+</div>
+<div *ngIf="flag == false && isHigher == true">Try Lower</div>
+<div *ngIf="flag == false && isHigher == false">Try Higher</div>
+
