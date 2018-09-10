@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const passport = require('passport')
 const mongoose = require('mongoose')
-const config = require('./config/database')
+const config = require('./__config/database')
 
 //connection to the database
 mongoose.connect(config.database, {useNewUrlParser: true});
@@ -19,8 +19,8 @@ mongoose.connection.on('error', (err) => {
 
 const app = express();
 
-const users = require('./routes/users');
-const subjects = require('./routes/subjects');
+const users = require('./__routes/users');
+const subjects = require('./__routes/subjects');
 
 //port number
 const port = 3000;
@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./config/passport')(passport);
+require('./__config/passport')(passport);
 
 app.use('/users', users);
 app.use('/subjects', subjects);

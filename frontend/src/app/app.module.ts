@@ -1,0 +1,72 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, InjectionToken } from '@angular/core';
+
+//Forms Module for angular
+import { FormsModule } from "@angular/forms";
+
+//Http module required for server connection
+import { HttpModule } from "@angular/http"
+import { HttpClientModule } from '@angular/common/http';
+
+//JWT
+import { JwtHelperService } from '@auth0/angular-jwt'
+
+//importing Components
+import { AppComponent } from './app.component';
+
+//subject
+import { SubjectsComponent } from './__components/subject/subjects/subjects.component';
+import { SubjectDetailComponent } from './__components/subject/subject-detail/subject-detail.component';
+import { SubjectSearchComponent } from './__components/subject/subject-search/subject-search.component';
+import { DashboardComponent } from './__components/subject/dashboard/dashboard.component';
+import { SubjectAddComponent } from './__components/subject/subject-add/subject-add.component';
+
+//ui
+import { LayoutComponent } from './__components/ui/layout/layout.component';
+import { HeaderComponent } from './__components/ui/header/header.component';
+import { FooterComponent } from './__components/ui/footer/footer.component';
+
+//user
+import { LoggingComponent } from './__components/user/login/logging/logging.component';
+import { ProfileComponent } from './__components/user/profile/profile.component';
+import { RegisteringComponent } from './__components/user/register/registering/registering.component';
+
+//Importing Authentication Guard
+import { AuthGuard } from './__guards/auth.guard';
+
+//Importing Service
+import { ValidateService } from './__services/validateService/validate.service';
+import { AuthService } from './__services/authService/auth.service';
+
+//Routing Module
+import { AppRoutingModule } from './__routes/app-routing.module';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ProfileComponent,
+    RegisteringComponent,
+    LoggingComponent,
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    SubjectAddComponent,
+    SubjectDetailComponent,
+    SubjectsComponent,
+    SubjectSearchComponent,
+    DashboardComponent,
+  ],
+
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpModule,
+    HttpClientModule
+  ],
+  
+  providers: [ValidateService, AuthService, JwtHelperService, AuthGuard],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
