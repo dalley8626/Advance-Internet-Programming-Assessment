@@ -1,4 +1,11 @@
 export class Subject {
-    id: number;
-    name: string;
+  public _id;
+  public subjectCode;
+  public subjectName;
+
+  constructor() {
+    this._id = '';
+    this.subjectCode = '';
+    this.subjectName = '';
+  }
 }

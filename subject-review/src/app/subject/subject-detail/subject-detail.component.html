@@ -1,11 +1,27 @@
-<div *ngIf="subject">
-  <h2>{{subject.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{subject.id}}</div>
-  <div>
-    <label>name:
-      <!-- <input [(ngModel)]="subject.name" placeholder="name"/> -->
-    </label>
+<!--<div *ngIf="subject">-->
+  <!--<h2>{{subject.subjectName | uppercase}} Details</h2>-->
+  <!--<div><span>id: </span>{{subject.subjectCode}}</div>-->
+  <!--<div>-->
+    <!--<label>name:-->
+      <!--&lt;!&ndash; <input [(ngModel)]="subject.subjectName" placeholder="subjectName"/> &ndash;&gt;-->
+    <!--</label>-->
+  <!--</div>-->
+  <!--<button (click)="goBack()">go back</button>-->
+  <!--<button (click)="save()">save</button>-->
+<!--</div>-->
+<form>
+  <div class="form-group">
+    <label for="subjectCode">Subject code</label>
+    <input name="subjectCode" [(ngModel)]="subject.subjectCode" type="text" class="form-control" id="subjectCode">
   </div>
+  <div class="form-group">
+    <label for="subjectName">Subject name</label>
+    <input name="subjectName" [(ngModel)]="subject.subjectName" class="form-control" id="subjectName"
+           placeholder="Enter Subject name">
+  </div>
+
   <button (click)="goBack()">go back</button>
   <button (click)="save()">save</button>
-</div>
+  <button (click)="delete()">delete</button>
+
+</form>

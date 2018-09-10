@@ -22,6 +22,6 @@ export class DashboardComponent implements OnInit {
   getSubjects(): void {
     this.subjectService.getSubjects()
     // TODO, it is shoing first four subjects but later it is to display the best rated subjects
-      .subscribe(subjects => this.subjects = subjects.slice(1, 5)); 
+      .subscribe(result => this.subjects = result['data'].slice(1, 5));
   }
 }

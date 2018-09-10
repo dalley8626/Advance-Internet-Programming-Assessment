@@ -12,6 +12,7 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { AppRoutingModule } from './/app-routing.module';
 import { SubjectModule } from './subject/subject.module';
+import {HttpClientModule} from '@angular/common/http';
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
@@ -31,8 +32,9 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterModule,
     AppRoutingModule,
     SubjectModule,
-    FormsModule, 
-    HttpModule
+    FormsModule,
+    HttpModule,
+    HttpClientModule
   ],
   
   providers: [ValidateService, AuthService, JwtHelperService, AuthGuard],
