@@ -4,19 +4,19 @@
 
   <!-- navigation bar -->
   <ul class="nav nav-pills float-right">>
-    <li *ngIf="!authService.user" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <li *ngIf="authService.notLoggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
       <button class="btn btn-primary" [routerLink]="['/login']">Login</button>
     </li>
-    <li *ngIf="authService.user" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <li *ngIf="!authService.notLoggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
       <button class="btn btn-link" [routerLink]="['/subjects']">Subjects</button>
     </li>
-    <li *ngIf="authService.user" class="nav-item" >
-      <button class="btn btn-link" >Profile</button>
+    <li *ngIf="!authService.notLoggedIn()" class="nav-item" >
+      <button  class="btn btn-link" [routerLink]="['/dashboard']">Dashboard</button>
     </li>
-    <li *ngIf="!authService.user" class="nav-item" [routerLinkActive]="['Active']" [routerLinkActiveOptions]="{exact:true}">
+    <li *ngIf="authService.notLoggedIn()" class="nav-item" [routerLinkActive]="['Active']" [routerLinkActiveOptions]="{exact:true}">
       <button class="btn btn-link" [routerLink]="['/register']">Register</button>
     </li>
-    <li *ngIf="authService.user" class="nav-item">
+    <li *ngIf="!authService.notLoggedIn()" class="nav-item">
       <button class="btn btn-link" (click)="onClickLogout()" href="#">Logout</button>
     </li>
   </ul>

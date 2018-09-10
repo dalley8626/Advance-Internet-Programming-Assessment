@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, InjectionToken } from '@angular/core';
 
 import { FormsModule } from "@angular/forms";
 
@@ -13,11 +13,17 @@ import { RegisterModule } from './register/register.module';
 import { AppRoutingModule } from './/app-routing.module';
 import { SubjectModule } from './subject/subject.module';
 import {HttpClientModule} from '@angular/common/http';
+import { ValidateService } from './services/validate.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+import { JwtHelperService } from '@auth0/angular-jwt'
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +37,7 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule
   ],
   
-  providers: [],
+  providers: [ValidateService, AuthService, JwtHelperService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
