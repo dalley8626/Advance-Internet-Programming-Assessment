@@ -3,7 +3,7 @@ import {Router, CanActivate} from '@angular/router'
 import {AuthService} from '../__services/authService/auth.service'
 
 @Injectable() 
-export class AuthGuard implements CanActivate {
+export class NotAuthGuard implements CanActivate {
     constructor(
         private authService:AuthService,
         private router:Router
@@ -11,10 +11,10 @@ export class AuthGuard implements CanActivate {
 
     canActivate() {
         if(!this.authService.notLoggedIn()){
-            return true;
-        } else {
-            this.router.navigate(['/login'])
+            this.router.navigate(['/dashboard'])
             return false;
+        } else {
+            return true;
         }
     }
 }

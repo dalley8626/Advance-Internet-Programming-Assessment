@@ -33,6 +33,7 @@ import { RegisteringComponent } from './__components/user/register/registering/r
 
 //Importing Authentication Guard
 import { AuthGuard } from './__guards/auth.guard';
+import { NotAuthGuard } from './__guards/notAuth.guard';
 
 //Importing Service
 import { ValidateService } from './__services/validateService/validate.service';
@@ -66,7 +67,7 @@ import { AppRoutingModule } from './__routes/app-routing.module';
     HttpClientModule
   ],
   
-  providers: [ValidateService, AuthService, JwtHelperService, AuthGuard],
+  providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
