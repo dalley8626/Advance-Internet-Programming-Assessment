@@ -1,0 +1,8 @@
+#subject review node modules
+subject-review/node_modules/
+
+#front end node modules
+frontend/node_modules/
+
+#nodemodules
+/node_modules
