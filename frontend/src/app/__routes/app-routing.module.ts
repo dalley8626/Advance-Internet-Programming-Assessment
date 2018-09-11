@@ -17,8 +17,14 @@ import { RegisteringComponent } from '../__components/user/register/registering/
 import { NotAuthGuard } from '../__guards/notAuth.guard';
 import { AuthGuard } from '../__guards/auth.guard';
 
-const routes: Routes = [
+const routes: Routes = [  
+  { path: '', component:DashboardComponent, canActivate:[AuthGuard]},
   { path: 'login', component: LoggingComponent, canActivate:[NotAuthGuard]},
+  { path: 'register', component: RegisteringComponent, canActivate:[NotAuthGuard]},
+  { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
+  { path: 'subjects/detail/:id', component: SubjectDetailComponent, canActivate:[AuthGuard] },
+  { path: 'subjects', component: SubjectsComponent, canActivate:[AuthGuard] },
+  { path: 'subjects/add', component: SubjectAddComponent, canActivate:[AuthGuard]},
   { path: 'register', component: RegisteringComponent, canActivate:[NotAuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   { path: 'subjects/detail/:id', component: SubjectDetailComponent, canActivate:[AuthGuard] },
