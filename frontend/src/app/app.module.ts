@@ -56,7 +56,7 @@ import { AppRoutingModule } from './__routes/app-routing.module';
     SubjectDetailComponent,
     SubjectsComponent,
     SubjectSearchComponent,
-    DashboardComponent,
+    DashboardComponent
   ],
 
   imports: [
