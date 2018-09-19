@@ -3,8 +3,14 @@ const config = require('../__config/database');
 
 //Declare a subject schema that defines the shape of mongodb collection
 const SubjectSchema = mongoose.Schema({
-    subjectCode: {type: String,require: true},
-    subjectName: {type: String,required: true}
+    subjectCode: {
+        type: String,
+        require: true
+    },
+    subjectName: {
+        type: String,
+        required: true
+    }
 });
 
 //Expose the mongodb object as a module that would allow request

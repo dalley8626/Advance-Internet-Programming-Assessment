@@ -4,9 +4,17 @@ const config = require('../__config/database');
 
 //Declare a user schema that defines the shape of mongodb collection
 const UserSchema = mongoose.Schema({
-    name: {type: String,required:true},
-    email: {type: String,required: true},
-    password: {type: String,required: true}
+    name: {
+        type: String
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type:String,
+        required: true
+    }
 });
 
 //Expose the mongodb object as a module that would allow request
@@ -14,13 +22,13 @@ const User = module.exports = mongoose.model('User', UserSchema);
 
 //Get the user ID from the generated mongodb database
 module.exports.getUserByID = (id, callback) => {
-    User.findById(id, callback);
+    User.findById(id,callback);
 }
 
 //Get email address that has been created by the user
-module.exports.getUserByEmailAddress = (email, callback) => {
-    const query = { email: email }
-    User.findOne(query, callback);
+module.exports.getUserByEmailAddress = (email,callback) => {
+    const query = {email: email}
+    User.findOne(query,callback);
 }
 
 
@@ -29,9 +37,9 @@ module.exports.getUserByEmailAddress = (email, callback) => {
 //Add user to the mongodb database
 module.exports.addUser = (newUser, callback) => {
     //Hash the user's password with 10 rounds of salt
-    bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.genSalt(10, (err,salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
+            if(err) throw err;
             newUser.password = hash;
             newUser.save(callback);
         });
@@ -39,11 +47,11 @@ module.exports.addUser = (newUser, callback) => {
 }
 
 
-module.exports.comparePassword = function (candidatePassword, hash, callback) {
+module.exports.comparePassword = function(candidatePassword, hash, callback) {
     //Compares if the user's credential in the database matches with the user's current input 
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
         //If the password does not match, throw an error
-        if (err) throw err;
+        if(err) throw err;
         callback(null, isMatch);
     });
 }
