@@ -4,12 +4,12 @@ export class Subject {
   public _id;
   public subjectCode;
   public subjectName;
-  public ratings: Array<Rating>;
+  public ratingIDs: Array<string>;
 
   constructor() {
     this._id = '';
     this.subjectCode = '';
     this.subjectName = '';
-    this.ratings = [];
+    this.ratingIDs = [];
   }
 }
