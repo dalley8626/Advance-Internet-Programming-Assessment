@@ -30,9 +30,8 @@ module.exports.getRatingsBySubjectID = (subjectID,callback) => {
 }
 module.exports.update = (rating, callback) => {
     let myquery = { _id : rating._id }
-    let newvalues = { $set: { ratingTitle: raitng.ratingTitle, ratingDescription: rating.ratingDescription}}
+    let newvalues = { $set: { ratingTitle: rating.ratingTitle, ratingDescription: rating.ratingDescription}}
     Rating.updateOne(myquery, newvalues, callback);
-
 }
 module.exports.findByIdAndRemove = (rating_id, callback) => {
     let myquery = { _id : rating_id }

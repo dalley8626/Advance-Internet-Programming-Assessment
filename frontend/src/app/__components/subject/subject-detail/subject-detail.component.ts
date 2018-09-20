@@ -48,7 +48,13 @@ export class SubjectDetailComponent implements OnInit {
 
   getRatingsbySubjectID(): void {
     this.ratingService.getRatingsbySubjectID(this.subject._id)
-      .subscribe(result => this.ratings = result['data']);
+      .subscribe(result => {
+        this.ratings = result['data'];
+        this.ratings.forEach(function(element) {
+          console.log(element);
+          element.editFlag = false;
+        });
+      });
   }
   addRating(): void {
     if (this.rating.ratingTitle && this.rating.ratingDescription) {
@@ -68,11 +74,19 @@ export class SubjectDetailComponent implements OnInit {
       alert('Rating title and Rating Description required');
     }
   }
-  edit(): void {
-    this.rating.editFlag = true;
+  edit(rating: Rating): void {
+    rating.editFlag = true;
   }
-  editRating(): void {
-    this.rating.editFlag = false;
+  editRating(rating: Rating): void {
+    rating.editFlag = false;
+    this.ratingService.updateRating(rating).subscribe(res => {
+      if (res['status'] === 'success') {
+        this.ratingService.notifyRatingAddition();
+        alert('Rating edited.');
+      } else {
+        alert('Attempt failed, try again.');
+      }
+    });
   }
 
   goBack(): void {
