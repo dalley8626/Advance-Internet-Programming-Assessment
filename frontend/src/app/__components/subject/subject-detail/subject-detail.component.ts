@@ -78,10 +78,10 @@ export class SubjectDetailComponent implements OnInit {
     rating.editFlag = true;
   }
   editRating(rating: Rating): void {
-    rating.editFlag = false;
     this.ratingService.updateRating(rating).subscribe(res => {
       if (res['status'] === 'success') {
         this.ratingService.notifyRatingAddition();
+        rating.editFlag = false;
         alert('Rating edited.');
       } else {
         alert('Attempt failed, try again.');
