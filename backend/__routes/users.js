@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../__config/database')
@@ -10,23 +11,70 @@ const User = require('../__models/user');
 //It requests the field as a JSON type
 //Then it adds the into the database as a new collection
 router.post('/register', (req, res, next) => {
-//First, Initialize the input that has been entered as a new user
-let newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-    });
-//Then, Add the user to the database
-//If, there is an error in the database, provide error message
-//else, user is registered
-    User.addUser(newUser, (err, user) => {
-        if (err) {
-            res.json({ success: false, msg: 'Failed to register user' });
+
+    if (!req.body.f_name) {
+        res.json({ success: false, message: 'You must provide your first name' });
+    } else {
+        if (!req.body.l_name) {
+            res.json({ success: false, message: 'You must provide your last name' });
         }
         else {
-            res.json({ success: true, msg: 'User is registered' })
+            if (!req.body.email) {
+                res.json({ success: false, message: 'You must provide your email' });
+            }
+            else {
+                if (!req.body.username) {
+                    res.json({ success: false, message: 'You must provide your username' });
+                } else {
+                    if (!req.body.password) {
+                        res.json({ success: false, message: 'You must provide your password' });
+                    } else {
+                        //First, Initialize the input that has been entered as a new user
+                        let newUser = new User({
+                            f_name: req.body.f_name,
+                            l_name: req.body.l_name,
+                            email: req.body.email.toLowerCase(),
+                            username: req.body.username.toLowerCase(),
+                            password: req.body.password
+                        });
+
+                        //Then, Add the user to the database using a method defined in user model
+                        //If, there is an error in the database, provide error message
+                        //else, user is registered
+                        User.addUser(newUser, (err) => {
+                            if (err) {
+                                if (err.code === 11000) {
+                                    res.json({ success: false, message: 'Username or Email already Exists' });
+                                } else {
+                                    if (err.errors) {
+                                        if (err.errors.email) {
+                                            res.json({ success: false, message: err.errors.email.message });
+                                        }
+                                        else {
+                                            if (err.errors.username) {
+                                                res.json({ success: false, message: err.errors.username.message });
+                                            } else {
+                                                if (err.errors.password) {
+                                                    res.json({ success: false, message: err.errors.password.message });
+                                                    
+                                                } else {
+                                                    res.json({ success: false, message: 'Failed to register user. Error: ', err });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                res.json({ success: true, message: 'Successfully registered account' });
+                            }
+                        });
+
+
+                    }
+                }
+            }
         }
-    });
+    }
 });
 
 //This function is to authenticate that this is the real user that has been registered
@@ -53,7 +101,7 @@ router.post('/authenticate', (req, res, next) => {
         User.comparePassword(password, user.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch) {
-                const token = jwt.sign({data:user}, config.secret, {
+                const token = jwt.sign({ data: user }, config.secret, {
                     expiresIn: 604800 // after not logging in for 1 week
                 });
 
@@ -77,8 +125,8 @@ router.post('/authenticate', (req, res, next) => {
 //If they have the correct authentication(token), therefore it would allow access
 //This is just get the user req and goes to authenticate, if authenticate successful
 // Allow pass
-router.get('/profile', passport.authenticate('jwt', {session:false}),(req, res, next) => {
-    res.json({user: req.user});
+router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    res.json({ user: req.user });
 });
 
 module.exports = router;
