@@ -42,6 +42,9 @@ import { AuthService } from './__services/authService/auth.service';
 //Routing Module
 import { AppRoutingModule } from './__routes/app-routing.module';
 
+//Reactive Forms
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -64,7 +67,8 @@ import { AppRoutingModule } from './__routes/app-routing.module';
     AppRoutingModule,
     FormsModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   
   providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard],

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-dark mb-5">
+<nav *ngIf="!authService.notLoggedIn()" class="navbar navbar-dark bg-dark mb-5">
   <a *ngIf="!authService.user" class="navbar-brand" href="/">Subject Review</a>
   <a *ngIf="authService.user" class="navbar-brand" href="/dashboard">Subject Review</a>
 

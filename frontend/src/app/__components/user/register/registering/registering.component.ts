@@ -3,7 +3,7 @@ import { ValidateService } from '../../../../__services/validateService/validate
 import { AuthService } from '../../../../__services/authService/auth.service';
 import { Router } from '@angular/router';
 
-// import { NgFlashMessageService } from 'ng-flash-messages'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registering',
@@ -11,13 +11,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./registering.component.css']
 })
 export class RegisteringComponent implements OnInit {
+  
+  form: FormGroup;
+
+  createForm() {
+  }
+  
   name: String;
   email: String;
   password: String;
 
   constructor(
+    private formBuilder: FormBuilder,
     private validateService: ValidateService, 
-    // private flashMessageService : NgFlashMessageService,
     private authService: AuthService,
     private router: Router
   ) { }

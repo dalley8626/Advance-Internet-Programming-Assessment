@@ -1,0 +1,71 @@
+.registration
+{
+    font-family: 'Trebuchet MS';
+}
+
+.card {
+    top: 10px;
+    margin: auto;
+    max-width: 400px;
+}
+
+.card-body h1
+{
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+
+.card .inputBox
+{
+    position: relative;
+    margin: 10px;
+}
+
+.card .inputBox input
+{
+    width:100%;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1px solid grey ;
+    transition: border .1s ease-out;
+    outline: none;
+}
+
+.card button
+{
+    width:100%;
+    border-radius: 20px;
+}
+
+.card .inputBox label
+{
+    position:absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    pointer-events: none;
+    transition: .5s;
+    color: lightgrey;
+}
+
+.card .inputBox input:focus ~ label,
+.card .inputBox input:valid ~ label
+{
+    top: -18px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+    
+}
+
+.card .inputBox input:focus,
+.card .inputBox input:valid
+{
+    border-color: #03a9f4;
+}
+
+.policy
+{
+    font-size: 12px;
+}
