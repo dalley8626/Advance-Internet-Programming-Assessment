@@ -13,13 +13,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegisteringComponent implements OnInit {
 
   form: FormGroup;
+  message;
+  messageClass;
 
+  processing;
+
+  emailValid;
+  emailMessage;
+
+  usernameValid;
+  usernameMessage;
 
   constructor(
     private formBuilder: FormBuilder,
-    // private validateService: ValidateService,
-    // private authService: AuthService,
-    // private router: Router
+    private authService: AuthService,
+    private router: Router
   ) {
     this.createForm();
   }
@@ -61,17 +69,33 @@ export class RegisteringComponent implements OnInit {
     }, { validator: this.matchingPasswords('password', 'confirm_password') })
   }
 
-  // name: String;
-  // email: String;
-  // password: String;
-
-
   ngOnInit() {
   }
 
   onRegisterSubmit() {
-    console.log(this.form);
+    this.processing = true;
+    const user = {
+      f_name: this.form.get('f_name').value,
+      l_name: this.form.get('l_name').value,
+      email: this.form.get('email').value,
+      username: this.form.get('username').value,
+      password: this.form.get('password').value,
+    }
 
+    this.authService.registerUser(user).subscribe(data => {
+      if (!data.success) {
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+        this.processing = false;
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+        this.processing = false;
+        setTimeout(() => {
+          this.router.navigate(['/login'])
+        }, 2000)
+      }
+    });
   }
 
   validateEmails(controls) {
@@ -101,12 +125,12 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
-  validatePassword(controls){
+  validatePassword(controls) {
     const regExp = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/);
-    if (regExp.test(controls.value)){
+    if (regExp.test(controls.value)) {
       return null;
     } else {
-      return {'validatePassword' : true};
+      return { 'validatePassword': true };
     }
   }
 
@@ -121,6 +145,35 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
+  checkEmail() {
+    const email = this.form.get('email').value;
+    if (email.length != 0) {
+      this.authService.checkEmail(email).subscribe(data => {
+        if (!data.success) {
+          this.emailValid = false;
+          this.emailMessage = data.message;
+        } else {
+          this.emailValid = true;
+          this.emailMessage = data.message;
+        }
+      });
+    }
+  }
+
+  checkUsername() {
+    const username = this.form.get('username').value;
+    if (username.length != 0) {
+      this.authService.checkUsername(username).subscribe(data => {
+        if (!data.success) {
+          this.usernameValid = false;
+          this.usernameMessage = data.message;
+        } else {
+          this.usernameValid = true;
+          this.usernameMessage = data.message;
+        }
+      });
+    }
+  }
   //Register User
   // this.authService.registerUser(user).subscribe(data => {
   //   if (data.success) {

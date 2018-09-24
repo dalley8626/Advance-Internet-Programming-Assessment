@@ -15,7 +15,8 @@
     font-weight: 900;
 }
 
-.card .inputBox
+.card .inputBox,
+.show-hide-message
 {
     position: relative;
     margin: 10px;
@@ -72,23 +73,15 @@
 
 .help-block
 {
-    float: clear;
-}
-
-.help-block li
-{
-    position:relative;
+    position:absolute;
     top: 0;
     right: 0;
-    color: #03a9f4;
-    font-size: 12px;
-    display: block;
-    margin-left: 5px;
-    width: 100%;
+    padding: 10px 0;
 }
 
-.alert
+.help-block p
 {
-    top:-20px;
-    padding:0px;
+    top: 0;
+    left: 0;
+    font-size: 12px;
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators/'
 import { JwtHelperService } from '@auth0/angular-jwt'
+import { Router } from '@angular/router';
 
 const helper = new JwtHelperService();
 
@@ -10,19 +11,30 @@ const helper = new JwtHelperService();
 })
 
 export class AuthService {
+  //url for server
+  domain = "http://localhost:3000"
   authToken: any;
   user: any;
 
   constructor(
-    private http:Http
+    private http : Http,
+    private router: Router
   ) { }
 
   registerUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http
-      .post('http://localhost:3000/users/register', user, {headers: headers})
+      .post(this.domain + '/users/register', user, {headers: headers})
       .pipe(map(res => res.json()));
+  }
+
+  checkUsername(username){
+    return this.http.get(this.domain + '/users/checkUsername/' + username).pipe(map(res => res.json()));
+  }
+
+  checkEmail(email){
+    return this.http.get(this.domain + '/users/checkEmail/'+ email).pipe(map(res => res.json()));
   }
 
   authenticateUser(user) {
@@ -66,4 +78,6 @@ export class AuthService {
     this.user= null;
     localStorage.clear(); 
   }
+
+  
 }

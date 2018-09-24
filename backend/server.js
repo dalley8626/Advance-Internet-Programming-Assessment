@@ -32,7 +32,9 @@ app.use(express.static(path.join(__dirname,'../front-end')))
 
 //middleware
 app.use(bodyParser.json()); //Body parse that allows forms to be accepted as data
-app.use(cors());//cors middleware
+app.use(cors({
+    origin: "http://localhost:4200"
+}));//cors middleware
 
 //Initialize the passport
 //Use the session
