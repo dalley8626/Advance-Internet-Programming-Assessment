@@ -81,6 +81,7 @@ router.post('/register', (req, res, next) => {
 //It checks if the email address and password match the collection
 //If it does, provide a token that allows access
 router.post('/authenticate', (req, res, next) => {
+    
     //Get the email and password as JSON type
     const email = req.body.email;
     const password = req.body.password;
@@ -90,7 +91,7 @@ router.post('/authenticate', (req, res, next) => {
     User.getUserByEmailAddress(email, (err, user) => {
         if (err) throw err;
         if (!user) {
-            return res.json({ success: false, msg: 'User not found' });
+            return res.json({ success: false, message: 'User not found' });
         }
 
         // Verification of password if it match
