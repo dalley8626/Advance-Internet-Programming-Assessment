@@ -109,17 +109,85 @@ const passwordValidators = [
     }
 ];
 
+//f_name validation 
+let firstnameLengthChecker = (f_name) => {
+    if(!f_name){
+        return false;
+    } else {
+        if (f_name.length < 5 || f_name.length > 50) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+};
+
+let validfirstnameChecker = (f_name) => {
+    if(!f_name){
+        return false;
+    } else {
+        const regExp = new RegExp(/^[a-zA-Z]+$/);
+        return regExp.test(f_name);
+    }
+};
+
+const firstnameValidators = [
+    {
+        validator: firstnameLengthChecker,
+        message: 'First Name must be atleast 5 character but less than 50'
+    },
+    {
+        validator: validfirstnameChecker,
+        message: 'Must be a valid First Name'
+    }
+];
+
+//l_name validation
+let lastnameLengthChecker = (l_name) => {
+    if(!l_name){
+        return false;
+    } else {
+        if (l_name.length < 5 || l_name.length > 50) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+};
+
+let validlastnameChecker = (l_name) => {
+    if(!l_name){
+        return false;
+    } else {
+        const regExp = new RegExp(/^[a-zA-Z]+$/);
+        return regExp.test(l_name);
+    }
+};
+
+const lastnameValidators = [
+    {
+        validator: lastnameLengthChecker,
+        message: 'Last Name must be atleast 5 character but less than 50'
+    },
+    {
+        validator: validlastnameChecker,
+        message: 'Must be a valid Last Name'
+    }
+];
+
 //Vaidation ends
 
 //Declare a user schema that defines the shape of mongodb collection
 const UserSchema = mongoose.Schema({
     f_name: {
         type: String,
-        required: true
+        required: true,
+        validate: firstnameValidators
     },
     l_name: {
         type: String,
-        required: true
+        required: true,
+        validate: lastnameValidators
     },
     email: {
         type: String,

@@ -60,7 +60,7 @@
 }
 
 .card .inputBox input:focus,
-.card .inputBox input:valid
+.card .inputBox input:valid,
 {
     border-color: #03a9f4;
 }
@@ -68,4 +68,27 @@
 .policy
 {
     font-size: 12px;
+}
+
+.help-block
+{
+    float: clear;
+}
+
+.help-block li
+{
+    position:relative;
+    top: 0;
+    right: 0;
+    color: #03a9f4;
+    font-size: 12px;
+    display: block;
+    margin-left: 5px;
+    width: 100%;
+}
+
+.alert
+{
+    top:-20px;
+    padding:0px;
 }
