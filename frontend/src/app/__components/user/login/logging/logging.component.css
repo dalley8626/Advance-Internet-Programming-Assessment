@@ -4,7 +4,7 @@
 }
 
 .card {
-    top: 20px;
+    top: 100px;
     margin: auto;
     max-width: 400px;
 }
@@ -75,4 +75,27 @@
 .signup
 {
     margin-top: 20%;
+}
+
+.help-block
+{
+    position:absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 0;
+}
+
+.help-block p
+{
+    top: 0;
+    left: 0;
+    font-size: 12px;
+}
+
+.show-hide-message
+{
+    margin: auto;
+    top:0;
+    padding: 0;
+    font-size: 12px;
 }

@@ -91,7 +91,7 @@ router.post('/authenticate', (req, res, next) => {
     User.getUserByEmailAddress(email, (err, user) => {
         if (err) throw err;
         if (!user) {
-            return res.json({ success: false, message: 'User not found' });
+            return res.json({ success: false, message: 'Username or Password is incorrect' });
         }
 
         // Verification of password if it match
@@ -116,7 +116,7 @@ router.post('/authenticate', (req, res, next) => {
                     }
                 });
             } else {
-                return res.json({ success: false, msg: 'Wrong Password' })
+                return res.json({ success: false, message: 'Username or Password is incorrect' })
             }
         });
     });

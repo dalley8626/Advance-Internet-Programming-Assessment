@@ -59,12 +59,8 @@ export class LoggingComponent implements OnInit {
 
     this.authService.authenticateUser(user).subscribe(data => {
         if (data.success) {
-          this.messageClass = 'alert alert-success';
-          this.message = data.message;
           this.authService.storeUserData(data.token, data.user);
-          setTimeout(()=>{
-            this.router.navigate(['/dashboard']);
-          }, 2000);
+          this.router.navigate(['/dashboard']);
         }
         else {
           this.messageClass = 'alert alert-danger';

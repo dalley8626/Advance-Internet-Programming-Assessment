@@ -2,8 +2,9 @@
   <form [formGroup]="form" (submit)="onLoginSubmit()">
     <div class="col-sm-10 shadow p-3 mb-5 bg-white rounded card">
       <div class="card-body">
-        <img class="card-img-top" src="./../../../../../assets/images/logo.png" alt="Logo Image" style="margin-bottom: 10%;">
-
+        <h1 class="text-center">Let's get Started!</h1>
+        <br>
+        <br>
         <!-- Message Display -->
         <div class="row show-hide-message" style="width:100%;">
           <div [ngClass]="messageClass" class="text-center">
@@ -36,7 +37,7 @@
         </div>
 
         <!-- Login Button -->
-        <button class="btn btn-primary" type="submit" name="">Login</button>
+        <button [disabled]="!form.valid" class="btn btn-primary" type="submit" name="">Login</button>
         <p class="policy text-center" style="margin-top:5px;"><a href="#">Forgot Password?</a></p>
 
         <p class="signup text-center">Don't Have an account? <a routerLink="/register">Register here</a></p>
