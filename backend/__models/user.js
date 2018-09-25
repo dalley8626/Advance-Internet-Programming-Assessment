@@ -114,7 +114,7 @@ let firstnameLengthChecker = (f_name) => {
     if(!f_name){
         return false;
     } else {
-        if (f_name.length < 5 || f_name.length > 50) {
+        if (f_name.length < 2 || f_name.length > 50) {
             return false;
         } else {
             return true;
@@ -147,7 +147,7 @@ let lastnameLengthChecker = (l_name) => {
     if(!l_name){
         return false;
     } else {
-        if (l_name.length < 5 || l_name.length > 50) {
+        if (l_name.length < 2 || l_name.length > 50) {
             return false;
         } else {
             return true;
