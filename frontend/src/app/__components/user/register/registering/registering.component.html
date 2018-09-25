@@ -1,20 +1,19 @@
 <div class="registration">
 
-
-
   <!-- Registration -->
   <form [formGroup]="form" (submit)="onRegisterSubmit()">
     <div class="col-sm-10 shadow p-3 mb-5 bg-white rounded card">
-
-
+      
       <div class="card-body">
         <h1 class="text-center">Register</h1>
+
         <!-- Message Display -->
         <div class="row show-hide-message" style="width:100%;">
           <div [ngClass]="messageClass" class="text-center">
             {{ message }}
           </div>
         </div>
+
         <!-- First Name -->
         <div class="inputBox" [ngClass]="{'has-error':(form.controls.f_name.errors && form.controls.f_name.dirty), 'has-success': !form.controls.f_name.errors}">
           <input type="text" name="f_name" required="" autocomplete="off" formControlName="f_name" />
