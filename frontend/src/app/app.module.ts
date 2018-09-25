@@ -45,6 +45,9 @@ import { AppRoutingModule } from './__routes/app-routing.module';
 //Reactive Forms
 import { ReactiveFormsModule } from '@angular/forms';
 
+//importing flash message module
+import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+
 
 @NgModule({
   declarations: [
@@ -68,10 +71,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     HttpModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FlashMessagesModule
   ],
   
-  providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard],
+  providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard, FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

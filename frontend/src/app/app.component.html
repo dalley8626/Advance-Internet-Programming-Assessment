@@ -2,6 +2,8 @@
 <!-- background image display according to the login status -->
 <div [ngClass]="{'bg': authService.notLoggedIn(), 'nobg': !authService.notLoggedIn()}">
 
+
+    <flash-messages></flash-messages>
     <app-layout>
     <app-header></app-header>
     <!--TODO: Get this flash message going
