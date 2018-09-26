@@ -22,7 +22,7 @@ let validSubjectNumber = (subjectNumber) => {
     if(!subjectNumber){
         return false;
     } else {
-        const regExp = new RegExp(/^[a-zA-Z0-9 ]+$/);
+        const regExp = new RegExp(/^[0-9]+$/);
         return regExp.test(subjectNumber);
     }
 };
@@ -131,6 +131,10 @@ const subjectSchema = mongoose.Schema({
     rating: {
         type: Number,
         default: 0
+    },
+    numberOfReview: {
+        type: Number,
+        default: 0
     }
     ,
     reviews: [
@@ -140,7 +144,15 @@ const subjectSchema = mongoose.Schema({
             reviewDate: { type: Date, default: Date.now() },
             reviewRating: { type: Number }
         }
-    ]
+    ],
+    maximumRatingPossible: {
+        type: Number,
+        default: 0
+    },
+    percentageRating:{
+        type: Number,
+        default: 0
+    }
 
 });
 

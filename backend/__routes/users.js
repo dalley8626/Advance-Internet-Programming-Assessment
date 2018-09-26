@@ -160,23 +160,6 @@ router.get('/checkEmail/:email', (req, res)=>{
     }
   })
 
-//middleware to grab the tokens
-router.use((req, res, next)=>{
-    const token = req.headers['authorization'];
-    if (!token){
-        res.json({success:false, message: 'No token provided'});
-    } else {
-        jwt.verify(token,config.secret, (err,decoded)=>{
-            if(err){
-                res.json({success:false, message: 'Token invalid: ' + err});
-            } else {
-                req.decoded = decoded;
-                next();
-            }
-        });
-    }
-});
-
 //A route way to access the webpage, therefore we have to encrypt with a passport authentication
 //If they have the correct authentication(token), therefore it would allow access
 //This is just get the user req and goes to authenticate, if authenticate successful

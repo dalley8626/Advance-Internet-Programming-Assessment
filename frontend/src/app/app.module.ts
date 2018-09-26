@@ -49,8 +49,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 //importing flash message module
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 
-//Subject_feed
+//Subject
 import { SubjectFeedComponent } from './__components/subject/subject-feed/subject-feed.component';
+import { SubjectAddComponent } from './__components/subject/subject-add/subject-add.component';
+import { SubjectAddReviewComponent } from './__components/subject/subject-add-review/subject-add-review.component';
 
 
 @NgModule({
@@ -62,12 +64,14 @@ import { SubjectFeedComponent } from './__components/subject/subject-feed/subjec
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
-    // SubjectAddComponent,
+    SubjectAddComponent,
     // SubjectDetailComponent,
     // SubjectsComponent,
     // SubjectSearchComponent,
     DashboardComponent,
     SubjectFeedComponent,
+    SubjectAddComponent,
+    SubjectAddReviewComponent,
   ],
 
   imports: [
