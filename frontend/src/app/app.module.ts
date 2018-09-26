@@ -15,11 +15,12 @@ import { JwtHelperService } from '@auth0/angular-jwt'
 import { AppComponent } from './app.component';
 
 //subject
-import { SubjectsComponent } from './__components/subject/subjects/subjects.component';
-import { SubjectDetailComponent } from './__components/subject/subject-detail/subject-detail.component';
-import { SubjectSearchComponent } from './__components/subject/subject-search/subject-search.component';
+// import { SubjectsComponent } from './__components/subject/subjects/subjects.component';
+// import { SubjectDetailComponent } from './__components/subject/subject-detail/subject-detail.component';
+// import { SubjectSearchComponent } from './__components/subject/subject-search/subject-search.component';
+// import { SubjectAddComponent } from './__components/subject/subject-add/subject-add.component';
+
 import { DashboardComponent } from './__components/subject/dashboard/dashboard.component';
-import { SubjectAddComponent } from './__components/subject/subject-add/subject-add.component';
 
 //ui
 import { LayoutComponent } from './__components/ui/layout/layout.component';
@@ -48,6 +49,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 //importing flash message module
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 
+//Subject_feed
+import { SubjectFeedComponent } from './__components/subject/subject-feed/subject-feed.component';
+
 
 @NgModule({
   declarations: [
@@ -58,11 +62,12 @@ import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messag
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
-    SubjectAddComponent,
-    SubjectDetailComponent,
-    SubjectsComponent,
-    SubjectSearchComponent,
-    DashboardComponent
+    // SubjectAddComponent,
+    // SubjectDetailComponent,
+    // SubjectsComponent,
+    // SubjectSearchComponent,
+    DashboardComponent,
+    SubjectFeedComponent,
   ],
 
   imports: [

@@ -23,6 +23,7 @@ const app = express();
 const users = require('./__routes/users');
 const subjects = require('./__routes/subjects');
 const ratings = require('./__routes/ratings');
+const dollarDefender = require('dollar-defender-middleware');
 
 //port number
 const port = 3000;
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname,'../front-end')))
 
 //middleware
 app.use(bodyParser.json()); //Body parse that allows forms to be accepted as data
+app.use(dollarDefender(/* optionional config object */));
 app.use(cors({
     origin: "http://localhost:4200"
 }));//cors middleware

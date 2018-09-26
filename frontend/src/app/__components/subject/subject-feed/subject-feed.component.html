@@ -1,0 +1,108 @@
+<div class="container">
+
+  <button type="button" name="button" class="btn btn-warning" *ngIf="!newSubject" (click)="newSubjectForm()">Add</button>
+  <button [disabled]="loadingBlogs" type="button" name="button" class="btn btn-primary" *ngIf="!newSubject" (click)="reloadSubject()"><i
+      class="fa fa-refresh" aria-hidden="true"></i>&nbsp;Reload</button>
+
+  <div class="card-deck" *ngIf="!newSubject">
+    <div class="card" *ngFor="let subject of subjectPosts">
+      <div class="card-header text-center">
+        <h3 class="card-title">{{ subject.subjectNumber }}</h3>
+      </div>
+      <div class="subject-name card-header text-center">
+          <h5 class="text-center">{{ subject.subjectName }}</h5>
+        </div>
+      <div class="card-body">
+        Descritption: {{subject.description}}
+      </div>
+      <!-- footer start -->
+      <div class="card-footer">
+        <div>
+          <strong>Rating: </strong> {{subject.rating}}
+        </div>
+        <!-- footer end-->
+      </div>
+    </div>
+  </div>
+
+          <!-- New Subject Form -->
+          <form [formGroup]="form" (submit)="onSubjectSubmit()" *ngIf="newSubject">
+              <div class="col-sm-10 shadow p-3 mb-5 bg-white rounded card registration">
+    
+                <div class="card-body">
+                  <h1 class="text-center">Add Subject</h1>
+    
+                  <!-- Message Display -->
+                  <div class="row show-hide-message" style="width:100%;">
+                    <div [ngClass]="messageClass" class="text-center">
+                      {{ message }}
+                    </div>
+                  </div>
+    
+                  <!-- Subject Number -->
+                  <div class="inputBox" [ngClass]="{'has-error':(form.controls.subjectNumber.errors && form.controls.subjectNumber.dirty), 'has-success': !form.controls.subjectNumber.errors}">
+                    <input type="text" name="subjectNumber" required="" autocomplete="off" formControlName="subjectNumber" />
+                    <label>Subject Number</label>
+                    <!-- Error Block -->
+                    <div class="help-block">
+                      <!-- Required Error -->
+                      <p class="text-danger text-right" *ngIf="form.controls.subjectNumber.errors?.required && form.controls.subjectNumber.dirty">*This
+                        field is Required</p>
+                      <!-- Minimum and Maximum length of data error  -->
+                      <p class="text-danger text-right" *ngIf="(form.controls.subjectNumber.errors?.minlength || form.controls.subjectNumber.errors?.maxlength) && form.controls.subjectNumber.dirty">
+                        Must be 5 numbers
+                      </p>
+                      <!-- Invalid data error  -->
+                      <p class="text-danger text-right" *ngIf="form.controls.subjectNumber.errors?.subjectNumberValidation && form.controls.subjectNumber.dirty && (form.controls.subjectNumber.value.length != 0)">Invalid
+                        Subject Number
+                      </p>
+                    </div>
+                  </div>
+    
+                  <!-- Subject Name -->
+                  <div class="inputBox" [ngClass]="{'has-error':(form.controls.subjectName.errors && form.controls.subjectName.dirty), 'has-success': !form.controls.subjectName.errors}">
+                    <input type="text" name="subjectName" required="" autocomplete="off" formControlName="subjectName" />
+                    <label>Subject Name</label>
+                    <!-- Error Block -->
+                    <div class="help-block">
+                      <!-- Required Error -->
+                      <p class="text-danger text-right" *ngIf="form.controls.subjectName.errors?.required && form.controls.subjectName.dirty">*This
+                        field is Required</p>
+                      <!-- Minimum and Maximum length of data error  -->
+                      <p class="text-danger text-right" *ngIf="(form.controls.subjectName.errors?.minlength || form.controls.subjectName.errors?.maxlength) && form.controls.subjectName.dirty">*Min
+                        : 3, Max characters: 100
+                      </p>
+                      <!-- Invalid data error  -->
+                      <p class="text-danger text-right" *ngIf="form.controls.subjectName.errors?.subjectNameValidation && form.controls.subjectName.dirty && form.controls.subjectName.value.length != 0">Invalid
+                        Subject Name, No special characters except . , - and '
+                      </p>
+                    </div>
+                  </div>
+                  <br/>
+                  <!-- Subject Description -->
+                  <div class="inputBox" [ngClass]="{'has-error':(form.controls.description.errors && form.controls.description.dirty), 'has-success': !form.controls.description.errors}">
+                    <textarea class="form-control" style="min-height:150px;" name="description" required="" autocomplete="on" formControlName="description"></textarea>
+                    <label style="left:10px;">Write the Description of the Subject</label>
+                    <!-- Error Block -->
+                    <div class="help-block-textarea">
+                      <!-- Required error -->
+                      <p class="text-danger text-right" *ngIf="form.controls.description.errors?.required && form.controls.description.dirty">*This
+                        field is Required</p>
+                      <!-- Minimum and Maximum length of data error  -->
+                      <p class="text-danger text-right" *ngIf="(form.controls.description.errors?.minlength || form.controls.description.errors?.maxlength) && form.controls.description.dirty">*Minimum
+                        characters: 8, Maximum characters: 25000
+                      </p>
+                    </div>
+                    <p class="text-danger text-right" style="font-size:12px;" *ngIf="descriptionMessage && !form.controls.description.errors?.validatedescriptions">{{descriptionMessage}}</p>
+                  </div>
+
+                  <div class="buttons">
+                      <button [disabled]="processing || !form.valid" type="submit" class="btn btn-primary" name="">Add Subject</button>
+                      <button style="float:right" [disabled]="processing" class="btn btn-danger" type="button" name="">Go Back</button>    
+                  </div>
+                  
+                </div>
+              </div>
+            </form>
+            <!-- New Blog Form End -->
+</div>

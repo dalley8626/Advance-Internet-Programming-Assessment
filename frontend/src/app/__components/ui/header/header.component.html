@@ -1,26 +1,7 @@
-<!-- <nav  class="navbar navbar-dark bg-dark mb-5">
-  <a *ngIf="!authService.user" class="navbar-brand" href="/">Subject Review</a>
-  <a *ngIf="authService.user" class="navbar-brand" href="/dashboard">Subject Review</a>
-
-  <ul class="nav nav-pills float-right">>
-    
-    <li *ngIf="!authService.notLoggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-      <button class="btn btn-link" [routerLink]="['/subjects']">Subjects</button>
-    </li>
-    <li *ngIf="!authService.notLoggedIn()" class="nav-item" >
-      <button  class="btn btn-link" [routerLink]="['/dashboard']">Dashboard</button>
-    </li>
-    
-    <li *ngIf="!authService.notLoggedIn()" class="nav-item">
-      <button class="btn btn-link" (click)="onClickLogout()" href="#">Logout</button>
-    </li>
-  </ul>
-</nav> -->
-
 <!-- Navbar  -->
 <nav *ngIf="!authService.notLoggedIn()" class="navbar navbar-expand-lg navbar-light bg-light">
 
-  <a class="navbar-brand" href="#">UTS-Subject-Review</a>
+  <a class="navbar-brand" style="font-weight:900;" href="#">UTS-Subject-Review</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
