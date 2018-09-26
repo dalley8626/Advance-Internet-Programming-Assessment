@@ -72,7 +72,7 @@
 
         <div class="buttons">
             <button [disabled]="processing || !form.valid" type="submit" class="btn btn-primary" name="">Add Subject</button>
-            <button style="float:right" [disabled]="processing" class="btn btn-danger" type="button" name="">Go Back</button>    
+            <button [routerLink]="['/subjects']" style="float:right" [disabled]="processing" class="btn btn-danger" type="button" name="">Go Back</button>    
         </div>
         
       </div>

@@ -1,0 +1,84 @@
+<div class="container">
+  <!-- Message Display -->
+  <br/>
+  <div class="row show-hide-message" >
+      <div [ngClass]="messageClass" style="width:100%;" class="text-center">
+        {{ message }}
+      </div>
+    </div>
+
+    <!-- New Subject Form -->
+    <form [formGroup]="form" (submit)="updateSubjectSubmit()" *ngIf="!loadEditForm" >
+       <div class="col-sm-10 shadow p-3 mb-5 bg-white rounded card registration">
+
+         <div class="card-body">
+           <h1 class="text-center">Edit Subject</h1>
+   
+           <!-- Subject Number -->
+           <div class="inputBox">
+             <input type="text" name="subjectNumber" required="" autocomplete="off" formControlName="subjectNumber" [(ngModel)]="subject.subjectNumber"/>
+             <label>Subject Number</label>
+             <!-- Error Block -->
+             <div class="help-block">
+               <!-- Required Error -->
+               <p class="text-danger text-right" *ngIf="form.controls.subjectNumber.errors?.required && (form.controls.subjectNumber.dirty || form.controls.subjectNumber.pristine)">*This
+                 field is Required</p>
+               <!-- Minimum and Maximum length of data error  -->
+               <p class="text-danger text-right" *ngIf="(form.controls.subjectNumber.errors?.minlength || form.controls.subjectNumber.errors?.maxlength) && (form.controls.subjectNumber.dirty || form.controls.subjectNumber.pristine)">
+                 Must be 5 numbers
+               </p>
+               <!-- Invalid data error  -->
+               <p class="text-danger text-right" *ngIf="form.controls.subjectNumber.errors?.subjectNumberValidation && (form.controls.subjectNumber.dirty || form.controls.subjectNumber.pristine) && (form.controls.subjectNumber.value.length != 0)">Invalid
+                 Subject Number
+               </p>
+             </div>
+           </div>
+   
+           <!-- Subject Name -->
+           <div class="inputBox">
+             <input type="text" name="subjectName" required="" autocomplete="off" formControlName="subjectName" [(ngModel)]="subject.subjectName"/>
+             <label>Subject Name</label>
+             <!-- Error Block -->
+             <div class="help-block">
+               <!-- Required Error -->
+               <p class="text-danger text-right" *ngIf="form.controls.subjectName.errors?.required && form.controls.subjectName.dirty">*This
+                 field is Required</p>
+               <!-- Minimum and Maximum length of data error  -->
+               <p class="text-danger text-right" *ngIf="(form.controls.subjectName.errors?.minlength || form.controls.subjectName.errors?.maxlength) && form.controls.subjectName.dirty">*Min
+                 : 3, Max characters: 100
+               </p>
+               <!-- Invalid data error  -->
+               <p class="text-danger text-right" *ngIf="form.controls.subjectName.errors?.subjectNameValidation && form.controls.subjectName.dirty && form.controls.subjectName.value.length != 0">Invalid
+                 Subject Name, No special characters except . , - and '
+               </p>
+             </div>
+           </div>
+           <br/>
+           <!-- Subject Description -->
+           <div class="inputBox">
+             <textarea class="form-control" style="min-height:150px;" name="description" required="" autocomplete="on" formControlName="description" [(ngModel)]="subject.description"></textarea>
+             <label style="left:10px;">Write the Description of the Subject</label>
+             <!-- Error Block -->
+             <div class="help-block-textarea">
+               <!-- Required error -->
+               <p class="text-danger text-right" *ngIf="form.controls.description.errors?.required && form.controls.description.dirty">*This
+                 field is Required</p>
+               <!-- Minimum and Maximum length of data error  -->
+               <p class="text-danger text-right" *ngIf="(form.controls.description.errors?.minlength || form.controls.description.errors?.maxlength) && form.controls.description.dirty">*Minimum
+                 characters: 8, Maximum characters: 25000
+               </p>
+             </div>
+             <p class="text-danger text-right" style="font-size:12px;" *ngIf="descriptionMessage && !form.controls.description.errors?.validatedescriptions">{{descriptionMessage}}</p>
+           </div>
+   
+           <div class="buttons">
+               <button [disabled]="processing || !form.valid" type="submit" class="btn btn-primary" name="">Save Changes</button>
+               <button style="float:right" [disabled]="processing" class="btn btn-warning" type="button" name="" (click)="goBack()">Go Back</button>    
+               <button [routerLink]="['/subjects/delete/', subject._id]" style="float:right" type="submit" class="btn btn-danger" name="">Delete Subject</button>
+            </div>
+           
+         </div>
+       </div>
+     </form>
+   </div>
+   

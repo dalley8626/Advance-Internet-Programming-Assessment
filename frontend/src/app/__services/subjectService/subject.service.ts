@@ -37,4 +37,19 @@ export class SubjectService {
     return this.http.get(this.domain + '/subjects/allSubjects', this.options).pipe(map(res => res.json()));
   }
 
+  getSingleSubject(id) {
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain + '/subjects/singleSubject/' + id, this.options).pipe(map(res => res.json()));
+  }
+
+  editSubject(subject) {
+    this.createAuthenticationHeaders();
+    return this.http.put(this.domain + '/subjects/updateSubject', subject, this.options).pipe(map(res => res.json()));
+  }
+
+  deleteSubject(id) {
+    this.createAuthenticationHeaders();
+    return this.http.delete(this.domain + '/subjects/deleteSubject/' + id, this.options).pipe(map(res => res.json()));
+  }
+
 }

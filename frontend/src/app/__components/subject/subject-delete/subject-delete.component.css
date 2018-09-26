@@ -1,0 +1,53 @@
+.card {
+    top: 100px;
+    margin: auto;
+    max-width: 400px;
+}
+
+.card-body h1
+{
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+
+.card .inputBox
+{
+    position: relative;
+    margin: 10px;
+}
+
+.help-block
+{
+    position:absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 0;
+}
+
+.help-block p
+{
+    top: 0;
+    left: 0;
+    font-size: 12px;
+}
+
+.show-hide-message
+{
+    margin: auto;
+    top:0;
+    padding: 0;
+    font-size: 12px;
+}
+
+.buttons-position
+{
+    top: 100px;
+    margin: auto;
+    max-width: 400px;
+}
+
+.buttons-position button
+{
+    margin: 5px;
+    width: 46%;
+}

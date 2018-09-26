@@ -53,6 +53,8 @@ import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messag
 import { SubjectFeedComponent } from './__components/subject/subject-feed/subject-feed.component';
 import { SubjectAddComponent } from './__components/subject/subject-add/subject-add.component';
 import { SubjectAddReviewComponent } from './__components/subject/subject-add-review/subject-add-review.component';
+import { SubjectEditComponent } from './__components/subject/subject-edit/subject-edit.component';
+import { SubjectDeleteComponent } from './__components/subject/subject-delete/subject-delete.component';
 
 
 @NgModule({
@@ -72,6 +74,8 @@ import { SubjectAddReviewComponent } from './__components/subject/subject-add-re
     SubjectFeedComponent,
     SubjectAddComponent,
     SubjectAddReviewComponent,
+    SubjectEditComponent,
+    SubjectDeleteComponent,
   ],
 
   imports: [
