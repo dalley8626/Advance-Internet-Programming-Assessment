@@ -115,6 +115,7 @@ router.put('/updateSubject', (req,res) => {
                                             console.log("2")
                                         } else {
                                             res.json ({ success: true, message: 'Subject Updated Successfully' });
+                                            console.log("3")
                                         }
                                     });
                     //             }

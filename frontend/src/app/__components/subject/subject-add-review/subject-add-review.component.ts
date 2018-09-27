@@ -147,7 +147,7 @@ export class SubjectAddReviewComponent implements OnInit {
       }
       this.subjectService.editSubject(this.subject).subscribe(res => {
         console.log('response is ', res);
-        if (res['status'] === 'success') {
+        if (res['success'] === true) {
           this.subjectService.notifySubjectAddition();
         } else {
           alert('Attempt failed, try again.');
