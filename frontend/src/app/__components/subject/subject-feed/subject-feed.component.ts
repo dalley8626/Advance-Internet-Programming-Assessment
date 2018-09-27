@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { SubjectService } from './../../../__services/subjectService/subject.service';
 import { AuthService } from './../../../__services/authService/auth.service';
 
+import { NgxSpinnerService } from 'ngx-spinner'
+
 
 @Component({
   selector: 'app-subject-feed',
@@ -25,7 +27,8 @@ export class SubjectFeedComponent implements OnInit{
   
   constructor(
     private subjectService: SubjectService,
-    private authService: AuthService
+    private authService: AuthService,
+    private spinner : NgxSpinnerService
   ) 
   {
     
@@ -42,7 +45,13 @@ export class SubjectFeedComponent implements OnInit{
     this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
     });
+    
+    this.spinner.show();
     this.getAllSubjects();
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+  }, 300);
   }
 
 }
