@@ -52,11 +52,6 @@ export class SubjectAddReviewComponent implements OnInit {
   ngOnInit() {
 
     this.getSingleSubject();
-    console.log(this.subject);
-    this.getRatingsbySubjectID();
-    this.ratingService.ratingAdded_Observable.subscribe(res => {
-      this.getRatingsbySubjectID();
-    });
 
   }
 
@@ -130,7 +125,6 @@ export class SubjectAddReviewComponent implements OnInit {
 
 
   getRatingsbySubjectID(){
-    console.log(this.subject._id)
     this.ratingService.getRatingsbySubjectID(this.subject._id)
       .subscribe(result => {
         this.ratings = result['data'];

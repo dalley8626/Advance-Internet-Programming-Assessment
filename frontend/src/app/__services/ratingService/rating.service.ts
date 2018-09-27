@@ -54,7 +54,6 @@ export class RatingService {
   /** GET ratings from the server */
   getRatingsbySubjectID (subjectID: number): Observable<Rating[]> {
     this.createAuthenticationHeaders();
-    console.log(subjectID);
     const url = `${this.ratingsUrl}/${subjectID}`;
     return this.http.get<Rating[]>(url);
   }

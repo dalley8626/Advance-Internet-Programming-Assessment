@@ -112,6 +112,7 @@ router.put('/updateSubject', (req,res) => {
                                     subject.save((err) => {
                                         if (err) {
                                             res.json ({ success: false, message: err });
+                                            console.log("2")
                                         } else {
                                             res.json ({ success: true, message: 'Subject Updated Successfully' });
                                         }

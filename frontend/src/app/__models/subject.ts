@@ -12,6 +12,8 @@ export class Subject {
     this._id = '';
     this.subjectCode = '';
     this.subjectName = '';
+    this.numberOfReview = 0;
+    this.percentageRating = 0;
     this.ratingIDs = [];
   }
 }
