@@ -27,26 +27,28 @@
 <div>
   <table class="table table-hover">
     <thead>
-    <tr>
-      <th scope="col">Subject #</th>
-      <th scope="col">Name</th>
-      <th scope="col">Rating</th>
-      <th scope="col">Options</th>
-    </tr>
+      <tr>
+        <th scope="col">Subject #</th>
+        <th scope="col">Name</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Options</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let subject of subjects">
-      <th scope="row">{{subject.subjectCode}}</th>
-      <td>{{subject.subjectName}}</td>
-      <td>N/A</td>
-      <td>
-        <button class="btn btn-outline-primary" routerLink="detail/{{subject.subjectCode}}">View
-        </button>
-        <button class="btn btn-outline-danger" title="delete subject"
-                (click)="delete(subject)">delete
-        </button>
-      </td>
-    </tr>
+      <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+      </ngx-spinner>
+      <tr *ngFor="let subject of subjects">
+        <th scope="row">{{subject.subjectCode}}</th>
+        <td>{{subject.subjectName}}</td>
+        <td>N/A</td>
+        <td>
+          <button class="btn btn-outline-primary" routerLink="detail/{{subject.subjectCode}}">View
+          </button>
+          <button class="btn btn-outline-danger" title="delete subject" (click)="delete(subject)">delete
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

@@ -47,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //importing flash message module
 import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messag
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FlashMessagesModule
+    FlashMessagesModule,
+    NgxSpinnerModule
   ],
   
   providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard, FlashMessagesService],

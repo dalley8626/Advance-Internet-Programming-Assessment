@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from '../../../__models/subject';
 import { SubjectService } from '../../../__services/subjectService/subject.service';
 
+import { NgxSpinnerService } from 'ngx-spinner'; 
+import { timeInterval } from 'rxjs/operators';
+
 /**
  * This component allows user to add/delete subject.
  */
@@ -14,13 +17,22 @@ import { SubjectService } from '../../../__services/subjectService/subject.servi
 export class SubjectsComponent implements OnInit {
   subjects: Subject[];
 
-  constructor(private subjectService: SubjectService) { }
+  constructor(
+    private subjectService: SubjectService, 
+    private spinner : NgxSpinnerService
+    ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.getSubjects();
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+  }, 1000); 
   }
 
   getSubjects(): void {
+    
     this.subjectService.getSubjects()
       .subscribe(result => this.subjects = result['data']);
   }
