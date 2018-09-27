@@ -56,6 +56,7 @@ import { SubjectAddReviewComponent } from './__components/subject/subject-add-re
 import { SubjectEditComponent } from './__components/subject/subject-edit/subject-edit.component';
 import { SubjectDeleteComponent } from './__components/subject/subject-delete/subject-delete.component';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,9 @@ import { SubjectDeleteComponent } from './__components/subject/subject-delete/su
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FlashMessagesModule
+    FlashMessagesModule,
+    NgxSpinnerModule
+
   ],
   
   providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard, FlashMessagesService],
