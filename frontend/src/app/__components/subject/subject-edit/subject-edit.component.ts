@@ -4,6 +4,9 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { SubjectService } from './../../../__services/subjectService/subject.service';
 import { AuthService } from './../../../__services/authService/auth.service';
 
+import {Rating} from '../../../__models/rating';
+import {RatingService} from '../../../__services/ratingService/rating.service';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -29,14 +32,21 @@ export class SubjectEditComponent implements OnInit {
 
   subject;
 
+  ratings: Rating[];
+  public rating: Rating;
+
   constructor(
     private formBuilder : FormBuilder,
     private subjectService: SubjectService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private ratingService: RatingService,
+
   ) 
   {
+
+    this.rating = new Rating();
     this.createNewSubjectForm();
 
   }
@@ -52,6 +62,10 @@ export class SubjectEditComponent implements OnInit {
         this.loadEditForm = false;
       }
     })
+    this.getRatingsbySubjectID();
+    this.ratingService.ratingAdded_Observable.subscribe(res => {
+      this.getRatingsbySubjectID();
+    });
   }
   
 
@@ -118,6 +132,50 @@ export class SubjectEditComponent implements OnInit {
     });
   }
 
-  
-
+  getRatingsbySubjectID(): void {
+    this.ratingService.getRatingsbySubjectID(this.subject._id)
+      .subscribe(result => {
+        this.ratings = result['data'];
+        this.ratings.forEach(function(element) {
+          console.log(element);
+          element.editFlag = false;
+        });
+      });
+  }
+  addRating(): void {
+    if (this.rating.ratingTitle && this.rating.ratingDescription) {
+      this.rating.subjectID = this.subject._id;
+      this.ratingService.addRating(this.rating).subscribe(res => {
+        console.log('response is ', res);
+        if (res['status'] === 'success') {
+          this.ratingService.notifyRatingAddition();
+          alert('Rating added.');
+        } else {
+          alert('Attempt failed, try again.');
+        }
+      }, error => {
+        console.log('error is', error);
+      });
+    } else {
+      alert('Rating title and Rating Description required');
+    }
+  }
+  edit(rating: Rating): void {
+    rating.editFlag = true;
+  }
+  editRating(rating: Rating): void {
+    this.ratingService.updateRating(rating).subscribe(res => {
+      if (res['status'] === 'success') {
+        this.ratingService.notifyRatingAddition();
+        rating.editFlag = false;
+        alert('Rating edited.');
+      } else {
+        alert('Attempt failed, try again.');
+      }
+    });
+  }
+  delete(rating: Rating): void {
+    this.ratings = this.ratings.filter(r => r !== rating);
+    this.ratingService.deleteRating(rating).subscribe();
+  }
 }
