@@ -27,8 +27,9 @@ export class SubjectAddReviewComponent implements OnInit {
 
   subject;
 
-  ratings: Rating[];
   public rating: Rating;
+  ratings: Rating[];
+
   user;
 
   constructor(
@@ -41,7 +42,6 @@ export class SubjectAddReviewComponent implements OnInit {
 
   )
   {
-    this.subject = new Subject();
     this.rating = new Rating();
     this.createNewSubjectForm();
     this.user  = JSON.parse(localStorage.getItem('user'));
@@ -50,6 +50,7 @@ export class SubjectAddReviewComponent implements OnInit {
 
   ngOnInit() {
     this.currentUrl = this.activatedRoute.snapshot.params;
+
     this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
       if(!data.success) {
         this.messageClass = 'alert alert-danger';
@@ -57,12 +58,14 @@ export class SubjectAddReviewComponent implements OnInit {
       } else {
         this.subject = data.subject;
         this.loadEditForm = false;
+        this.ratingService.ratingAdded_Observable.subscribe(res => {
+          this.getRatingsbySubjectID();
+        });  
       }
     })
-    this.getRatingsbySubjectID();
-    this.ratingService.ratingAdded_Observable.subscribe(res => {
-      this.getRatingsbySubjectID();
-    });
+
+
+    
 
   }
 
@@ -130,12 +133,12 @@ export class SubjectAddReviewComponent implements OnInit {
     });
   }
 
-  getRatingsbySubjectID(): void {
+  getRatingsbySubjectID(){
+    console.log(this.subject._id)
     this.ratingService.getRatingsbySubjectID(this.subject._id)
       .subscribe(result => {
         this.ratings = result['data'];
         this.ratings.forEach(function(element) {
-          console.log(element);
           element.editFlag = false;
         });
       });

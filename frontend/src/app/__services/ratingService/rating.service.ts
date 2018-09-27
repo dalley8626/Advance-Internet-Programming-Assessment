@@ -43,6 +43,7 @@ export class RatingService {
     const url = `${this.ratingsUrl}/${subjectID}`;
     return this.http.get<Rating[]>(url);
   }
+  
   /** GET rating by id. Will 404 if id not found */
   getRating(_id: number): Observable<Rating> {
     const url = `${this.ratingsUrl}/detail/${_id}`;
