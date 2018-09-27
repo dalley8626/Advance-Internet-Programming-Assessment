@@ -149,4 +149,55 @@ router.delete('/deleteSubject/:id', (req,res) => {
     }
 })
 
+router.post('/addReview/:id', (req,res) => {
+    if (!req.body.reviewComment) {
+        res.json({ success: false, message: 'No review Provided' });
+    } else {
+        if (!req.body.id) {
+            res.json({ success: false, message: 'No id was Provided' });
+        } else {
+            Subject.findOne({ _id: req.body.id }, (err, subject) => {
+                if (err) {
+                    res.json({ success: false, message: 'Invalid subject Id' });
+                } else {
+                    if (!subject) {
+                        res.json({ success: false, message: 'Subject not Found.' });
+                    } else {
+                        User.findOne({ _id: req.params.id}, (err,user) => {
+                            if (err) {
+                                res.json({success:false, message: 'Something is not right'});
+                            } else {
+                                if (!user) {
+                                    res.json({success:false, message: 'User not found'});
+                                } else {
+                                    // const review = {
+                                    //     reviewComment: req.body.reviewComment,
+                                    //     reviewCreator: user.username,
+                                    //     reviewDate: Date.now(),
+                                    //     reviewRating: req.body.reviewRating};
+                                    //     subject.reviews.push(review);
+                                        
+                                    // subject.numberOfReview = subject.numberOfReview + 1;
+                                    // res.send(''+ subject.reviews[reviewRating]);
+                                    // subject.rating = subject.rating + subject.reviews[reviewRating];
+                                    
+                                    // subject.maximumRatingPossible = subject.numberOfReview * 5;
+                                    // subject.percentageRating = Math.round((subject.rating/subject.maximumRatingPossible)*10)/10;
+                                    subject.save((err) => {
+                                        if (err) {
+                                            res.json({ success: false, message: err});
+                                        } else {
+                                            res.json({success: true, message: 'Review Successful' })
+                                        }
+                                    });
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    }
+})
+
 module.exports = router;

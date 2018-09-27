@@ -52,4 +52,12 @@ export class SubjectService {
     return this.http.delete(this.domain + '/subjects/deleteSubject/' + id, this.options).pipe(map(res => res.json()));
   }
 
+  postReview(id, reviewComment, reviewRating) {
+    this.createAuthenticationHeaders();
+    const subjectData = {
+      reviewComment: reviewComment,
+      reviewRating: reviewRating
+    }
+    return this.http.post(this.domain + 'subjects/addreview/'+id, subjectData,this.options).pipe(map(res => res.json()));
+  }
 }

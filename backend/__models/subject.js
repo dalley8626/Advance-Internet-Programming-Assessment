@@ -111,8 +111,15 @@ const reviewValidators = [
     }
 ];
 
+// const reviewSchema = new mongoose.Schema ({
+//     reviewComment: { type: String, validate: reviewValidators },
+//     reviewCreator: { type: String },
+//     reviewDate: { type: Date, default: Date.now() },
+//     reviewRating: { type: Number }
+//     subject:  
+// })
 
-const subjectSchema = mongoose.Schema({
+const subjectSchema = new mongoose.Schema({
     subjectNumber: {
         type: String,
         required: true,
@@ -135,10 +142,8 @@ const subjectSchema = mongoose.Schema({
     numberOfReview: {
         type: Number,
         default: 0
-    }
-    ,
-    reviews: [
-        {
+    },
+    reviews: [{
             reviewComment: { type: String, validate: reviewValidators },
             reviewCreator: { type: String },
             reviewDate: { type: Date, default: Date.now() },
