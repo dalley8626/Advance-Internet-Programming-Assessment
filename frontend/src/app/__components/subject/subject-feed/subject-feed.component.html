@@ -2,7 +2,7 @@
 
   <div class="col-sm-12">
     <div class="design-display" *ngFor="let subject of subjectPosts">
-      <div class="card" >
+      <div class="card shadow" >
         <div class="card-header text-center">
           <h3><code class="card-title">{{ subject.subjectNumber }}</code></h3>
           <p class="card-title text-center" style="font-size:16px;">{{ subject.subjectName }}</p>
@@ -22,7 +22,7 @@
             <!-- Ratings --><br/>
             {{subject.rating}} reviews
          
-          <button [routerLink]="['/subjects/edit/', subject._id]" class="btn btn-warning btn-sm float-right">Find out more</button>
+          <button [routerLink]="['/subjects/review/', subject._id]" class="btn btn-warning btn-sm float-right">Find out more</button>
         </div>
           <!-- footer end-->
         </div>

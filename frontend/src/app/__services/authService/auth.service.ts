@@ -45,11 +45,17 @@ export class AuthService {
       .pipe(map(res => res.json()));
   }
 
+  updateProfile(user) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put(this.domain + '/users/profile/updateUser', user, {headers : headers}).pipe(map(res => res.json()));
+  }
+
   getProfile() {
     let headers = new Headers();
     this.loadToken();
-    headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', this.authToken);
     return this.http
       .get('http://localhost:3000/users/profile', {headers: headers})
       .pipe(map(res => res.json()));
@@ -79,5 +85,6 @@ export class AuthService {
     localStorage.clear(); 
   }
 
+  
   
 }

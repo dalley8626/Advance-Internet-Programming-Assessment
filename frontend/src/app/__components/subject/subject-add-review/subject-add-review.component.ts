@@ -12,4 +12,7 @@ export class SubjectAddReviewComponent implements OnInit {
   ngOnInit() {
   }
 
+  postReview(){
+    
+  }
 }
