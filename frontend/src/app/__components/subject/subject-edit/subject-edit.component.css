@@ -24,10 +24,15 @@
     font-weight: 900;
 }
 
-.card .inputBox,
-.show-hide-message
+.card .inputBox
 {
     position: relative;
+    margin: 10px;
+}
+
+.show-hide-message
+{
+    width: 100%;
     margin: 10px;
 }
 

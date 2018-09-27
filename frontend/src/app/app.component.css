@@ -6,5 +6,6 @@
 }
 
 nobg{
-    background: none;
+    background-color: grey;
+    height: 1024px;
 }

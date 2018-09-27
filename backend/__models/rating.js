@@ -15,10 +15,9 @@ const RatingSchema = mongoose.Schema({
         type: String,
         require: true
     },
-
     userID: {
-        type:mongoose.Schema.Types.ObjectId, ref:'User', require:true
-    },
+       type:mongoose.Schema.Types.ObjectId, ref:'User', require:true
+   },
 })
 
 //Expose the mongodb object as a module that would allow request

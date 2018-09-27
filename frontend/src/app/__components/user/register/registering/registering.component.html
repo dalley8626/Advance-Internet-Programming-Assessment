@@ -25,7 +25,7 @@
               field is Required</p>
             <!-- Minimum and Maximum length of data error  -->
             <p class="text-danger text-right" *ngIf="(form.controls.f_name.errors?.minlength || form.controls.f_name.errors?.maxlength) && form.controls.f_name.dirty">*Minimum
-              characters: 5
+              characters: 2
               Maximum characters: 50
             </p>
             <!-- Invalid data error  -->
@@ -46,7 +46,7 @@
               field is Required</p>
             <!-- Minimum and Maximum length of data error  -->
             <p class="text-danger text-right" *ngIf="(form.controls.l_name.errors?.minlength || form.controls.l_name.errors?.maxlength) && form.controls.l_name.dirty && form.controls.l_name.value.length != 0">*Minimum
-              characters: 5, Maximum characters: 50
+              characters: 2, Maximum characters: 50
             </p>
             <!-- Invalid data error  -->
             <p class="text-danger text-right" *ngIf="form.controls.l_name.errors?.validateName && form.controls.l_name.dirty && form.controls.l_name.dirty && form.controls.l_name.value.length != 0">Invalid

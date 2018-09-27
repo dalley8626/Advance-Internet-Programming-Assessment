@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const config = require('../__config/database')
 const User = require('../__models/user');
 
+router.get('/', (req,res) => {
+    User.find()
+        .then(user => res.json(user))
+});
 
 router.get('/', (req,res) => {
     User.find()
@@ -61,7 +65,7 @@ router.post('/register', (req, res, next) => {
                                             } else {
                                                 if (err.errors.password) {
                                                     res.json({ success: false, message: err.errors.password.message });
-                                                    
+
                                                 } else {
                                                     res.json({ success: false, message: 'Failed to register user. Error: ', err });
                                                 }
@@ -86,7 +90,7 @@ router.post('/register', (req, res, next) => {
 //It checks if the email address and password match the collection
 //If it does, provide a token that allows access
 router.post('/authenticate', (req, res, next) => {
-    
+
     //Get the email and password as JSON type
     const email = req.body.email;
     const password = req.body.password;
@@ -116,7 +120,7 @@ router.post('/authenticate', (req, res, next) => {
                     token: `Bearer ${token}`,
                     user: {
                         id: user._id,
-                        name: user.name,
+                        username: user.username,
                         email: user.email
                     }
                 });
@@ -127,51 +131,114 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
+//check for email
+router.get('/checkEmail/:email', (req, res) => {
+    if (!req.params.email) {
+        res.json({ success: false, message: 'Email has not been provided' });
+    } else {
+        User.findOne({ email: req.params.email }, (err, user) => {
+            if (err) {
+                res.json({ success: false, message: err });
+            } else {
+                if (user) {
+                    res.json({ success: false, message: 'E-mail is already registered' });
+                } else {
+                    res.json({ success: true, message: 'E-mail is available' })
+                }
+            }
+        })
+    }
+})
+
+//check for username
+router.get('/checkUsername/:username', (req, res) => {
+    if (!req.params.username) {
+        res.json({ success: false, message: 'Username has not been provided' });
+    } else {
+        User.findOne({ username: req.params.username }, (err, user) => {
+            if (err) {
+                res.json({ success: false, message: err });
+            } else {
+                if (user) {
+                    res.json({ success: false, message: 'Username is already registered' });
+                } else {
+                    res.json({ success: true, message: 'Username Available' })
+                }
+            }
+        })
+    }
+})
+
+//middleware to grab the tokens
+// router.use((req, res, next) => {
+//     const token = req.headers['Authorization'];
+//     if (!token) {
+//         res.json({ success: false, message: 'No token provided' });
+//     } else {
+//         jwt.verify(token, config.secret, (err, decoded) => {
+//             if (err) {
+//                 res.json({ success: false, message: 'Token invalid: ' + err });
+//             } else {
+//                 req.decoded = decoded;
+//                 next();
+//             }
+//         });
+//     }
+// });
+
 //A route way to access the webpage, therefore we have to encrypt with a passport authentication
 //If they have the correct authentication(token), therefore it would allow access
 //This is just get the user req and goes to authenticate, if authenticate successful
 // Allow pass
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    res.json({ user: req.user });
+    res.json({ success: true, user: req.user });
 });
 
-//check for email
-router.get('/checkEmail/:email', (req, res)=>{
-    if (!req.params.email) {
-      res.json({ success: false, message: 'Email has not been provided'});
-    } else {
-      User.findOne({ email: req.params.email}, (err, user)=>{
-        if (err) {
-          res.json({success : false, message: err});
-        } else {
-          if (user) {
-            res.json({ success: false, message: 'E-mail is already registered'});
-          } else {
-            res.json ({ success: true, message: 'E-mail is available'})
-          }
-        }
-      })
-    }
-  })
+router.put('/profile/updateProfile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+        User.findOne({ _id: req.body._id }, (err,user) => {
+            if (err){
+                res.json({success: false, message: 'Not a authorized user'});
+            } else {
+                if (!user) {
+                    res.json({ success: false, message: 'User not found'});
+                } else {
+                    //admin user?
+                    // User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                    //     if (err) {
+                    //         res.json({ success: false, message: err });
+                    //     } else {
+                    //         if (!user) {
+                    //             res.json({ success: false, message: 'Unable to authenticate user' })
+                    //         } else {
+                    //             //only if you havea username ro123, you can update the thing
+                    //             if (user.username !== "ro123") {
+                    //                 res.json ({ success: false, message: 'Not authorized to update the subject' })
+                    //             } else {
+                                    user.f_name = req.body.f_name;
+                                    user.l_name = req.body.l_name;
+                                    user.email = req.body.email.toLowerCase();
+                                    user.username = req.body.username.toLowerCase();
+                                    user.password = req.body.password;
 
-  //check for username
-  router.get('/checkUsername/:username', (req, res)=>{
-    if (!req.params.username) {
-      res.json({ success: false, message: 'Username has not been provided'});
-    } else {
-      User.findOne({ username: req.params.username}, (err, user)=>{
-        if (err) {
-          res.json({success : false, message: err});
-        } else {
-          if (user) {
-            res.json({ success: false, message: 'Username is already registered'});
-          } else {
-            res.json ({ success: true, message: 'Username Available'})
-          }
-        }
-      })
-    }
-  })
+                                    user.save((err) => {
+                                        if (err) {
+                                            res.json ({ success: false, message: err });
+                                        } else {
+                                            res.json ({ success: true, message: 'User Updated Successfully' });
+                                        }
+                                    });
+                    //             }
+                    //         }
+                    //     }
+
+                    // });
+                }
+            }
+        });
+    
+})
+
+
 
 
 module.exports = router;

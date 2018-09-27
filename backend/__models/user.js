@@ -134,7 +134,7 @@ let validfirstnameChecker = (f_name) => {
 const firstnameValidators = [
     {
         validator: firstnameLengthChecker,
-        message: 'First Name must be atleast 5 character but less than 50'
+        message: 'First Name must be atleast 2 character but less than 50'
     },
     {
         validator: validfirstnameChecker,
@@ -167,7 +167,7 @@ let validlastnameChecker = (l_name) => {
 const lastnameValidators = [
     {
         validator: lastnameLengthChecker,
-        message: 'Last Name must be atleast 5 character but less than 50'
+        message: 'Last Name must be atleast 2 character but less than 50'
     },
     {
         validator: validlastnameChecker,

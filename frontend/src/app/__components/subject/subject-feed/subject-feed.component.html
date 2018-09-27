@@ -1,0 +1,32 @@
+<div class="container" style="background-color: white; min-height:1000px;">
+
+  <div class="col-sm-12">
+    <div class="design-display" *ngFor="let subject of subjectPosts">
+      <div class="card shadow" >
+        <div class="card-header text-center">
+          <h3><code class="card-title">{{ subject.subjectNumber }}</code></h3>
+          <p class="card-title text-center" style="font-size:16px;">{{ subject.subjectName }}</p>
+        </div>
+        <div class="card-body">
+          {{subject.description}}
+        </div>
+        <!-- footer start -->
+        <div class="card-footer">
+          <div>
+            
+            <div class="stars-outer">
+              <div class="stars-inner" [style.width]="subject.percentageRating + '%'" >
+                
+              </div>
+            </div>
+            <!-- Ratings --><br/>
+            {{subject.rating}} reviews
+         
+          <button [routerLink]="['/subjects/detail/', subject._id]" class="btn btn-warning btn-sm float-right">Find out more</button>
+        </div>
+          <!-- footer end-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

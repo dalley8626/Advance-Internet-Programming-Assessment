@@ -4,66 +4,60 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { SubjectService } from './../../../__services/subjectService/subject.service';
 import { AuthService } from './../../../__services/authService/auth.service';
 
-import { Router } from '@angular/router';
+import {Subject} from '../../../__models/subject';
+import {Rating} from '../../../__models/rating';
+import {RatingService} from '../../../__services/ratingService/rating.service';
+
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-subject-add',
-  templateUrl: './subject-add.component.html',
-  styleUrls: ['./subject-add.component.css']
+  selector: 'app-subject-edit',
+  templateUrl: './subject-edit.component.html',
+  styleUrls: ['./subject-edit.component.css']
 })
-export class SubjectAddComponent implements OnInit {
+export class SubjectEditComponent implements OnInit {
 
   message;
   messageClass;
 
   processing = false;
-
+  currentUrl;
   form;
 
   user;
-  
+
   subjectPosts;
 
+  loadEditForm = true;
+
+  subject;
 
   constructor(
     private formBuilder : FormBuilder,
     private subjectService: SubjectService,
-    private authService: AuthService,
-    private router: Router
-  ) 
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private location: Location
+  )
   {
     this.createNewSubjectForm();
+
   }
 
   ngOnInit() {
-  }
-
-  onSubjectSubmit(){
-    this.processing = true;
-
-    const subject = {
-      subjectNumber: this.form.get('subjectNumber').value,
-      subjectName: this.form.get('subjectName').value,
-      description: this.form.get('description').value
-    }
-
-    this.subjectService.newSubject(subject).subscribe(data => {
+    this.currentUrl = this.activatedRoute.snapshot.params;
+    this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
       if(!data.success) {
-        this.messageClass= 'alert alert-danger small';
-        this.message = data.message;
-        this.processing = false;
+        this.messageClass = 'alert alert-danger';
+        this.message = "Subject Not found";
       } else {
-        this.messageClass = 'alert alert-success small'
-        this.message = data.message;
-        setTimeout(() => {
-          this.processing = false;
-          this.router.navigate(['/subjects']);
-          this.form.reset();
-        }, 2000);
+        this.subject = data.subject;
+        this.loadEditForm = false;
       }
-    });
-    
+    })
   }
+
 
   subjectNumberValidation(controls){
     const regExp = new RegExp(/^[0-9]+$/);
@@ -107,7 +101,25 @@ export class SubjectAddComponent implements OnInit {
 
   goBack()
   {
-    window.location.reload();
+    this.location.back();
+  }
+
+  updateSubjectSubmit()
+  {
+    this.processing = true;
+    this.subjectService.editSubject(this.subject).subscribe(data => {
+      if(!data.success){
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+        this.processing = false;
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+        setTimeout(()=>{
+          this.location.back();
+        },2000)
+      }
+    });
   }
 
 }

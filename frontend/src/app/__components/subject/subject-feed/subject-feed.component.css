@@ -8,19 +8,23 @@
 .subject-name
 {
     background-color: #03a9f4 !important;
+    min-height: 80px;
 }
 
 .card
 {
-    margin:auto;
+    min-width: 245px;
+    max-width: 245px;
+    margin:10px;
     font-family: 'Trebuchet MS';
     font-size: 12px;
-    max-width: 700px;
+    min-height: 300px;
+    max-height: 300px;
+    overflow: hidden;
 }
 
-.card-body h1
+.card-title
 {
-    margin-bottom: 20px;
     font-weight: 900;
 }
 
@@ -73,7 +77,7 @@
 }
 
 .card .inputBox input:focus,
-.card .inputBox input:valid,
+.card .inputBox input:valid
 {
     border-color: #03a9f4;
 }
@@ -110,4 +114,43 @@
 {
     margin:10px;
 }
+
+.design-display {
+    width: 15rem; 
+    display: inline-block;
+    margin:5px;
+}
+
+.stars-outer
+{
+    position: relative;
+    display: inline;
+}
+
+.stars-inner
+{
+    position: absolute;;
+    top:0;
+    left:0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0%;
+}
+
+.stars-outer::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: FontAwesome;
+    font-weight: 900;
+    color: lightgrey;
+}
+
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font-family: FontAwesome;
+    font-weight: 900;
+    color:red;
+}
+
+
+
 
