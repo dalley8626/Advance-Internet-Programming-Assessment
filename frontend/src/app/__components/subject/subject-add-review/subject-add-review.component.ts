@@ -57,12 +57,13 @@ export class SubjectAddReviewComponent implements OnInit {
       } else {
         this.subject = data.subject;
         this.loadEditForm = false;
+        this.getRatingsbySubjectID();
+        this.ratingService.ratingAdded_Observable.subscribe(res => {
+          this.getRatingsbySubjectID();
+        });
       }
     })
-    this.getRatingsbySubjectID();
-    this.ratingService.ratingAdded_Observable.subscribe(res => {
-      this.getRatingsbySubjectID();
-    });
+
 
   }
 
