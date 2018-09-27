@@ -3,10 +3,11 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { AuthService } from './../authService/auth.service';
 import { map } from 'rxjs/operators/';
 import { Router } from '@angular/router';
+import {Subject} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SubjectService {
-
+  public subjectAdded_Observable = new Subject();
   options;
   domain = this.authService.domain;
 
@@ -26,7 +27,10 @@ export class SubjectService {
       })
     });
   }
-
+  notifySubjectAddition() {
+    this.createAuthenticationHeaders();
+    this.subjectAdded_Observable.next();
+  }
   newSubject(subject){
     this.createAuthenticationHeaders();
     return this.http.post(this.domain + '/subjects/addSubject', subject, this.options).pipe(map(res => res.json()));

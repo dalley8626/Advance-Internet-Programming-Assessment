@@ -26,8 +26,6 @@ router.get('/:id', function(req, res){
         if (!rating) {
             return res.json({ success: false, msg: 'Ratings not found' });
         }
-
-        console.log(res)
             return res.status(200).json({
                 status: 'success',
                 data: rating
@@ -42,6 +40,7 @@ router.post('/add', (req, res) => {
             ratingDescription: req.body.ratingDescription,
             subjectID: req.body.subjectID,
             userID: req.body.userID,
+            star: req.body.star,
         })
         rating.save((err, doc) => {
             if(err) throw err;
@@ -70,7 +69,6 @@ router.get('/detail/:id', function(req, res){
 })
 router.delete('/delete/:id', (req, res) => {
     mongoose.connect(config.database, { useNewUrlParser: true }, function(err){
-        console.log(req.params.id);
         if(err) throw err;
         Rating.findByIdAndRemove(req.params.id,
             (err, doc) => {

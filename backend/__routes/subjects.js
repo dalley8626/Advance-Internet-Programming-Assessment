@@ -107,6 +107,8 @@ router.put('/updateSubject', (req,res) => {
                                     subject.subjectNumber = req.body.subjectNumber;
                                     subject.subjectName = req.body.subjectName;
                                     subject.description = req.body.description;
+                                    subject.numberOfReview = req.body.numberOfReview;
+                                    subject.percentageRating = req.body.percentageRating;
                                     subject.save((err) => {
                                         if (err) {
                                             res.json ({ success: false, message: err });

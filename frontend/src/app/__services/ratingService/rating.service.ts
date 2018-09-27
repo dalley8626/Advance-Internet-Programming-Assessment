@@ -6,6 +6,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from '../messageService/message.service';
 import {Rating} from '../../__models/rating';
+import {Headers, RequestOptions} from '@angular/http';
+import {AuthService} from '../authService/auth.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,11 +17,22 @@ const httpOptions = {
 export class RatingService {
   public ratingAdded_Observable = new Subject();
   private ratingsUrl = 'http://localhost:3000/ratings';  // URL to web api
+  options;
 
   constructor(
     private http: HttpClient,
+    private authService: AuthService,
     private messageService: MessageService) { }
 
+  createAuthenticationHeaders() {
+    this.authService.loadToken();
+    this.options = new RequestOptions({
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'authorization': this.authService.authToken
+      })
+    });
+  }
   /** GET ratings from the server */
   getRatings (): Observable<Rating[]> {
     return this.http.get<Rating[]>(this.ratingsUrl);
@@ -40,6 +53,8 @@ export class RatingService {
   }
   /** GET ratings from the server */
   getRatingsbySubjectID (subjectID: number): Observable<Rating[]> {
+    this.createAuthenticationHeaders();
+    console.log(subjectID);
     const url = `${this.ratingsUrl}/${subjectID}`;
     return this.http.get<Rating[]>(url);
   }
