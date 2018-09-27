@@ -35,8 +35,11 @@ export class SubjectFeedComponent implements OnInit{
   }
 
   getAllSubjects() {
+    this.spinner.show();
+    
     this.subjectService.getAllSubjects().subscribe(data => {
       this.subjectPosts = data.subjects;
+      this.spinner.hide();
     })
 
   }
@@ -46,12 +49,7 @@ export class SubjectFeedComponent implements OnInit{
       this.user = profile.user;
     });
     
-    this.spinner.show();
     this.getAllSubjects();
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-  }, 300);
   }
 
 }
