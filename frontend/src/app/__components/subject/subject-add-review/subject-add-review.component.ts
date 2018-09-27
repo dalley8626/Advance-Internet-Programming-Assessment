@@ -137,6 +137,7 @@ export class SubjectAddReviewComponent implements OnInit {
     if (this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
       this.rating.userID = this.user.id;
+      this.rating.username = this.user.username;
       if (this.subject.numberOfReview && this.subject.percentageRating) {
         this.subject.numberOfReview = this.subject.numberOfReview + 1;
         this.subject.percentageRating =

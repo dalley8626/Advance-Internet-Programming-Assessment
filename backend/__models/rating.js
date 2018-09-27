@@ -18,6 +18,10 @@ const RatingSchema = mongoose.Schema({
     userID: {
        type:mongoose.Schema.Types.ObjectId, ref:'User', require:true
    },
+   username: {
+       type: String,
+       require: true
+   },
    star: {
        type: Number,
        require: true

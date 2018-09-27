@@ -4,6 +4,7 @@ export class Rating {
   public ratingDescription;
   public subjectID;
   public editFlag = false;
+  public username;
   public star;
 
   constructor() {
@@ -12,6 +13,7 @@ export class Rating {
     this.ratingDescription = '';
     this.subjectID = '';
     this.editFlag = false;
+    this.username = '';
     this.star = 0;
   }
 }

@@ -40,6 +40,7 @@ router.post('/add', (req, res) => {
             ratingDescription: req.body.ratingDescription,
             subjectID: req.body.subjectID,
             userID: req.body.userID,
+            username: req.body.username,
             star: req.body.star,
         })
         rating.save((err, doc) => {
