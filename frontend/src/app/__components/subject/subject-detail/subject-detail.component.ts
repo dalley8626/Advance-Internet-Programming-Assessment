@@ -16,11 +16,13 @@ import {RatingService} from '../../../__services/ratingService/rating.service';
   templateUrl: './subject-detail.component.html',
   styleUrls: [ './subject-detail.component.css' ]
 })
+
 export class SubjectDetailComponent implements OnInit {
   @Input() subject: Subject;
   ratings: Rating[];
   public rating: Rating;
-
+  public user  = JSON.parse(localStorage.getItem('user'));
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -31,12 +33,15 @@ export class SubjectDetailComponent implements OnInit {
       this.rating = new Rating();
   }
 
+
   ngOnInit(): void {
     this.getSubject();
     this.getRatingsbySubjectID();
     this.ratingService.ratingAdded_Observable.subscribe(res => {
       this.getRatingsbySubjectID();
     });
+    
+    
   }
 
   getSubject(): void {
@@ -59,6 +64,7 @@ export class SubjectDetailComponent implements OnInit {
   addRating(): void {
     if (this.rating.ratingTitle && this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
+      this.rating.userID = this.user.id;
       this.ratingService.addRating(this.rating).subscribe(res => {
         console.log('response is ', res);
         if (res['status'] === 'success') {
