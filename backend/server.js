@@ -1,20 +1,21 @@
 const express = require('express')
 const path = require('path')
+
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const config = require('./__config/database')
 
-//connection to the database
-mongoose.connect(config.database, {useNewUrlParser: true});
+//connecting to the database
+mongoose.Promise = global.Promise;
 
-mongoose.connection.on('connected', () => {
-    console.log('Connected to the database ' + config.database);
-});
-
-mongoose.connection.on('error', (err) => {
-    console.log('Database ' + err);
+mongoose.connect(config.database, {useNewUrlParser: true}, (err)=>{
+    if(err){
+        console.log('Could not connect to the database : ', err);
+    } else {
+        console.log('Connected to the database: '+ config.database);
+    }
 });
 
 const app = express();
@@ -26,14 +27,14 @@ const ratings = require('./__routes/ratings');
 //port number
 const port = 3000;
 
-//Cors middleware
-app.use(cors());
+//prociding a static directory for front-end
+app.use(express.static(path.join(__dirname,'../front-end')))
 
-//Connect the server to angular file
-app.use(express.static(path.join(__dirname,'subject-review')))
-
-//Body parse that allows forms to be accepted as data
-app.use(bodyParser.json());
+//middleware
+app.use(bodyParser.json()); //Body parse that allows forms to be accepted as data
+app.use(cors({
+    origin: "http://localhost:4200"
+}));//cors middleware
 
 //Initialize the passport
 //Use the session
@@ -42,6 +43,7 @@ app.use(passport.session());
 
 require('./__config/passport')(passport);
 
+//all routes passed
 app.use('/users', users);
 app.use('/subjects', subjects);
 app.use('/ratings', ratings);

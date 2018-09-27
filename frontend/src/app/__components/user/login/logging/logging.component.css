@@ -1,41 +1,101 @@
-.login-head
+.login
 {
-    height:100px;
-    width:100px;
-    border-radius:5px;
-    margin-top:-40px;
-    margin-bottom:35px;
+    font-family: 'Trebuchet MS';
 }
 
-.form-group
-{
-    margin-bottom:35px;
+.card {
+    top: 100px;
+    margin: auto;
+    max-width: 400px;
 }
 
-.form-group input
+.card-body h1
 {
-    border:0px;
-    font-size:18px;
-    padding-left:40px;
+    margin-bottom: 20px;
+    font-weight: 900;
 }
 
-.keep-bottom-space
+.card .inputBox
 {
-    margin-bottom:35px;
+    position: relative;
+    margin: 10px;
 }
 
-.fixed-user
+.card .inputBox input
+{
+    width:100%;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1px solid grey ;
+    transition: border .1s ease-out;
+    outline: none;
+}
+
+.card button
+{
+    width:100%;
+    border-radius: 20px;
+}
+
+
+
+.card .inputBox label
 {
     position:absolute;
-    top:6px;
-    left:20px;
-    zoom:1.25;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    pointer-events: none;
+    transition: .5s;
+    color: lightgrey;
 }
 
-.fixed-password
+.card .inputBox input:focus ~ label,
+.card .inputBox input:valid ~ label
+{
+    top: -18px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+    
+}
+
+.card .inputBox input:focus,
+.card .inputBox input:valid
+{
+    border-color: #03a9f4;
+}
+
+.policy
+{
+    font-size: 12px;
+}
+
+.signup
+{
+    margin-top: 20%;
+}
+
+.help-block
 {
     position:absolute;
-    left:20px;
-    zoom:1.25;
-    margin-top:8px;
+    top: 0;
+    right: 0;
+    padding: 10px 0;
+}
+
+.help-block p
+{
+    top: 0;
+    left: 0;
+    font-size: 12px;
+}
+
+.show-hide-message
+{
+    margin: auto;
+    top:0;
+    padding: 0;
+    font-size: 12px;
 }
