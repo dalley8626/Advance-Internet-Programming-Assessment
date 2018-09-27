@@ -6,7 +6,6 @@ const cors = require('cors')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const config = require('./__config/database')
-const morgan = require('morgan');
 
 //connecting to the database
 mongoose.Promise = global.Promise;
@@ -41,7 +40,6 @@ app.use(dollarDefender(/* optionional config object */));
 app.use(cors({
     origin: "http://localhost:4200"
 }));//cors middleware
-app.use(morgan('dev'));//Morgan, to show http request in console
 
 //Initialize the passport
 //Use the session

@@ -5,6 +5,26 @@ label{ margin: 0; padding: 0;}
   body{ margin: 20px; }
 h1 { font-size: 1.5em; margin: 10px; }
 
+
+/* */
+.card
+{
+    margin:10px;;
+    font-family: 'Trebuchet MS';
+    font-size: 12px;
+}
+
+.reviewComment
+{
+  margin-top:-20px;
+}
+
+.reviewComment button
+{
+  margin-left: 3px;
+}
+
+
 /****** Style Star Rating Widget *****/
 
 .rating {
@@ -47,6 +67,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 {
   position: relative;
   display: inline;
+  zoom: 2.0;
 }
 
 .stars-inner
@@ -70,6 +91,15 @@ h1 { font-size: 1.5em; margin: 10px; }
   content: "\f005 \f005 \f005 \f005 \f005";
   font-family: FontAwesome;
   font-weight: 900;
-  color:blue;
+  color: #FFD700;
+}
+
+.addRatingButton {
+  margin-top:15px;
+  border-radius: 20px;
+}
+
+.subjectdetail{
+  min-height: 300px;
 }
 
