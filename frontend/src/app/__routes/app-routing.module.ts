@@ -30,7 +30,7 @@ const routes: Routes = [
   // { path: 'subjects/detail/:id', component: SubjectDetailComponent, canActivate:[AuthGuard] },
    { path: 'subjects', component: SubjectFeedComponent, canActivate:[AuthGuard] },
    { path: 'subjects/add', component: SubjectAddComponent, canActivate:[AuthGuard]},
-   { path: 'subjects/review/:id', component: SubjectAddReviewComponent, canActivate:[AuthGuard]},
+   { path: 'subjects/detail/:id', component: SubjectAddReviewComponent, canActivate:[AuthGuard]},
    { path: 'subjects/edit/:id', component: SubjectEditComponent, canActivate:[AuthGuard]},
    { path: 'subjects/delete/:id', component: SubjectDeleteComponent, canActivate:[AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },

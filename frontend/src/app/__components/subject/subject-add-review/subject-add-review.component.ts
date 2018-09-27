@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {Rating} from '../../../__models/rating';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubjectService} from '../../../__services/subjectService/subject.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {RatingService} from '../../../__services/ratingService/rating.service';
+import {Subject} from '../../../__models/subject';
 
 @Component({
   selector: 'app-subject-add-review',
@@ -7,12 +14,167 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubjectAddReviewComponent implements OnInit {
 
-  constructor() { }
+  message;
+  messageClass;
 
-  ngOnInit() {
+  processing = false;
+  currentUrl;
+  form;
+
+  subjectPosts;
+
+  loadEditForm = true;
+
+  subject;
+
+  ratings: Rating[];
+  public rating: Rating;
+  user;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private subjectService: SubjectService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private location: Location,
+    private ratingService: RatingService,
+
+  )
+  {
+    this.subject = new Subject();
+    this.rating = new Rating();
+    this.createNewSubjectForm();
+    this.user  = JSON.parse(localStorage.getItem('user'));
+
   }
 
-  postReview(){
-    
+  ngOnInit() {
+    this.currentUrl = this.activatedRoute.snapshot.params;
+    this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
+      if(!data.success) {
+        this.messageClass = 'alert alert-danger';
+        this.message = 'Subject Not found';
+      } else {
+        this.subject = data.subject;
+        this.loadEditForm = false;
+      }
+    })
+    this.getRatingsbySubjectID();
+    this.ratingService.ratingAdded_Observable.subscribe(res => {
+      this.getRatingsbySubjectID();
+    });
+
+  }
+
+
+  subjectNumberValidation(controls){
+    const regExp = new RegExp(/^[0-9]+$/);
+    if (regExp.test(controls.value)) {
+      return null;
+    } else {
+      return { 'subjectNumberValidation' : true }
+    }
+  }
+
+  subjectNameValidation(controls){
+    const regExp = new RegExp(/^[a-zA-Z0-9 ,.'-]+$/i);
+    if (regExp.test(controls.value)) {
+      return null;
+    } else {
+      return { 'subjectNameValidation' : true };
+    }
+  }
+
+  createNewSubjectForm() {
+    this.form = this.formBuilder.group({
+      subjectNumber: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(5),
+        Validators.minLength(5),
+        this.subjectNumberValidation
+      ])],
+      subjectName: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100),
+        Validators.minLength(3),
+        this.subjectNameValidation
+      ])],
+      description: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(25000),
+        Validators.minLength(8),
+      ])],
+    })
+  }
+
+  goBack()
+  {
+    this.location.back();
+  }
+
+  updateSubjectSubmit()
+  {
+    this.processing = true;
+    this.subjectService.editSubject(this.subject).subscribe(data => {
+      if(!data.success){
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+        this.processing = false;
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+        setTimeout(()=>{
+          this.location.back();
+        },2000)
+      }
+    });
+  }
+
+  getRatingsbySubjectID(): void {
+    this.ratingService.getRatingsbySubjectID(this.subject._id)
+      .subscribe(result => {
+        this.ratings = result['data'];
+        this.ratings.forEach(function(element) {
+          console.log(element);
+          element.editFlag = false;
+        });
+      });
+  }
+  addRating(): void {
+    if (this.rating.ratingTitle && this.rating.ratingDescription) {
+      this.rating.subjectID = this.subject._id;
+      this.rating.userID = this.user.id;
+      this.ratingService.addRating(this.rating).subscribe(res => {
+        console.log('response is ', res);
+        if (res['status'] === 'success') {
+          this.ratingService.notifyRatingAddition();
+          alert('Rating added.');
+        } else {
+          alert('Attempt failed, try again.');
+        }
+      }, error => {
+        console.log('error is', error);
+      });
+    } else {
+      alert('Rating title and Rating Description required');
+    }
+  }
+  edit(rating: Rating): void {
+    rating.editFlag = true;
+  }
+  editRating(rating: Rating): void {
+    this.ratingService.updateRating(rating).subscribe(res => {
+      if (res['status'] === 'success') {
+        this.ratingService.notifyRatingAddition();
+        rating.editFlag = false;
+        alert('Rating edited.');
+      } else {
+        alert('Attempt failed, try again.');
+      }
+    });
+  }
+  delete(rating: Rating): void {
+    this.ratings = this.ratings.filter(r => r !== rating);
+    this.ratingService.deleteRating(rating).subscribe();
   }
 }

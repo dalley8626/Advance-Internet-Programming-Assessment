@@ -1,5 +1,4 @@
 <div class="container" style="background-color: white; min-height:1000px;">
-    <button [routerLink]="['/subjects/edit', subject._id]" class="btn btn-warning btn-sm float-right">Edit</button>        
     <!-- Display all the Subject content  -->
 
 
@@ -8,14 +7,75 @@
 
     <!-- Show all the reviews -->
 
+  <div class="card">
+    <h5 class="card-header">{{subject.subjectNumber}} {{subject.subjectName}}</h5>
+    <div class="card-body">
+      <h5 class="card-title">{{subject.description}}</h5>
+      <button [routerLink]="['/subjects/edit', subject._id]" class="btn btn-warning float-right">Edit</button>
+    </div>
+  </div>    <!-- Post a review -->
+  <div class="card">
+    <h5 class="card-header">Add Rating!</h5>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <label for="username">User Name</label>
+          <input name="username" [(ngModel)]="user.username" type="text" class="form-control" id="username" disabled>
+        </div>
+        <div class="form-group">
+          <label for="ratingTitle">Rating Title</label>
+          <input name="ratingTitle" [(ngModel)]="rating.ratingTitle" type="text" class="form-control" id="ratingTitle"
+                 placeholder="Enter Rating Title">
+        </div>
+        <div class="form-group">
+          <label for="ratingDescription">Subject name</label>
+          <input name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
+                 id="ratingDescription"
+                 placeholder="Enter Rating Description">
+        </div>
+        <button type="submit" (click)='addRating()'>Add Rating</button>
+      </form>
+    </div>
+  </div>
+  <div class="card text-center" *ngFor="let rating of ratings">
+    <div *ngIf="rating.editFlag == false">
+      <div class="card-header">
+        {{rating.ratingTitle}}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{rating.Ul}}</h5>
+        <p class="card-text" align = "right">Written by: {{user.username}}</p>
+        <p class="card-text">{{rating.ratingDescription}}</p>
+        <button class="btn btn-outline-danger" title="delete rating"
+                (click)="delete(rating)">delete
+        </button>
+        <button class="btn btn-outline-warning" title="edit rating"
+                (click)="edit(rating)">edit
+        </button>
+      </div>
+    </div>
+    <div *ngIf="rating.editFlag == true">
+      <form>
+        <div class="form-group">
+          <label for="username">User Name</label>
+          <input name="username" [(ngModel)]="user.username" type="text" class="form-control" id="username" disabled>
+        </div>
+        <div class="form-group">
+          <label for="ratingTitle1">Rating Title</label>
+          <input name="ratingTitle1" [(ngModel)]="rating.ratingTitle" type="text" class="form-control" id="ratingTitle1"
+                 placeholder="Enter Rating Title">
+        </div>
+        <div class="form-group">
+          <label for="ratingDescription1">Rating Description</label>
+          <input name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
+                 id="ratingDescription1"
+                 placeholder="Enter Rating Description">
+        </div>
+        <button type="submit" (click)='editRating(rating)'>Edit Rating</button>
+      </form>
+    </div>
+  </div>
 
-    <!-- Post a review -->
-    <form>
-        <textarea name="comment" rows="10" cols="30" class="form-control"></textarea>
-        <button type="button" name="button" class="btn btn-sm btn-info">Post Review</button>
-        <button type="button" name="button" class="btn btn-sm btn-info">Cancel</button>
-
-    </form>
 
 
 </div>

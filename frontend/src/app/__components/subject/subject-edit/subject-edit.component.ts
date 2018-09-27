@@ -24,31 +24,24 @@ export class SubjectEditComponent implements OnInit {
   processing = false;
   currentUrl;
   form;
-  
+
+  user;
+
   subjectPosts;
 
   loadEditForm = true;
 
   subject;
 
-  ratings: Rating[];
-  public rating: Rating;
-  user;
-
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder : FormBuilder,
     private subjectService: SubjectService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private location: Location,
-    private ratingService: RatingService,
-
-  ) 
+    private location: Location
+  )
   {
-    this.subject = new Subject();
-    this.rating = new Rating();
     this.createNewSubjectForm();
-    this.user  = JSON.parse(localStorage.getItem('user'));
 
   }
 
@@ -57,19 +50,14 @@ export class SubjectEditComponent implements OnInit {
     this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
       if(!data.success) {
         this.messageClass = 'alert alert-danger';
-        this.message = 'Subject Not found';
+        this.message = "Subject Not found";
       } else {
         this.subject = data.subject;
         this.loadEditForm = false;
       }
     })
-    this.getRatingsbySubjectID();
-    this.ratingService.ratingAdded_Observable.subscribe(res => {
-      this.getRatingsbySubjectID();
-    });
-
   }
-  
+
 
   subjectNumberValidation(controls){
     const regExp = new RegExp(/^[0-9]+$/);
@@ -85,7 +73,7 @@ export class SubjectEditComponent implements OnInit {
     if (regExp.test(controls.value)) {
       return null;
     } else {
-      return { 'subjectNameValidation' : true };
+      return { 'subjectNameValidation' : true }
     }
   }
 
@@ -134,51 +122,4 @@ export class SubjectEditComponent implements OnInit {
     });
   }
 
-  getRatingsbySubjectID(): void {
-    this.ratingService.getRatingsbySubjectID(this.subject._id)
-      .subscribe(result => {
-        this.ratings = result['data'];
-        this.ratings.forEach(function(element) {
-          console.log(element);
-          element.editFlag = false;
-        });
-      });
-  }
-  addRating(): void {
-    if (this.rating.ratingTitle && this.rating.ratingDescription) {
-      this.rating.subjectID = this.subject._id;
-      this.rating.userID = this.user.id;
-      this.ratingService.addRating(this.rating).subscribe(res => {
-        console.log('response is ', res);
-        if (res['status'] === 'success') {
-          this.ratingService.notifyRatingAddition();
-          alert('Rating added.');
-        } else {
-          alert('Attempt failed, try again.');
-        }
-      }, error => {
-        console.log('error is', error);
-      });
-    } else {
-      alert('Rating title and Rating Description required');
-    }
-  }
-  edit(rating: Rating): void {
-    rating.editFlag = true;
-  }
-  editRating(rating: Rating): void {
-    this.ratingService.updateRating(rating).subscribe(res => {
-      if (res['status'] === 'success') {
-        this.ratingService.notifyRatingAddition();
-        rating.editFlag = false;
-        alert('Rating edited.');
-      } else {
-        alert('Attempt failed, try again.');
-      }
-    });
-  }
-  delete(rating: Rating): void {
-    this.ratings = this.ratings.filter(r => r !== rating);
-    this.ratingService.deleteRating(rating).subscribe();
-  }
 }
