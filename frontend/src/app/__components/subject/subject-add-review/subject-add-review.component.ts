@@ -27,8 +27,9 @@ export class SubjectAddReviewComponent implements OnInit {
 
   @Input() subject: Subject;
 
-  ratings: Rating[];
   public rating: Rating;
+  ratings: Rating[];
+
   user;
 
 
@@ -42,7 +43,6 @@ export class SubjectAddReviewComponent implements OnInit {
 
   )
   {
-    this.subject = new Subject();
     this.rating = new Rating();
     this.createNewSubjectForm();
     this.user  = JSON.parse(localStorage.getItem('user'));
@@ -62,6 +62,7 @@ export class SubjectAddReviewComponent implements OnInit {
 
   getSingleSubject() {
     this.currentUrl = this.activatedRoute.snapshot.params;
+
     this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
       if(!data.success) {
         this.messageClass = 'alert alert-danger';
@@ -74,7 +75,8 @@ export class SubjectAddReviewComponent implements OnInit {
           this.getRatingsbySubjectID();
         });
       }
-    })
+    });
+
   }
 
   subjectNumberValidation(controls){
@@ -127,9 +129,15 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
 
-  getRatingsbySubjectID(): void {
+  getRatingsbySubjectID(){
+    console.log(this.subject._id)
     this.ratingService.getRatingsbySubjectID(this.subject._id)
-      .subscribe(result => this.ratings = result['data']);
+      .subscribe(result => {
+        this.ratings = result['data'];
+        this.ratings.forEach(function(element) {
+          element.editFlag = false;
+        });
+      });
   }
   addRating(): void {
     if (this.rating.ratingDescription) {

@@ -7,10 +7,10 @@
 
   <!-- Show all the reviews -->
 
-  <div class="card">
+  <div class="card" *ngIf="subject">
     <h5 class="card-header">{{subject.subjectNumber}} {{subject.subjectName}}</h5>
     <div class="card-body">
-      <h5 class="card-title">{{subject.description}}</h5>
+      <h5 class="card-title">{{subject.description}} {{subject._id}}</h5>
       <button [routerLink]="['/subjects/edit', subject._id]" class="btn btn-warning float-right">Edit</button>
     </div>
   </div>    <!-- Post a review -->
