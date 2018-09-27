@@ -40,7 +40,8 @@ router.post('/add', (req, res) => {
         const rating = new Rating({
             ratingTitle: req.body.ratingTitle,
             ratingDescription: req.body.ratingDescription,
-            subjectID: req.body.subjectID
+            subjectID: req.body.subjectID,
+            userID: req.body.userID,
         })
         rating.save((err, doc) => {
             if(err) throw err;

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { SubjectService } from './../../../__services/subjectService/subject.service';
 import { AuthService } from './../../../__services/authService/auth.service';
 
+import {Subject} from '../../../__models/subject';
 import {Rating} from '../../../__models/rating';
 import {RatingService} from '../../../__services/ratingService/rating.service';
 
@@ -23,8 +24,6 @@ export class SubjectEditComponent implements OnInit {
   processing = false;
   currentUrl;
   form;
-
-  user;
   
   subjectPosts;
 
@@ -34,9 +33,10 @@ export class SubjectEditComponent implements OnInit {
 
   ratings: Rating[];
   public rating: Rating;
+  user;
 
   constructor(
-    private formBuilder : FormBuilder,
+    private formBuilder: FormBuilder,
     private subjectService: SubjectService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -45,9 +45,10 @@ export class SubjectEditComponent implements OnInit {
 
   ) 
   {
-
+    this.subject = new Subject();
     this.rating = new Rating();
     this.createNewSubjectForm();
+    this.user  = JSON.parse(localStorage.getItem('user'));
 
   }
 
@@ -55,8 +56,8 @@ export class SubjectEditComponent implements OnInit {
     this.currentUrl = this.activatedRoute.snapshot.params;
     this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
       if(!data.success) {
-        this.messageClass= 'alert alert-danger';
-        this.message = "Subject Not found";
+        this.messageClass = 'alert alert-danger';
+        this.message = 'Subject Not found';
       } else {
         this.subject = data.subject;
         this.loadEditForm = false;
@@ -66,6 +67,7 @@ export class SubjectEditComponent implements OnInit {
     this.ratingService.ratingAdded_Observable.subscribe(res => {
       this.getRatingsbySubjectID();
     });
+
   }
   
 
@@ -83,7 +85,7 @@ export class SubjectEditComponent implements OnInit {
     if (regExp.test(controls.value)) {
       return null;
     } else {
-      return { 'subjectNameValidation' : true }
+      return { 'subjectNameValidation' : true };
     }
   }
 
@@ -145,6 +147,7 @@ export class SubjectEditComponent implements OnInit {
   addRating(): void {
     if (this.rating.ratingTitle && this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
+      this.rating.userID = this.user.id;
       this.ratingService.addRating(this.rating).subscribe(res => {
         console.log('response is ', res);
         if (res['status'] === 'success') {

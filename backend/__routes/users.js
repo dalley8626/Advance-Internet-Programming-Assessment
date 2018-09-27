@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const config = require('../__config/database')
 const User = require('../__models/user');
 
+router.get('/', (req,res) => {
+    User.find()
+        .then(user => res.json(user))
+});
 
 //This function is use for user registration
 //It requests the field as a JSON type

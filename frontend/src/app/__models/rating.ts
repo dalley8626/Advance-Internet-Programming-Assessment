@@ -1,5 +1,6 @@
 export class Rating {
   public _id;
+  public userID;
   public ratingTitle;
   public ratingDescription;
   public subjectID;
@@ -7,6 +8,7 @@ export class Rating {
 
   constructor() {
     this._id = '';
+    this.userID = '';
     this.ratingTitle = '';
     this.ratingDescription = '';
     this.subjectID = '';

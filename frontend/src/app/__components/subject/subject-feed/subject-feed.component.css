@@ -77,7 +77,7 @@
 }
 
 .card .inputBox input:focus,
-.card .inputBox input:valid,
+.card .inputBox input:valid
 {
     border-color: #03a9f4;
 }
