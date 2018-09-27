@@ -1,7 +1,5 @@
 .bg{
-    background-image: url('../assets/images/login.jpg'); height: 100%; background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: yellow;
     height: 1024px;
 }
 
