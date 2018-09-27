@@ -1,11 +1,11 @@
 <div class="container" style="background-color: white; min-height:1000px;">
-    <!-- Display all the Subject content  -->
+  <!-- Display all the Subject content  -->
 
 
-    <!-- User rating chart  -->
+  <!-- User rating chart  -->
 
 
-    <!-- Show all the reviews -->
+  <!-- Show all the reviews -->
 
   <div class="card">
     <h5 class="card-header">{{subject.subjectNumber}} {{subject.subjectName}}</h5>
@@ -22,13 +22,32 @@
           <label for="username">User Name</label>
           <input name="username" [(ngModel)]="user.username" type="text" class="form-control" id="username" disabled>
         </div>
-        <div class="form-group">
-          <label for="ratingTitle">Rating Title</label>
-          <input name="ratingTitle" [(ngModel)]="rating.ratingTitle" type="text" class="form-control" id="ratingTitle"
-                 placeholder="Enter Rating Title">
+        <div>
+          <fieldset class="rating">
+            <input type="radio" id="star5" name="rating" value="5" (click)="updateStar(5)"/>
+            <label class="full" for="star5" title="Awesome - 5 stars"></label>
+            <input type="radio" id="star4half" name="rating" value="4.5"  (click)="updateStar(4.5)"/>
+            <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+            <input type="radio" id="star4" name="rating" value="4" (click)="updateStar(4)"/>
+            <label class="full" for="star4" title="Pretty good - 4 stars"></label>
+            <input type="radio" id="star3half" name="rating" value="3.5" (click)="updateStar(3.5)"/>
+            <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+            <input type="radio" id="star3" name="rating" value="3" (click)="updateStar(3)"/>
+            <label class="full" for="star3" title="Meh - 3 stars"></label>
+            <input type="radio" id="star2half" name="rating" value="2.5" (click)="updateStar(2.5)"/>
+            <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+            <input type="radio" id="star2" name="rating" value="2" (click)="updateStar(2)"/>
+            <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+            <input type="radio" id="star1half" name="rating" value="1.5" (click)="updateStar(1.5)"/>
+            <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+            <input type="radio" id="star1" name="rating" value="1" (click)="updateStar(1)"/>
+            <label class="full" for="star1" title="Sucks big time - 1 star"></label>
+            <input type="radio" id="starhalf" name="rating" value="0.5" (click)="updateStar(0.5)"/>
+            <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+          </fieldset>
         </div>
         <div class="form-group">
-          <label for="ratingDescription">Subject name</label>
+          <label for="ratingDescription">Rating Description</label>
           <input name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
                  id="ratingDescription"
                  placeholder="Enter Rating Description">
@@ -40,11 +59,12 @@
   <div class="card text-center" *ngFor="let rating of ratings">
     <div *ngIf="rating.editFlag == false">
       <div class="card-header">
-        {{rating.ratingTitle}}
+        {{user.username}}
       </div>
       <div class="card-body">
-        <h5 class="card-title">{{rating.Ul}}</h5>
-        <p class="card-text" align = "right">Written by: {{user.username}}</p>
+        <div class="stars-outer">
+          <div class="stars-inner" [style.width]="(rating.star)*20 + '%'" ></div>
+        </div>
         <p class="card-text">{{rating.ratingDescription}}</p>
         <button class="btn btn-outline-danger" title="delete rating"
                 (click)="delete(rating)">delete
@@ -61,11 +81,6 @@
           <input name="username" [(ngModel)]="user.username" type="text" class="form-control" id="username" disabled>
         </div>
         <div class="form-group">
-          <label for="ratingTitle1">Rating Title</label>
-          <input name="ratingTitle1" [(ngModel)]="rating.ratingTitle" type="text" class="form-control" id="ratingTitle1"
-                 placeholder="Enter Rating Title">
-        </div>
-        <div class="form-group">
           <label for="ratingDescription1">Rating Description</label>
           <input name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
                  id="ratingDescription1"
@@ -75,7 +90,6 @@
       </form>
     </div>
   </div>
-
 
 
 </div>

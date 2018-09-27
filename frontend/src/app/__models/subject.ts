@@ -4,6 +4,8 @@ export class Subject {
   public _id;
   public subjectCode;
   public subjectName;
+  public numberOfReview;
+  public percentageRating;
   public ratingIDs: Array<string>;
 
   constructor() {

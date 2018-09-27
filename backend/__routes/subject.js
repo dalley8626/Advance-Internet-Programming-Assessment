@@ -135,7 +135,22 @@ const subjectSchema = new mongoose.Schema({
         required: true,
         validate: descriptionValidators
     },
+    rating: {
+        type: Number,
+        default: 0
+    },
     numberOfReview: {
+        type: Number,
+        default: 0
+    },
+    reviews: [{
+            reviewComment: { type: String, validate: reviewValidators },
+            reviewCreator: { type: String },
+            reviewDate: { type: Date, default: Date.now() },
+            reviewRating: { type: Number }
+        }
+    ],
+    maximumRatingPossible: {
         type: Number,
         default: 0
     },

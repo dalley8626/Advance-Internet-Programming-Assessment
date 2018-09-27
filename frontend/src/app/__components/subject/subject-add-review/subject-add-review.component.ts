@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Rating} from '../../../__models/rating';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubjectService} from '../../../__services/subjectService/subject.service';
@@ -25,11 +25,12 @@ export class SubjectAddReviewComponent implements OnInit {
 
   loadEditForm = true;
 
-  subject;
+  @Input() subject: Subject;
 
   ratings: Rating[];
   public rating: Rating;
   user;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,6 +50,17 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.getSingleSubject();
+    console.log(this.subject);
+    this.getRatingsbySubjectID();
+    this.ratingService.ratingAdded_Observable.subscribe(res => {
+      this.getRatingsbySubjectID();
+    });
+
+  }
+
+  getSingleSubject() {
     this.currentUrl = this.activatedRoute.snapshot.params;
     this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
       if(!data.success) {
@@ -57,15 +69,10 @@ export class SubjectAddReviewComponent implements OnInit {
       } else {
         this.subject = data.subject;
         this.loadEditForm = false;
+        console.log(data);
       }
-    })
-    this.getRatingsbySubjectID();
-    this.ratingService.ratingAdded_Observable.subscribe(res => {
-      this.getRatingsbySubjectID();
     });
-
   }
-
 
   subjectNumberValidation(controls){
     const regExp = new RegExp(/^[0-9]+$/);
@@ -107,43 +114,43 @@ export class SubjectAddReviewComponent implements OnInit {
     })
   }
 
+  updateStar(star) {
+    this.rating.star = star;
+  }
+
   goBack()
   {
     this.location.back();
   }
 
-  updateSubjectSubmit()
-  {
-    this.processing = true;
-    this.subjectService.editSubject(this.subject).subscribe(data => {
-      if(!data.success){
-        this.messageClass = 'alert alert-danger';
-        this.message = data.message;
-        this.processing = false;
-      } else {
-        this.messageClass = 'alert alert-success';
-        this.message = data.message;
-        setTimeout(()=>{
-          this.location.back();
-        },2000)
-      }
-    });
-  }
 
   getRatingsbySubjectID(): void {
     this.ratingService.getRatingsbySubjectID(this.subject._id)
-      .subscribe(result => {
-        this.ratings = result['data'];
-        this.ratings.forEach(function(element) {
-          console.log(element);
-          element.editFlag = false;
-        });
-      });
+      .subscribe(result => this.ratings = result['data']);
   }
   addRating(): void {
-    if (this.rating.ratingTitle && this.rating.ratingDescription) {
+    if (this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
       this.rating.userID = this.user.id;
+      if (this.subject.numberOfReview && this.subject.percentageRating) {
+        this.subject.numberOfReview = this.subject.numberOfReview + 1;
+        this.subject.percentageRating =
+          (this.subject.percentageRating * (this.subject.numberOfReview - 1) + this.rating.star * 20) / this.subject.numberOfReview;
+      } else {
+        this.subject.numberOfReview = 1;
+        this.subject.percentageRating = this.rating.star * 20;
+      }
+      this.subjectService.editSubject(this.subject).subscribe(res => {
+        console.log('response is ', res);
+        if (res['status'] === 'success') {
+          this.subjectService.notifySubjectAddition();
+        } else {
+          alert('Attempt failed, try again.');
+        }
+      }, error => {
+        console.log('error is', error);
+      });
+
       this.ratingService.addRating(this.rating).subscribe(res => {
         console.log('response is ', res);
         if (res['status'] === 'success') {
@@ -156,7 +163,7 @@ export class SubjectAddReviewComponent implements OnInit {
         console.log('error is', error);
       });
     } else {
-      alert('Rating title and Rating Description required');
+      alert('Rating Description required');
     }
   }
   edit(rating: Rating): void {
