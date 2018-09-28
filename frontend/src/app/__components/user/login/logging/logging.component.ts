@@ -56,11 +56,10 @@ export class LoggingComponent implements OnInit {
       password: this.form.get('password').value
     }
 
-
     this.authService.authenticateUser(user).subscribe(data => {
         if (data.success) {
           this.authService.storeUserData(data.token, data.user);
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/subjects']);
         }
         else {
           this.messageClass = 'alert alert-danger';

@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {RatingService} from '../../../__services/ratingService/rating.service';
 import {Subject} from '../../../__models/subject';
+import { FlashMessagesService } from 'angular2-flash-messages'; 
 
 @Component({
   selector: 'app-subject-add-review',
@@ -39,6 +40,7 @@ export class SubjectAddReviewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
+    private flashMessageService: FlashMessagesService,
     private ratingService: RatingService,
 
   )
@@ -133,6 +135,7 @@ export class SubjectAddReviewComponent implements OnInit {
         });
       });
   }
+
   addRating(): void {
     if (this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
@@ -151,7 +154,7 @@ export class SubjectAddReviewComponent implements OnInit {
         if (res['success'] === true) {
           this.subjectService.notifySubjectAddition();
         } else {
-          alert('Attempt failed, try again.');
+          this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger',timeout: 1000});
         }
       }, error => {
         console.log('error is', error);
@@ -161,31 +164,35 @@ export class SubjectAddReviewComponent implements OnInit {
         console.log('response is ', res);
         if (res['status'] === 'success') {
           this.ratingService.notifyRatingAddition();
-          alert('Rating added.');
+          this.flashMessageService.show('Rating added', {cssClass: 'alert-success.',timeout: 1000});
+    
         } else {
-          alert('Attempt failed, try again.');
+          this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger.',timeout: 1000});
         }
       }, error => {
         console.log('error is', error);
       });
     } else {
-      alert('Rating Description required');
+      this.flashMessageService.show('Rating Description Required', { cssClass: 'alert-danger.',timeout: 1000});
     }
   }
+
   edit(rating: Rating): void {
     rating.editFlag = true;
   }
+
   editRating(rating: Rating): void {
     this.ratingService.updateRating(rating).subscribe(res => {
       if (res['status'] === 'success') {
         this.ratingService.notifyRatingAddition();
         rating.editFlag = false;
-        alert('Rating edited.');
+        this.message = 'Rating edited.';
       } else {
-        alert('Attempt failed, try again.');
+        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.',timeout: 1000});
       }
     });
   }
+
   delete(rating: Rating): void {
     this.ratings = this.ratings.filter(r => r !== rating);
     this.ratingService.deleteRating(rating).subscribe();

@@ -23,7 +23,7 @@ import { NotAuthGuard } from '../__guards/notAuth.guard';
 import { AuthGuard } from '../__guards/auth.guard';
 
 const routes: Routes = [  
-  { path: '', component:DashboardComponent, canActivate:[AuthGuard]},
+  { path: '', component:SubjectFeedComponent, canActivate:[AuthGuard]},
   { path: 'login', component: LoggingComponent, canActivate:[NotAuthGuard]},
   { path: 'register', component: RegisteringComponent, canActivate:[NotAuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
