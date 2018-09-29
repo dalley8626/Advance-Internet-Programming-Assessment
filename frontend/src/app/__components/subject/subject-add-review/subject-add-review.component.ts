@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Rating} from '../../../__models/rating';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubjectService} from '../../../__services/subjectService/subject.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {RatingService} from '../../../__services/ratingService/rating.service';
-import {Subject} from '../../../__models/subject';
-import { FlashMessagesService } from 'angular2-flash-messages'; 
+import { Component, Input, OnInit } from '@angular/core';
+import { Rating } from '../../../__models/rating';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubjectService } from '../../../__services/subjectService/subject.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { RatingService } from '../../../__services/ratingService/rating.service';
+import { Subject } from '../../../__models/subject';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-subject-add-review',
@@ -31,6 +31,20 @@ export class SubjectAddReviewComponent implements OnInit {
   public rating: Rating;
   ratings: Rating[];
 
+  oneRating: number = 0;
+  twoRating: number = 0;
+  threeRating: number = 0;
+  fourRating: number = 0;
+  fiveRating: number = 0;
+
+  oneRatingPercentage;
+  twoRatingPercentage;
+  threeRatingPercentage;
+  fourRatingPercentage;
+  fiveRatingPercentage;
+  
+  averageRating;
+
   user;
 
 
@@ -43,31 +57,31 @@ export class SubjectAddReviewComponent implements OnInit {
     private flashMessageService: FlashMessagesService,
     private ratingService: RatingService,
 
-  )
-  {
+  ) {
     this.rating = new Rating();
+
     this.createNewSubjectForm();
-    this.user  = JSON.parse(localStorage.getItem('user'));
+    this.user = JSON.parse(localStorage.getItem('user'));
 
   }
 
   ngOnInit() {
-
     this.getSingleSubject();
-
   }
 
   getSingleSubject() {
     this.currentUrl = this.activatedRoute.snapshot.params;
 
     this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
-      if(!data.success) {
+      if (!data.success) {
         this.messageClass = 'alert alert-danger';
         this.message = 'Subject Not found';
       } else {
         this.subject = data.subject;
         this.loadEditForm = false;
+
         this.getRatingsbySubjectID();
+
         this.ratingService.ratingAdded_Observable.subscribe(res => {
           this.getRatingsbySubjectID();
         });
@@ -76,21 +90,21 @@ export class SubjectAddReviewComponent implements OnInit {
 
   }
 
-  subjectNumberValidation(controls){
+  subjectNumberValidation(controls) {
     const regExp = new RegExp(/^[0-9]+$/);
     if (regExp.test(controls.value)) {
       return null;
     } else {
-      return { 'subjectNumberValidation' : true }
+      return { 'subjectNumberValidation': true }
     }
   }
 
-  subjectNameValidation(controls){
+  subjectNameValidation(controls) {
     const regExp = new RegExp(/^[a-zA-Z0-9 ,.'-]+$/i);
     if (regExp.test(controls.value)) {
       return null;
     } else {
-      return { 'subjectNameValidation' : true };
+      return { 'subjectNameValidation': true };
     }
   }
 
@@ -120,19 +134,39 @@ export class SubjectAddReviewComponent implements OnInit {
     this.rating.star = star;
   }
 
-  goBack()
-  {
+  goBack() {
     this.location.back();
   }
 
 
-  getRatingsbySubjectID(){
+  getRatingsbySubjectID() {
     this.ratingService.getRatingsbySubjectID(this.subject._id)
       .subscribe(result => {
         this.ratings = result['data'];
-        this.ratings.forEach(function(element) {
+        this.ratings.forEach(function (element) {
           element.editFlag = false;
         });
+        this.ratings.forEach(element => {
+          if(element.star == 5 || element.star == 4.5){
+            this.fiveRating = this.fiveRating + 1;
+          } else if(element.star == 4 || element.star == 3.5){
+            this.fourRating = this.fourRating + 1;
+          } else if(element.star == 3 || element.star == 2.5){
+            this.threeRating = this.threeRating + 1;
+          } else if(element.star == 2 || element.star == 1.5){
+            this.twoRating = this.twoRating + 1;
+          } else if(element.star == 1 || element.star == 0.5 || element.star == 0 ){
+            this.oneRating = this.oneRating + 1;
+          }
+        });
+
+          this.fiveRatingPercentage = `${Math.round(((this.fiveRating/this.subject.numberOfReview)*100/10)*10)}%` ;
+          this.fourRatingPercentage = `${Math.round(((this.fourRating/this.subject.numberOfReview)*100/10)*10)}%`;
+          this.threeRatingPercentage = `${Math.round(((this.threeRating/this.subject.numberOfReview)*100/10)*10)}%` ;
+          this.twoRatingPercentage = `${Math.round(((this.twoRating/this.subject.numberOfReview)*100/10)*10)}%`;
+          this.oneRatingPercentage= `${Math.round(((this.oneRating/this.subject.numberOfReview)*100/10)*10)}%`;
+
+          this.averageRating = this.subject.percentageRating / 100 * this.subject.numberOfReview;
       });
   }
 
@@ -150,30 +184,30 @@ export class SubjectAddReviewComponent implements OnInit {
         this.subject.percentageRating = this.rating.star * 20;
       }
       this.subjectService.editSubject(this.subject).subscribe(res => {
-        console.log('response is ', res);
+
         if (res['success'] === true) {
           this.subjectService.notifySubjectAddition();
         } else {
-          this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger',timeout: 1000});
+          this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger', timeout: 1000 });
         }
       }, error => {
-        console.log('error is', error);
+        this.flashMessageService.show('Error: ' + error, { cssClass: 'alert-danger.', timeout: 1000 });
       });
 
       this.ratingService.addRating(this.rating).subscribe(res => {
         console.log('response is ', res);
         if (res['status'] === 'success') {
           this.ratingService.notifyRatingAddition();
-          this.flashMessageService.show('Rating added', {cssClass: 'alert-success.',timeout: 1000});
-    
+          this.flashMessageService.show('Rating added', { cssClass: 'alert-success.', timeout: 1000 });
+
         } else {
-          this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger.',timeout: 1000});
+          this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger.', timeout: 1000 });
         }
       }, error => {
-        console.log('error is', error);
+        this.flashMessageService.show('Error: ' + error, { cssClass: 'alert-danger.', timeout: 1000 });
       });
     } else {
-      this.flashMessageService.show('Rating Description Required', { cssClass: 'alert-danger.',timeout: 1000});
+      this.flashMessageService.show('Rating Description Required', { cssClass: 'alert-danger.', timeout: 1000 });
     }
   }
 
@@ -188,7 +222,7 @@ export class SubjectAddReviewComponent implements OnInit {
         rating.editFlag = false;
         this.message = 'Rating edited.';
       } else {
-        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.',timeout: 1000});
+        this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger.', timeout: 1000 });
       }
     });
   }

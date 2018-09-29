@@ -23,7 +23,7 @@
         <div class="card shadow subjectdetail" *ngIf="subject">
           <div class="card-header">
             <div style="top:15px;">
-              <h5><small class="float-left" > <!-- TODO: AVERAGE RATING DISPLAY --></small></h5>
+              <h5><small class="float-left" > Average User Rating of {{averageRating}} </small></h5>
             </div>
             <div class="float-right">
             <span class="fa fa-star checked"></span>
@@ -42,26 +42,23 @@
               </div>
               <div class="middle">
                 <div class="bar-container">
-                  <div class="bar-5"></div>
+                  <div class="bar-5" [style.width]='fiveRatingPercentage'></div>
                 </div>
               </div>
               <div class="side right">
                 <div>
-                  <!-- TODO: Count the Rating of 5  -->
-                  150</div>
+                 {{fiveRating}}</div>
               </div>
               <div class="side">
                 <div>4 star</div>
               </div>
               <div class="middle">
                 <div class="bar-container">
-                  <div class="bar-4"></div>
+                  <div class="bar-4" [style.width]='fourRatingPercentage'></div>
                 </div>
               </div>
               <div class="side right">
-                <div>63
-                   <!-- TODO: Count the Rating of 4  -->
-
+                <div>{{fourRating}}
                 </div>
               </div>
               <div class="side">
@@ -69,25 +66,25 @@
               </div>
               <div class="middle">
                 <div class="bar-container">
-                  <div class="bar-3"></div>
+                  <div class="bar-3" [style.width]='threeRatingPercentage'></div>
                 </div>
               </div>
               <div class="side right">
                 <div>
-                  <!-- TODO: count the Rating of 3  -->                  
-                </div>
+                    {{threeRating}}                
+                  </div>
               </div>
               <div class="side">
                 <div>2 star</div>
               </div>
               <div class="middle">
                 <div class="bar-container">
-                  <div class="bar-2"></div>
+                  <div class="bar-2" [style.width]='twoRatingPercentage'></div>
                 </div>
               </div>
               <div class="side right">
-                <div>6
-                  <!-- TODO: Count the Rating of 2  --> 
+                <div>
+                  {{twoRating}}
                 </div>
               </div>
               <div class="side">
@@ -95,13 +92,13 @@
               </div>
               <div class="middle">
                 <div class="bar-container">
-                  <div class="bar-1"></div>
+                  <div class="bar-1" [style.width]='oneRatingPercentage'></div>
                 </div>
               </div>
               <div class="side right">
                 <div>
-                  <!-- TODO: Count the Rating of 1  --> 
-                </div>
+                    {{oneRating}}                
+                  </div>
               </div>
             </div>
             <!-- User rating ends -->
@@ -152,7 +149,7 @@
     </div>
 
     <!-- Review -->
-<div class="col-sm-12">
+<div class="col-md-12">
       <div class="card shadow text-center" *ngFor="let rating of ratings">
       <div *ngIf="rating.editFlag == false">
         
