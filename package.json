@@ -1,0 +1,4 @@
+{
+    "scripts": {
+        "start": "cd backend/ && node server.js"
+  }}
