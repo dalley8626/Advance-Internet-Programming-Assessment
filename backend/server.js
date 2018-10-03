@@ -28,7 +28,7 @@ const ratings = require('./__routes/ratings');
 const dollarDefender = require('dollar-defender-middleware');
 
 //port number
-const port = 3000;
+var port = process.env.PORT || 5000;
 
 //prociding a static directory for front-end
 app.use(express.static(path.join(__dirname,'../front-end')))
