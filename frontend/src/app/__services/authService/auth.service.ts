@@ -12,7 +12,7 @@ const helper = new JwtHelperService();
 
 export class AuthService {
   //url for server
-  domain = "http://localhost:3000"
+  domain = "http://localhost:5000"
   authToken: any;
   user: any;
 

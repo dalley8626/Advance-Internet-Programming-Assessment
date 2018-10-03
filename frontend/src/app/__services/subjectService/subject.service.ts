@@ -9,9 +9,7 @@ import {Subject} from 'rxjs';
 export class SubjectService {
   public subjectAdded_Observable = new Subject();
   options;
-  domain = this.authService.domain;
-
-  private subjectsUrl = 'http://localhost:3000/subjects';  // URL to web api
+  domain = this.authService.domain;// URL to web api
 
   constructor(
     private authService: AuthService,
