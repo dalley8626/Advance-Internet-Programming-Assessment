@@ -167,7 +167,7 @@ export class SubjectAddReviewComponent implements OnInit {
         this.twoRatingPercentage = `${Math.round(((this.twoRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
         this.oneRatingPercentage = `${Math.round(((this.oneRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
 
-        this.averageRating = this.subject.percentageRating / 20;
+        this.averageRating = Math.round(this.subject.percentageRating * 5) / 100;
       });
   }
 

@@ -3,7 +3,7 @@
 
   <!-- User rating chart  -->
 
-  <br />
+  <br/>
   <!-- Show all the reviews -->
   <div class="col-md-12 card-deck">
     <div class="col-md-6">
@@ -13,102 +13,103 @@
           <h5 class="card-title">{{subject.description}}</h5>
         </div>
         <div class="card-footer">
-        <button [routerLink]="['/subjects/edit', subject._id]" class="btn btn-danger float-right btn-sm">Edit</button>
+          <button [routerLink]="['/subjects/edit', subject._id]" class="btn btn-danger float-right btn-sm">Edit</button>
+        </div>
       </div>
     </div>
-    </div> 
 
     <!-- Something to work on start -->
     <div class="col-md-6">
-        <div class="card shadow subjectdetail" *ngIf="subject">
-          <div class="card-header">
-            <div style="top:15px;">
-              <h5><small class="float-left" > Average User Rating of {{averageRating}} </small></h5>
+      <div class="card shadow subjectdetail" *ngIf="subject">
+        <div class="card-header">
+          <div style="top:15px;">
+            <h5>
+              <small class="float-left"> Average User Rating of {{averageRating}}&emsp;</small>
+            </h5>
+          </div>
+          <div class="stars-outer" >
+            <div class="stars-inner" [style.width]="subject.percentageRating + '%'">
             </div>
-            <div class="float-right">
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
           </div>
-          </div>
-          <div class="card-body">
-                      
-            <!-- User Ratings  -->
-            <div class="row">
-              <div class="side">
-                <div>5 star</div>
-              </div>
-              <div class="middle">
-                <div class="bar-container">
-                  <div class="bar-5" [style.width]='fiveRatingPercentage'></div>
-                </div>
-              </div>
-              <div class="side right">
-                <div>
-                 {{fiveRating}}</div>
-              </div>
-              <div class="side">
-                <div>4 star</div>
-              </div>
-              <div class="middle">
-                <div class="bar-container">
-                  <div class="bar-4" [style.width]='fourRatingPercentage'></div>
-                </div>
-              </div>
-              <div class="side right">
-                <div>{{fourRating}}
-                </div>
-              </div>
-              <div class="side">
-                <div>3 star</div>
-              </div>
-              <div class="middle">
-                <div class="bar-container">
-                  <div class="bar-3" [style.width]='threeRatingPercentage'></div>
-                </div>
-              </div>
-              <div class="side right">
-                <div>
-                    {{threeRating}}                
-                  </div>
-              </div>
-              <div class="side">
-                <div>2 star</div>
-              </div>
-              <div class="middle">
-                <div class="bar-container">
-                  <div class="bar-2" [style.width]='twoRatingPercentage'></div>
-                </div>
-              </div>
-              <div class="side right">
-                <div>
-                  {{twoRating}}
-                </div>
-              </div>
-              <div class="side">
-                <div>1 star</div>
-              </div>
-              <div class="middle">
-                <div class="bar-container">
-                  <div class="bar-1" [style.width]='oneRatingPercentage'></div>
-                </div>
-              </div>
-              <div class="side right">
-                <div>
-                    {{oneRating}}                
-                  </div>
-              </div>
-            </div>
-            <!-- User rating ends -->
-            
-          </div>
+
         </div>
-      </div> 
+        <div class="card-body">
+
+          <!-- User Ratings  -->
+          <div class="row">
+            <div class="side">
+              <div>5 star</div>
+            </div>
+            <div class="middle">
+              <div class="bar-container">
+                <div class="bar-5" [style.width]='fiveRatingPercentage'></div>
+              </div>
+            </div>
+            <div class="side right">
+              <div>
+                {{fiveRating}}
+              </div>
+            </div>
+            <div class="side">
+              <div>4 star</div>
+            </div>
+            <div class="middle">
+              <div class="bar-container">
+                <div class="bar-4" [style.width]='fourRatingPercentage'></div>
+              </div>
+            </div>
+            <div class="side right">
+              <div>{{fourRating}}
+              </div>
+            </div>
+            <div class="side">
+              <div>3 star</div>
+            </div>
+            <div class="middle">
+              <div class="bar-container">
+                <div class="bar-3" [style.width]='threeRatingPercentage'></div>
+              </div>
+            </div>
+            <div class="side right">
+              <div>
+                {{threeRating}}
+              </div>
+            </div>
+            <div class="side">
+              <div>2 star</div>
+            </div>
+            <div class="middle">
+              <div class="bar-container">
+                <div class="bar-2" [style.width]='twoRatingPercentage'></div>
+              </div>
+            </div>
+            <div class="side right">
+              <div>
+                {{twoRating}}
+              </div>
+            </div>
+            <div class="side">
+              <div>1 star</div>
+            </div>
+            <div class="middle">
+              <div class="bar-container">
+                <div class="bar-1" [style.width]='oneRatingPercentage'></div>
+              </div>
+            </div>
+            <div class="side right">
+              <div>
+                {{oneRating}}
+              </div>
+            </div>
+          </div>
+          <!-- User rating ends -->
+
+        </div>
+      </div>
+    </div>
     <!-- Something to work on end -->
 
-    <br />
+    <br/>
 
     <!-- Card Body  -->
     <div class="col-md-12">
@@ -116,77 +117,82 @@
         <div class="card-body">
 
           <div style="margin-left: auto; margin-right: auto;">
-          <fieldset class="rating ml-auto" style="zoom:2;">
-            <input type="radio" id="star5" name="rating" value="5" (click)="updateStar(5)" />
-            <label class="full" for="star5" title="Awesome - 5 stars"></label>
-            <input type="radio" id="star4half" name="rating" value="4.5" (click)="updateStar(4.5)" />
-            <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-            <input type="radio" id="star4" name="rating" value="4" (click)="updateStar(4)" />
-            <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-            <input type="radio" id="star3half" name="rating" value="3.5" (click)="updateStar(3.5)" />
-            <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-            <input type="radio" id="star3" name="rating" value="3" (click)="updateStar(3)" />
-            <label class="full" for="star3" title="Meh - 3 stars"></label>
-            <input type="radio" id="star2half" name="rating" value="2.5" (click)="updateStar(2.5)" />
-            <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-            <input type="radio" id="star2" name="rating" value="2" (click)="updateStar(2)" />
-            <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-            <input type="radio" id="star1half" name="rating" value="1.5" (click)="updateStar(1.5)" />
-            <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-            <input type="radio" id="star1" name="rating" value="1" (click)="updateStar(1)" />
-            <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-            <input type="radio" id="starhalf" name="rating" value="0.5" (click)="updateStar(0.5)" />
-            <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-          </fieldset>
-        </div>
-          <textarea name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control" id="ratingDescription"
-            placeholder="Write a Review"></textarea>
+            <fieldset class="rating ml-auto" style="zoom:2;">
+              <input type="radio" id="star5" name="rating" value="5" (click)="updateStar(5)"/>
+              <label class="full" for="star5" title="Awesome - 5 stars"></label>
+              <input type="radio" id="star4half" name="rating" value="4.5" (click)="updateStar(4.5)"/>
+              <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+              <input type="radio" id="star4" name="rating" value="4" (click)="updateStar(4)"/>
+              <label class="full" for="star4" title="Pretty good - 4 stars"></label>
+              <input type="radio" id="star3half" name="rating" value="3.5" (click)="updateStar(3.5)"/>
+              <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+              <input type="radio" id="star3" name="rating" value="3" (click)="updateStar(3)"/>
+              <label class="full" for="star3" title="Meh - 3 stars"></label>
+              <input type="radio" id="star2half" name="rating" value="2.5" (click)="updateStar(2.5)"/>
+              <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+              <input type="radio" id="star2" name="rating" value="2" (click)="updateStar(2)"/>
+              <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+              <input type="radio" id="star1half" name="rating" value="1.5" (click)="updateStar(1.5)"/>
+              <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+              <input type="radio" id="star1" name="rating" value="1" (click)="updateStar(1)"/>
+              <label class="full" for="star1" title="Sucks big time - 1 star"></label>
+              <input type="radio" id="starhalf" name="rating" value="0.5" (click)="updateStar(0.5)"/>
+              <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+            </fieldset>
+          </div>
+          <textarea name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
+                    id="ratingDescription"
+                    placeholder="Write a Review"></textarea>
 
-          <button class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();form.reset();'>Add Rating</button>
+          <button class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();form.reset();'>Add
+            Rating
+          </button>
 
         </div>
       </div>
     </div>
 
     <!-- Review -->
-<div class="col-md-12">
+    <div class="col-md-12">
       <div class="card shadow text-center" *ngFor="let rating of ratings">
-      <div *ngIf="rating.editFlag == false">
-        
-        <div class="card-body">
-          
-          <textarea class="form-control w-100" [disabled]="true">{{rating.ratingDescription}}</textarea>
-          
-          <div class="stars-outer float-left">
+        <div *ngIf="rating.editFlag == false">
+
+          <div class="card-body">
+
+            <textarea class="form-control w-100" [disabled]="true">{{rating.ratingDescription}}</textarea>
+
+            <div class="stars-outer float-left">
               <div class="stars-inner" [style.width]="(rating.star)*20 + '%'"></div>
             </div>
             <p style="clear:left;float:left;">
-                {{rating.username}}
-              </p>
-          <div class="reviewComment float-right" *ngIf="rating.userID == user.id">
-            <button class="btn btn-danger" title="delete rating" (click)="delete(rating)">Delete
-            </button>
-            <button class="btn btn-primary" title="edit rating" (click)="edit(rating)">Edit
-            </button>
+              {{rating.username}}
+            </p>
+            <div class="reviewComment float-right" *ngIf="rating.userID == user.id">
+              <button class="btn btn-danger" title="delete rating" (click)="delete(rating)">Delete
+              </button>
+              <button class="btn btn-primary" title="edit rating" (click)="edit(rating)">Edit
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="rating.editFlag == true">
-        <form>
-          <div class="form-group">
-            <label for="username">User Name</label>
-            <input name="username" [(ngModel)]="user.username" type="text" class="form-control" id="username" disabled>
-          </div>
-          <div class="form-group">
-            <label for="ratingDescription1">Rating Description</label>
-            <input name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control" id="ratingDescription1"
-              placeholder="Enter Rating Description">
-          </div>
-          <button class="btn btn-primary" type="submit" (click)='editRating(rating)'>Edit Rating</button>
-        </form>
+        <div *ngIf="rating.editFlag == true">
+          <form>
+            <div class="form-group">
+              <label for="username">User Name</label>
+              <input name="username" [(ngModel)]="user.username" type="text" class="form-control" id="username"
+                     disabled>
+            </div>
+            <div class="form-group">
+              <label for="ratingDescription1">Rating Description</label>
+              <input name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
+                     id="ratingDescription1"
+                     placeholder="Enter Rating Description">
+            </div>
+            <button class="btn btn-primary" type="submit" (click)='editRating(rating)'>Edit Rating</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
 </div>
