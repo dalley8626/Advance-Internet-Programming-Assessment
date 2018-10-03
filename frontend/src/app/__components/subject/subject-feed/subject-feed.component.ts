@@ -39,6 +39,11 @@ export class SubjectFeedComponent implements OnInit{
     
     this.subjectService.getAllSubjects().subscribe(data => {
       this.subjectPosts = data.subjects;
+      this.subjectPosts.forEach(function (subjectPost) {
+        if (subjectPost.description.length > 100 ) {
+          subjectPost.description = subjectPost.description.substring(0, 100) + '...';
+        }
+      });
       this.spinner.hide();
     })
 
