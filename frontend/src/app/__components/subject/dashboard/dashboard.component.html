@@ -1,31 +1,47 @@
 <div class="container">
-<!-- <app-subject-search></app-subject-search>
-<h3>High Rated Subjects</h3>
-<div class="row">
-  <div class="card text-center" style="width: 15rem;" *ngFor="let subject of subjects" >
-    <div class="card-header">
-      <h5>{{subject.subjectCode}}</h5>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title" >
-        <span class="badge badge-pill badge-danger">Hot!</span>
-      </h5>
-      <p class="card-text">{{subject.subjectName}}</p>
-      <p class="card-text">
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star checked"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-      </p>
-      <a routerLink="/subjects/detail/{{subject.subjectCode}}" class="btn btn-primary">Rate now!</a>
+  <br><br>
+  <h3>High Rated Subjects</h3>
+
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-rotate">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  <div class="row">
+    <div class="card text-center" style="width: 15rem;" *ngFor="let subject of subjects">
+      <div class="card-header text-center">
+        <h5>{{ subject.subjectNumber }}</h5>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">
+          <p class="card-title text-center" style="font-size:16px;"><span
+            class="badge badge-pill badge-danger">Hot!</span>
+        </h5>
+        <p class="card-text">{{ subject.subjectName }}</p>
+
+      </div>
+      <!-- footer start -->
+      <div class="card-footer">
+        <div>
+
+          <div class="stars-outer">
+            <div class="stars-inner" [style.width]="subject.percentageRating + '%'">
+
+            </div>
+          </div>
+          <!-- Ratings --><br/>
+          {{subject.numberOfReview}} reviews <br>
+
+
+          <button [routerLink]="['/subjects/detail/', subject._id]" class="btn btn-primary">Rate Now!
+          </button>
+        </div>
+        <!-- footer end-->
+      </div>
     </div>
   </div>
-</div>
-<br> -->
+  <br><br>
+  <h3>Most recent Ratings</h3>
 
 </div>
-
 
 
 <!--

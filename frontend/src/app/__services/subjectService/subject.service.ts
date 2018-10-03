@@ -39,6 +39,11 @@ export class SubjectService {
     return this.http.get(this.domain + '/subjects/allSubjects', this.options).pipe(map(res => res.json()));
   }
 
+  getDashboardSubjects() {
+    this.createAuthenticationHeaders();
+    return this.http.get(this.domain + '/subjects/dashboard', this.options).pipe(map(res => res.json()));
+  }
+
   getSingleSubject(id) {
     this.createAuthenticationHeaders();
     return this.http.get(this.domain + '/subjects/singleSubject/' + id, this.options).pipe(map(res => res.json()));
