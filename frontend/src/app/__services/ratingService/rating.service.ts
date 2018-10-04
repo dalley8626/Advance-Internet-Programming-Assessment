@@ -122,4 +122,8 @@ export class RatingService {
   private log(message: string) {
     this.messageService.add(`RatingService: ${message}`);
   }
-}
+
+  getDashboardRatings() {
+    this.createAuthenticationHeaders();
+    return this.http.get(this.ratingsUrl + '/dashboard', this.options);
+  }}

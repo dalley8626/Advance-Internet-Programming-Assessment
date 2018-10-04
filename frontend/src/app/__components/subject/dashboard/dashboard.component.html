@@ -40,7 +40,34 @@
   </div>
   <br><br>
   <h3>Most recent Ratings</h3>
-
+  <div class="row">
+    <div class="card text-center" style="width: 15rem;" *ngFor="let rating of ratings">
+      <div class="card-header text-center">
+        <h5>{{ rating.username }}</h5>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">
+          <p class="card-title text-center" style="font-size:16px;"><span
+            class="badge badge-pill badge-success">Recent!</span>
+        </h5>
+        <div class="stars-outer">
+          <div class="stars-inner" [style.width]="rating.star*20 + '%'">
+          </div>
+        </div>
+        <br>
+        <p class="card-text">{{ rating.ratingDescription }}</p>
+        <p style="clear:left;float:bottom;font-size:10px">
+          {{rating.created | date : "d MMM, y h:mm:ss a" : "en-AU"}}
+        </p>
+      </div>
+      <!-- footer start -->
+      <div class="card-footer">
+        <button [routerLink]="['/subjects/detail/', rating.subjectID]" class="btn btn-info">Read Now!
+        </button>
+        <!-- footer end-->
+      </div>
+    </div>
+  </div>
 </div>
 
 

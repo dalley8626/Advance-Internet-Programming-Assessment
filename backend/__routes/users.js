@@ -6,12 +6,12 @@ const jwt = require('jsonwebtoken');
 const config = require('../__config/database')
 const User = require('../__models/user');
 
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
     User.find()
         .then(user => res.json(user))
 });
 
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
     User.find()
         .then(user => res.json(user))
 });
@@ -21,70 +21,43 @@ router.get('/', (req,res) => {
 //Then it adds the into the database as a new collection
 router.post('/register', (req, res, next) => {
 
-    if (!req.body.f_name) {
-        res.json({ success: false, message: 'You must provide your first name' });
-    } else {
-        if (!req.body.l_name) {
-            res.json({ success: false, message: 'You must provide your last name' });
-        }
-        else {
-            if (!req.body.email) {
-                res.json({ success: false, message: 'You must provide your email' });
-            }
-            else {
-                if (!req.body.username) {
-                    res.json({ success: false, message: 'You must provide your username' });
-                } else {
-                    if (!req.body.password) {
-                        res.json({ success: false, message: 'You must provide your password' });
-                    } else {
+    
                         //First, Initialize the input that has been entered as a new user
                         let newUser = new User({
                             f_name: req.body.f_name,
                             l_name: req.body.l_name,
                             email: req.body.email.toLowerCase(),
                             username: req.body.username.toLowerCase(),
-                            password: req.body.password
+                            password: req.body.password,
+                            usertype: req.body.usertype,
                         });
 
-                        //Then, Add the user to the database using a method defined in user model
-                        //If, there is an error in the database, provide error message
-                        //else, user is registered
-                        User.addUser(newUser, (err) => {
-                            if (err) {
-                                if (err.code === 11000) {
-                                    res.json({ success: false, message: 'Username or Email already Exists' });
-                                } else {
-                                    if (err.errors) {
-                                        if (err.errors.email) {
-                                            res.json({ success: false, message: err.errors.email.message });
-                                        }
-                                        else {
-                                            if (err.errors.username) {
-                                                res.json({ success: false, message: err.errors.username.message });
-                                            } else {
-                                                if (err.errors.password) {
-                                                    res.json({ success: false, message: err.errors.password.message });
-
-                                                } else {
-                                                    res.json({ success: false, message: 'Failed to register user. Error: ', err });
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                res.json({ success: true, message: 'Successfully registered account' });
-                            }
-                        });
-
-
-                    }
+        
+    //Then, Add the user to the database using a method defined in user model
+    //If, there is an error in the database, provide error message
+    //else, user is registered
+    User.addUser(newUser, (err) => {
+        if (err) {
+            if (err.code === 11000) {
+                res.json({ success: false, message: 'Username or Email already Exists' });
+            } else if (err.errors) {
+                if (err.errors.email) {
+                    res.json({ success: false, message: err.errors.email.message });
+                } else if (err.errors.username) {
+                    res.json({ success: false, message: err.errors.username.message });
+                } else if (err.errors.password) {
+                    res.json({ success: false, message: err.errors.password.message });
+                } else {
+                    res.json({ success: false, message: 'Failed to register user. Error: ', err });
                 }
             }
+        } else {
+            res.json({ success: true, message: 'Successfully registered account' });
         }
-    }
-});
+    })
+})
+
+
 
 //This function is to authenticate that this is the real user that has been registered
 //It checks if the email address and password match the collection
@@ -139,12 +112,10 @@ router.get('/checkEmail/:email', (req, res) => {
         User.findOne({ email: req.params.email }, (err, user) => {
             if (err) {
                 res.json({ success: false, message: err });
+            } else if (user) {
+                res.json({ success: false, message: 'E-mail is already registered' });
             } else {
-                if (user) {
-                    res.json({ success: false, message: 'E-mail is already registered' });
-                } else {
-                    res.json({ success: true, message: 'E-mail is available' })
-                }
+                res.json({ success: true, message: 'E-mail is available' })
             }
         })
     }
@@ -158,13 +129,12 @@ router.get('/checkUsername/:username', (req, res) => {
         User.findOne({ username: req.params.username }, (err, user) => {
             if (err) {
                 res.json({ success: false, message: err });
+            } else if (user) {
+                res.json({ success: false, message: 'Username is already registered' });
             } else {
-                if (user) {
-                    res.json({ success: false, message: 'Username is already registered' });
-                } else {
-                    res.json({ success: true, message: 'Username Available' })
-                }
+                res.json({ success: true, message: 'Username Available' })
             }
+
         })
     }
 })
@@ -195,47 +165,47 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 });
 
 router.put('/profile/updateProfile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-        User.findOne({ _id: req.body._id }, (err,user) => {
-            if (err){
-                res.json({success: false, message: 'Not a authorized user'});
+    User.findOne({ _id: req.body._id }, (err, user) => {
+        if (err) {
+            res.json({ success: false, message: 'Not a authorized user' });
+        } else {
+            if (!user) {
+                res.json({ success: false, message: 'User not found' });
             } else {
-                if (!user) {
-                    res.json({ success: false, message: 'User not found'});
-                } else {
-                    //admin user?
-                    // User.findOne({ _id: req.decoded.userId }, (err, user) => {
-                    //     if (err) {
-                    //         res.json({ success: false, message: err });
-                    //     } else {
-                    //         if (!user) {
-                    //             res.json({ success: false, message: 'Unable to authenticate user' })
-                    //         } else {
-                    //             //only if you havea username ro123, you can update the thing
-                    //             if (user.username !== "ro123") {
-                    //                 res.json ({ success: false, message: 'Not authorized to update the subject' })
-                    //             } else {
-                                    user.f_name = req.body.f_name;
-                                    user.l_name = req.body.l_name;
-                                    user.email = req.body.email.toLowerCase();
-                                    user.username = req.body.username.toLowerCase();
-                                    user.password = req.body.password;
+                //admin user?
+                // User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                //     if (err) {
+                //         res.json({ success: false, message: err });
+                //     } else {
+                //         if (!user) {
+                //             res.json({ success: false, message: 'Unable to authenticate user' })
+                //         } else {
+                //             //only if you havea username ro123, you can update the thing
+                //             if (user.username !== "ro123") {
+                //                 res.json ({ success: false, message: 'Not authorized to update the subject' })
+                //             } else {
+                user.f_name = req.body.f_name;
+                user.l_name = req.body.l_name;
+                user.email = req.body.email.toLowerCase();
+                user.username = req.body.username.toLowerCase();
+                user.password = req.body.password;
 
-                                    user.save((err) => {
-                                        if (err) {
-                                            res.json ({ success: false, message: err });
-                                        } else {
-                                            res.json ({ success: true, message: 'User Updated Successfully' });
-                                        }
-                                    });
-                    //             }
-                    //         }
-                    //     }
+                user.save((err) => {
+                    if (err) {
+                        res.json({ success: false, message: err });
+                    } else {
+                        res.json({ success: true, message: 'User Updated Successfully' });
+                    }
+                });
+                //             }
+                //         }
+                //     }
 
-                    // });
-                }
+                // });
             }
-        });
-    
+        }
+    });
+
 })
 
 

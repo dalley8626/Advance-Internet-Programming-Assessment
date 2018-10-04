@@ -16,6 +16,19 @@ router.get('/', (req, res) => {
         })
     });
 });
+router.get('/dashboard', (req,res) => {
+    Rating.find({}, (err, ratings) => {
+        if (err) {
+            res.json({ success: false, message: err });
+        } else {
+            if (!ratings) {
+                res.json({ success: false, message: 'Unable to fetch the ratings' });
+            } else {
+                res.json({ success: true, ratings: ratings });
+            }
+        }
+    }).sort({ created: -1 });
+})
 router.get('/:id', function(req, res){
     let id = req.params.id;
     const query = {_id: id}
@@ -42,6 +55,7 @@ router.post('/add', (req, res) => {
             userID: req.body.userID,
             username: req.body.username,
             star: req.body.star,
+            created: req.body.created.toString(),
         })
         rating.save((err, doc) => {
             if(err) throw err;
