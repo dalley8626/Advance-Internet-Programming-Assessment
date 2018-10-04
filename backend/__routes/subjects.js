@@ -127,9 +127,9 @@ router.put('/updateSubject', (req, res) => {
 
                 // });
             }
-        }
-});
-}
+        });
+    }
+})
 
 router.delete('/deleteSubject/:id', (req, res) => {
     if (!req.params.id) {
