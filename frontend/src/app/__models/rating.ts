@@ -6,6 +6,7 @@ export class Rating {
   public editFlag = false;
   public username;
   public star;
+  public created;
 
   constructor() {
     this._id = '';
@@ -15,5 +16,6 @@ export class Rating {
     this.editFlag = false;
     this.username = '';
     this.star = 0;
+    this.created = '';
   }
 }

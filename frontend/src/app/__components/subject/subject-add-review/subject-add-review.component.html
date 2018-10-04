@@ -167,6 +167,9 @@
             <p style="clear:left;float:left;">
               {{rating.username}}
             </p>
+            <p style="clear:left;float:left;">
+              written: {{rating.created | date : "d MMM, y h:mm:ss a" : "en-AU"}}
+            </p>
             <div class="reviewComment float-right" *ngIf="rating.userID == user.id">
               <button class="btn btn-danger" title="delete rating" (click)="delete(rating)">Delete
               </button>

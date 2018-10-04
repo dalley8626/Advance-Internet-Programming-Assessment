@@ -3,7 +3,7 @@ import {Rating} from '../../../__models/rating';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SubjectService} from '../../../__services/subjectService/subject.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
+import {DatePipe, Location} from '@angular/common';
 import {RatingService} from '../../../__services/ratingService/rating.service';
 import {Subject} from '../../../__models/subject';
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -30,6 +30,7 @@ export class SubjectAddReviewComponent implements OnInit {
 
   public rating: Rating;
   ratings: Rating[];
+  pipe = new DatePipe('en-US');
 
   oneRating: number = 0;
   twoRating: number = 0;
@@ -176,6 +177,7 @@ export class SubjectAddReviewComponent implements OnInit {
       this.rating.subjectID = this.subject._id;
       this.rating.userID = this.user.id;
       this.rating.username = this.user.username;
+      this.rating.created = Date();
       if (this.subject.numberOfReview && this.subject.percentageRating) {
         this.subject.numberOfReview = this.subject.numberOfReview + 1;
         this.subject.percentageRating =
