@@ -12,7 +12,7 @@ const helper = new JwtHelperService();
 
 export class AuthService {
   //url for server
-  domain = "http://localhost:5000"
+  // domain = "http://localhost:5000"
   authToken: any;
   user: any;
 
@@ -25,30 +25,30 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http
-      .post(this.domain + '/users/register', user, {headers: headers})
+      .post('/users/register', user, {headers: headers})
       .pipe(map(res => res.json()));
   }
 
   checkUsername(username){
-    return this.http.get(this.domain + '/users/checkUsername/' + username).pipe(map(res => res.json()));
+    return this.http.get('/users/checkUsername/' + username).pipe(map(res => res.json()));
   }
 
   checkEmail(email){
-    return this.http.get(this.domain + '/users/checkEmail/'+ email).pipe(map(res => res.json()));
+    return this.http.get('/users/checkEmail/'+ email).pipe(map(res => res.json()));
   }
 
   authenticateUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http
-      .post(this.domain + '/users/authenticate', user, {headers: headers})
+      .post('/users/authenticate', user, {headers: headers})
       .pipe(map(res => res.json()));
   }
 
   updateProfile(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.put(this.domain + '/users/profile/updateUser', user, {headers : headers}).pipe(map(res => res.json()));
+    return this.http.put('/users/profile/updateUser', user, {headers : headers}).pipe(map(res => res.json()));
   }
 
   getProfile() {
@@ -57,7 +57,7 @@ export class AuthService {
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', this.authToken);
     return this.http
-      .get('http://localhost:3000/users/profile', {headers: headers})
+      .get('/users/profile', {headers: headers})
       .pipe(map(res => res.json()));
   }
 

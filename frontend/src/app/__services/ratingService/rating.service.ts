@@ -16,7 +16,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class RatingService {
   public ratingAdded_Observable = new Subject();
-  private ratingsUrl = 'http://localhost:5000/ratings';  // URL to web api
+  private ratingsUrl = '/ratings';  // URL to web api
   options;
 
   constructor(
