@@ -44,7 +44,8 @@ router.post('/register', (req, res, next) => {
                             l_name: req.body.l_name,
                             email: req.body.email.toLowerCase(),
                             username: req.body.username.toLowerCase(),
-                            password: req.body.password
+                            password: req.body.password,
+                            usertype: req.body.usertype,
                         });
 
                         //Then, Add the user to the database using a method defined in user model

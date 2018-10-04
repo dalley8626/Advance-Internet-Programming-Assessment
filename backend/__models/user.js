@@ -207,6 +207,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
         validate: passwordValidators
+    },
+    usertype: {
+        type: String,
+        default: "student",
     }
 });
 

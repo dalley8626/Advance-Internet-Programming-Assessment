@@ -62,6 +62,20 @@ router.get('/allSubjects', (req,res) => {
     }).sort({ '_id': -1 });
 })
 
+router.get('/dashboard', (req,res) => {
+    Subject.find({}, (err, subjects) => {
+        if (err) {
+            res.json({ success: false, message: err });
+        } else {
+            if (!subjects) {
+                res.json({ success: false, message: 'Unable to fetch the subjects' });
+            } else {
+                res.json({ success: true, subjects: subjects });
+            }
+        }
+    }).sort({ percentageRating: -1 });
+})
+
 router.get('/singleSubject/:id', (req,res) => {
 
     if (!req.params.id) {

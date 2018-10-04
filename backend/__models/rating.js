@@ -25,7 +25,11 @@ const RatingSchema = mongoose.Schema({
    star: {
        type: Number,
        require: true
-   }
+   },
+   created:  {
+       type: Date, 
+       require: true
+    },
 })
 
 //Expose the mongodb object as a module that would allow request
