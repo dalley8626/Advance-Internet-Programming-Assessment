@@ -33,9 +33,7 @@ var port = process.env.PORT || 8080;
 //prociding a static directory for front-end
 app.use(express.static(path.join(__dirname,'public')))
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
-})
+
 
 
 //middleware
@@ -57,9 +55,8 @@ app.use('/users', users);
 app.use('/subjects', subjects);
 app.use('/ratings', ratings);
 
-//index route
-app.get('/', (req,res) => {
-    res.send('Invalid end point');
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 })
 
 //start server

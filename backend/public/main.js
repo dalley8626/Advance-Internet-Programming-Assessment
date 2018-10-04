@@ -1923,33 +1923,31 @@ var AuthService = /** @class */ (function () {
     function AuthService(http, router) {
         this.http = http;
         this.router = router;
-        //url for server
-        this.domain = "http://localhost:5000";
     }
     AuthService.prototype.registerUser = function (user) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http
-            .post(this.domain + '/users/register', user, { headers: headers })
+            .post('/users/register', user, { headers: headers })
             .pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.checkUsername = function (username) {
-        return this.http.get(this.domain + '/users/checkUsername/' + username).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
+        return this.http.get('/users/checkUsername/' + username).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.checkEmail = function (email) {
-        return this.http.get(this.domain + '/users/checkEmail/' + email).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
+        return this.http.get('/users/checkEmail/' + email).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http
-            .post(this.domain + '/users/authenticate', user, { headers: headers })
+            .post('/users/authenticate', user, { headers: headers })
             .pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.updateProfile = function (user) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.put(this.domain + '/users/profile/updateUser', user, { headers: headers }).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
+        return this.http.put('/users/profile/updateUser', user, { headers: headers }).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.getProfile = function () {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
@@ -1957,7 +1955,7 @@ var AuthService = /** @class */ (function () {
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', this.authToken);
         return this.http
-            .get('http://localhost:3000/users/profile', { headers: headers })
+            .get('/users/profile', { headers: headers })
             .pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.storeUserData = function (token, user) {
@@ -2077,7 +2075,7 @@ var RatingService = /** @class */ (function () {
         this.authService = authService;
         this.messageService = messageService;
         this.ratingAdded_Observable = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
-        this.ratingsUrl = 'http://localhost:5000/ratings'; // URL to web api
+        this.ratingsUrl = '/ratings'; // URL to web api
     }
     RatingService.prototype.createAuthenticationHeaders = function () {
         this.authService.loadToken();
@@ -2202,11 +2200,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var SubjectService = /** @class */ (function () {
+    // domain = this.authService.domain;// URL to web api
     function SubjectService(authService, http) {
         this.authService = authService;
         this.http = http;
         this.subjectAdded_Observable = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
-        this.domain = this.authService.domain; // URL to web api
     }
     SubjectService.prototype.createAuthenticationHeaders = function () {
         this.authService.loadToken();
@@ -2223,27 +2221,27 @@ var SubjectService = /** @class */ (function () {
     };
     SubjectService.prototype.newSubject = function (subject) {
         this.createAuthenticationHeaders();
-        return this.http.post(this.domain + '/subjects/addSubject', subject, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
+        return this.http.post('/subjects/addSubject', subject, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
     };
     SubjectService.prototype.getAllSubjects = function () {
         this.createAuthenticationHeaders();
-        return this.http.get(this.domain + '/subjects/allSubjects', this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
+        return this.http.get('/subjects/allSubjects', this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
     };
     SubjectService.prototype.getDashboardSubjects = function () {
         this.createAuthenticationHeaders();
-        return this.http.get(this.domain + '/subjects/dashboard', this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
+        return this.http.get('/subjects/dashboard', this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
     };
     SubjectService.prototype.getSingleSubject = function (id) {
         this.createAuthenticationHeaders();
-        return this.http.get(this.domain + '/subjects/singleSubject/' + id, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
+        return this.http.get('/subjects/singleSubject/' + id, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
     };
     SubjectService.prototype.editSubject = function (subject) {
         this.createAuthenticationHeaders();
-        return this.http.put(this.domain + '/subjects/updateSubject', subject, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
+        return this.http.put('/subjects/updateSubject', subject, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
     };
     SubjectService.prototype.deleteSubject = function (id) {
         this.createAuthenticationHeaders();
-        return this.http.delete(this.domain + '/subjects/deleteSubject/' + id, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
+        return this.http.delete('/subjects/deleteSubject/' + id, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
     };
     SubjectService.prototype.postReview = function (id, reviewComment, reviewRating) {
         this.createAuthenticationHeaders();
@@ -2251,7 +2249,7 @@ var SubjectService = /** @class */ (function () {
             reviewComment: reviewComment,
             reviewRating: reviewRating
         };
-        return this.http.post(this.domain + 'subjects/addreview/' + id, subjectData, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
+        return this.http.post('subjects/addreview/' + id, subjectData, this.options).pipe(Object(rxjs_operators___WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) { return res.json(); }));
     };
     SubjectService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
