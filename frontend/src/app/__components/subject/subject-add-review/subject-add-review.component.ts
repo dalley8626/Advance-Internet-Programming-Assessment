@@ -49,6 +49,7 @@ export class SubjectAddReviewComponent implements OnInit {
   user;
 
   hasRated: boolean;
+  hasRatedText = 'Write a Review';
 
 
   constructor(
@@ -166,7 +167,10 @@ export class SubjectAddReviewComponent implements OnInit {
       }
       element.editFlag = false;
       // Check if there is any rating that has been rated by current user;
-      if (element.username === this.user.username) { this.hasRated = true; }
+      if (element.username === this.user.username) {
+        this.hasRated = true;
+        this.hasRatedText = 'You have already rated this subject.';
+      }
     });
 
     this.fiveRatingPercentage = `${Math.round(((this.fiveRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
@@ -208,7 +212,7 @@ export class SubjectAddReviewComponent implements OnInit {
         if (res['status'] === 'success') {
           this.ratingService.notifyRatingAddition();
           this.flashMessageService.show('Rating added', {cssClass: 'alert-success.', timeout: 1000});
-
+          this.rating.ratingDescription = '';
         } else {
           this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.', timeout: 1000});
         }
@@ -258,7 +262,7 @@ export class SubjectAddReviewComponent implements OnInit {
       }
     }, error => {
       this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
-    });;
+    });
     this.subjectService.editSubject(this.subject).subscribe(res => {
       if (res['success'] === true) {
         this.subjectService.notifySubjectAddition();

@@ -6,7 +6,7 @@
     <p style="font-size: 20px; color: white">Loading...</p>
   </ngx-spinner>
   <div class="row">
-    <div class="card text-center" style="width: 15rem;" *ngFor="let subject of subjects">
+    <div class="card shadow text-center" style="width: 15rem;" *ngFor="let subject of subjects">
       <div class="card-header text-center">
         <h5>{{ subject.subjectNumber }}</h5>
       </div>
@@ -41,7 +41,7 @@
   <br><br>
   <h3>Most recent Ratings</h3>
   <div class="row">
-    <div class="card text-center" style="width: 15rem;" *ngFor="let rating of ratings">
+    <div class="card shadow text-center" style="width: 15rem;" *ngFor="let rating of ratings">
       <div class="card-header text-center">
         <h5>{{ rating.username }}</h5>
       </div>

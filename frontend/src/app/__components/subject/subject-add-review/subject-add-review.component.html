@@ -140,9 +140,9 @@
               <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
             </fieldset>
           </div>
-          <textarea name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
+          <textarea [disabled]="hasRated === true" name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
                     id="ratingDescription"
-                    placeholder="Write a Review"></textarea>
+                    [placeholder]="hasRatedText"></textarea>
 
           <button [disabled]="hasRated === true" class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();form.reset();'>Add
             Rating
@@ -187,9 +187,9 @@
             </div>
             <div class="form-group">
               <label for="ratingDescription1">Rating Description</label>
-              <.rati name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
+              <textarea name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
                      id="ratingDescription1"
-                     placeholder="Enter Rating Description">
+                        placeholder="Enter Rating Description"></textarea>
             </div>
             <button class="btn btn-primary" type="submit" (click)='editRating(rating)'>Edit Rating</button>
           </form>

@@ -28,11 +28,11 @@ export class DashboardComponent implements OnInit {
   getSubjects(): void {
     this.subjectService.getDashboardSubjects()
     // TODO, it is shoing first four subjects but later it is to display the best rated subjects
-      .subscribe(result => this.subjects = result['subjects'].slice(0, 5));
+      .subscribe(result => this.subjects = result['subjects'].slice(0, 8));
   }
   getRatings(): void {
     this.ratingService.getDashboardRatings()
     // TODO, it is shoing first four subjects but later it is to display the best rated subjects
-      .subscribe(result => this.ratings = result['ratings'].slice(0, 5));
+      .subscribe(result => this.ratings = result['ratings'].slice(0, 8));
   }
 }
