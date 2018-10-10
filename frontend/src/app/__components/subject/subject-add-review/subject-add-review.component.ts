@@ -38,11 +38,11 @@ export class SubjectAddReviewComponent implements OnInit {
   fourRating: number = 0;
   fiveRating: number = 0;
 
-  oneRatingPercentage;
-  twoRatingPercentage;
-  threeRatingPercentage;
-  fourRatingPercentage;
-  fiveRatingPercentage;
+  oneRatingPercentage = '0';
+  twoRatingPercentage = '0';
+  threeRatingPercentage = '0';
+  fourRatingPercentage = '0';
+  fiveRatingPercentage = '0';
 
   averageRating;
 
@@ -168,7 +168,7 @@ export class SubjectAddReviewComponent implements OnInit {
         this.twoRatingPercentage = `${Math.round(((this.twoRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
         this.oneRatingPercentage = `${Math.round(((this.oneRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
 
-        this.averageRating = Math.round(this.subject.percentageRating * 5) / 100;
+          this.averageRating = Math.round(this.subject.percentageRating * 5) / 100;
       });
   }
 
@@ -230,9 +230,38 @@ export class SubjectAddReviewComponent implements OnInit {
     });
   }
 
-  delete(rating: Rating): void {
+  async delete(rating: Rating) {
     this.ratings = this.ratings.filter(r => r !== rating);
-    this.ratingService.deleteRating(rating).subscribe();
+    if (this.subject.numberOfReview > 1) {
+      this.subject.numberOfReview = await this.subject.numberOfReview - 1;
+      this.subject.percentageRating =
+        await (this.subject.percentageRating * (this.subject.numberOfReview + 1) - (this.rating.star * 20) ) / this.subject.numberOfReview;
+    } else {
+      this.subject.numberOfReview = 0;
+      this.subject.percentageRating = 0;
+    }
+
+    this.ratingService.deleteRating(rating).subscribe(res => {
+      console.log('response is ', res);
+      if (res['status'] === 'success') {
+        this.ratingService.notifyRatingAddition();
+        this.flashMessageService.show('Rating deleted', {cssClass: 'alert-success.', timeout: 1000});
+
+      } else {
+        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.', timeout: 1000});
+      }
+    }, error => {
+      this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
+    });;
+    this.subjectService.editSubject(this.subject).subscribe(res => {
+      if (res['success'] === true) {
+        this.subjectService.notifySubjectAddition();
+      } else {
+        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger', timeout: 1000});
+      }
+    }, error => {
+      this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
+    });
   }
 
   clearRatingStar(): void {
