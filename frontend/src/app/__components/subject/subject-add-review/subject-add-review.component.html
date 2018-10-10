@@ -6,11 +6,11 @@
   <br/>
   <!-- Show all the reviews -->
   <div class="col-md-12 card-deck">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="card shadow subjectdetail" *ngIf="subject">
         <h5 class="card-header">{{subject.subjectNumber}} {{subject.subjectName}}</h5>
         <div class="card-body">
-          <h5 class="card-title">{{subject.description}}</h5>
+          <h5 class="card-title text-justify" style="font-size: 14px;">{{subject.description}}</h5>
         </div>
         <div class="card-footer">
           <button *ngIf="user.usertype === 'admin'" [routerLink]="['/subjects/edit', subject._id]" class="btn btn-danger float-right btn-sm">Edit</button>
@@ -19,7 +19,7 @@
     </div>
 
     <!-- Something to work on start -->
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="card shadow subjectdetail" *ngIf="subject">
         <div class="card-header">
           <div style="top:15px;">

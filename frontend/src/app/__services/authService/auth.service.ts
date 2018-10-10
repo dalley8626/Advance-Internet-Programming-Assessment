@@ -47,8 +47,10 @@ export class AuthService {
 
   updateProfile(user) {
     let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.put(this.domain + '/users/profile/updateUser', user, {headers : headers}).pipe(map(res => res.json()));
+    return this.http.put(this.domain + '/users/profile/updateProfile', user, {headers : headers}).pipe(map(res => res.json()));
   }
 
   getProfile() {

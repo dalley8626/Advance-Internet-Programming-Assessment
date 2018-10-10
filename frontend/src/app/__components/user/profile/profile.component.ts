@@ -56,15 +56,16 @@ export class ProfileComponent implements OnInit {
   editUserForm(){
     this.loadEditForm = false
   }
+
   createForm() {
     this.form = this.formBuilder.group({
-      f_name: ['', Validators.compose([
+      first_name: ['', Validators.compose([
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(50),
         this.validateName
       ])],
-      l_name: ['', Validators.compose([
+      last_name: ['', Validators.compose([
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(50),
@@ -97,7 +98,7 @@ export class ProfileComponent implements OnInit {
     this.loadEditForm=true;
   }
 
-  updateSubjectSubmit()
+  updateUserSubmit()
   {
     this.processing = true;
     this.authService.updateProfile(this.user).subscribe(data => {

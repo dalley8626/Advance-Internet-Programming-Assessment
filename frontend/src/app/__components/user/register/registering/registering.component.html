@@ -109,13 +109,13 @@
               field is required </p>
 
             <!-- Minimum and Maximum length of data error  -->
-            <p class="text-danger text-right" *ngIf="(form.controls.password.errors?.minlength || form.controls.password.errors?.maxlength) && form.controls.password.dirty && form.controls.password.value.length <= 5">*Minimum
-              characters: 5, Maximum characters: 50
+            <p class="text-danger text-right" *ngIf="(form.controls.password.errors?.minlength || form.controls.password.errors?.maxlength) && form.controls.password.dirty && form.controls.password.value.length <= 8">*Minimum
+              characters: 8<br> *Maximum characters: 50
             </p>
             
           </div>
           <!-- Invalid data error  -->
-          <p class="text-danger text-right" style="font-size:12px;" *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty && form.controls.password.value.length > 5">Passord
+          <p class="text-danger text-right" style="font-size:12px;" *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty && form.controls.password.value.length > 8">Passord
               must contain atleast 1 Uppercase, 1 lowercase, 1 number and 1 special character
             </p>
         </div>
