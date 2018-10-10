@@ -7,6 +7,7 @@ import {DatePipe, Location} from '@angular/common';
 import {RatingService} from '../../../__services/ratingService/rating.service';
 import {Subject} from '../../../__models/subject';
 import {FlashMessagesService} from 'angular2-flash-messages';
+import { NgxSpinnerService } from 'ngx-spinner'
 
 @Component({
   selector: 'app-subject-add-review',
@@ -59,6 +60,7 @@ export class SubjectAddReviewComponent implements OnInit {
     private location: Location,
     private flashMessageService: FlashMessagesService,
     private ratingService: RatingService,
+    private spinner : NgxSpinnerService
   ) {
     this.rating = new Rating();
 
@@ -72,6 +74,7 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   getSingleSubject() {
+    this.spinner.show();
     this.currentUrl = this.activatedRoute.snapshot.params;
 
     this.subjectService.getSingleSubject(this.currentUrl.id).subscribe(data => {
@@ -90,6 +93,9 @@ export class SubjectAddReviewComponent implements OnInit {
         });
       }
     });
+    setTimeout( () =>
+      this.spinner.hide(), 1000
+    )
 
   }
 
