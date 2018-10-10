@@ -13,7 +13,7 @@
           <h5 class="card-title">{{subject.description}}</h5>
         </div>
         <div class="card-footer">
-          <button [routerLink]="['/subjects/edit', subject._id]" class="btn btn-danger float-right btn-sm">Edit</button>
+          <button *ngIf="user.usertype === 'admin'" [routerLink]="['/subjects/edit', subject._id]" class="btn btn-danger float-right btn-sm">Edit</button>
         </div>
       </div>
     </div>
@@ -144,7 +144,7 @@
                     id="ratingDescription"
                     placeholder="Write a Review"></textarea>
 
-          <button class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();form.reset();'>Add
+          <button [disabled]="hasRated === true" class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();form.reset();'>Add
             Rating
           </button>
 
@@ -187,7 +187,7 @@
             </div>
             <div class="form-group">
               <label for="ratingDescription1">Rating Description</label>
-              <input name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
+              <.rati name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
                      id="ratingDescription1"
                      placeholder="Enter Rating Description">
             </div>

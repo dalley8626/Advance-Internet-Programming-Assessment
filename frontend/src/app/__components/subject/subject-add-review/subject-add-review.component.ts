@@ -48,6 +48,8 @@ export class SubjectAddReviewComponent implements OnInit {
 
   user;
 
+  hasRated: boolean;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -144,32 +146,36 @@ export class SubjectAddReviewComponent implements OnInit {
     this.ratingService.getRatingsbySubjectID(this.subject._id)
       .subscribe(result => {
         this.ratings = result['data'];
-        // this.ratings.forEach(function (element) {
-        //   element.editFlag = false;
-        // });
-        this.ratings.forEach(element => {
-          if (element.star == 5 || element.star == 4.5) {
-            this.fiveRating = this.fiveRating + 1;
-          } else if (element.star == 4 || element.star == 3.5) {
-            this.fourRating = this.fourRating + 1;
-          } else if (element.star == 3 || element.star == 2.5) {
-            this.threeRating = this.threeRating + 1;
-          } else if (element.star == 2 || element.star == 1.5) {
-            this.twoRating = this.twoRating + 1;
-          } else if (element.star == 1 || element.star == 0.5 || element.star == 0) {
-            this.oneRating = this.oneRating + 1;
-          }
-          element.editFlag = false;
-        });
+        this.getRatingPercentages(this.ratings);
 
-        this.fiveRatingPercentage = `${Math.round(((this.fiveRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
-        this.fourRatingPercentage = `${Math.round(((this.fourRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
-        this.threeRatingPercentage = `${Math.round(((this.threeRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
-        this.twoRatingPercentage = `${Math.round(((this.twoRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
-        this.oneRatingPercentage = `${Math.round(((this.oneRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
-
-          this.averageRating = Math.round(this.subject.percentageRating * 5) / 100;
       });
+  }
+
+  getRatingPercentages(ratings: Rating[]) {
+    this.ratings.forEach(element => {
+      if (element.star === 5 || element.star === 4.5) {
+        this.fiveRating = this.fiveRating + 1;
+      } else if (element.star === 4 || element.star === 3.5) {
+        this.fourRating = this.fourRating + 1;
+      } else if (element.star === 3 || element.star === 2.5) {
+        this.threeRating = this.threeRating + 1;
+      } else if (element.star === 2 || element.star === 1.5) {
+        this.twoRating = this.twoRating + 1;
+      } else if (element.star === 1 || element.star === 0.5 || element.star === 0) {
+        this.oneRating = this.oneRating + 1;
+      }
+      element.editFlag = false;
+      // Check if there is any rating that has been rated by current user;
+      if (element.username === this.user.username) { this.hasRated = true; }
+    });
+
+    this.fiveRatingPercentage = `${Math.round(((this.fiveRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
+    this.fourRatingPercentage = `${Math.round(((this.fourRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
+    this.threeRatingPercentage = `${Math.round(((this.threeRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
+    this.twoRatingPercentage = `${Math.round(((this.twoRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
+    this.oneRatingPercentage = `${Math.round(((this.oneRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
+
+    this.averageRating = Math.round(this.subject.percentageRating * 5) / 100;
   }
 
   addRating(): void {
