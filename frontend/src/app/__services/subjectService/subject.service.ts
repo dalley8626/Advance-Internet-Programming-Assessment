@@ -9,7 +9,7 @@ import {Subject} from 'rxjs';
 export class SubjectService {
   public subjectAdded_Observable = new Subject();
   options;
-  // domain = this.authService.domain;// URL to web api
+  domain = this.authService.domain;// URL to web api
 
   constructor(
     private authService: AuthService,
@@ -31,32 +31,32 @@ export class SubjectService {
   }
   newSubject(subject){
     this.createAuthenticationHeaders();
-    return this.http.post('/subjects/addSubject', subject, this.options).pipe(map(res => res.json()));
+    return this.http.post(this.domain + '/subjects/addSubject', subject, this.options).pipe(map(res => res.json()));
   }
 
   getAllSubjects() {
     this.createAuthenticationHeaders();
-    return this.http.get('/subjects/allSubjects', this.options).pipe(map(res => res.json()));
+    return this.http.get(this.domain + '/subjects/allSubjects', this.options).pipe(map(res => res.json()));
   }
 
   getDashboardSubjects() {
     this.createAuthenticationHeaders();
-    return this.http.get('/subjects/dashboard', this.options).pipe(map(res => res.json()));
+    return this.http.get(this.domain + '/subjects/dashboard', this.options).pipe(map(res => res.json()));
   }
 
   getSingleSubject(id) {
     this.createAuthenticationHeaders();
-    return this.http.get('/subjects/singleSubject/' + id, this.options).pipe(map(res => res.json()));
+    return this.http.get(this.domain + '/subjects/singleSubject/' + id, this.options).pipe(map(res => res.json()));
   }
 
   editSubject(subject) {
     this.createAuthenticationHeaders();
-    return this.http.put('/subjects/updateSubject', subject, this.options).pipe(map(res => res.json()));
+    return this.http.put(this.domain + '/subjects/updateSubject', subject, this.options).pipe(map(res => res.json()));
   }
 
   deleteSubject(id) {
     this.createAuthenticationHeaders();
-    return this.http.delete('/subjects/deleteSubject/' + id, this.options).pipe(map(res => res.json()));
+    return this.http.delete(this.domain + '/subjects/deleteSubject/' + id, this.options).pipe(map(res => res.json()));
   }
 
   postReview(id, reviewComment, reviewRating) {
@@ -65,6 +65,6 @@ export class SubjectService {
       reviewComment: reviewComment,
       reviewRating: reviewRating
     }
-    return this.http.post('subjects/addreview/'+id, subjectData,this.options).pipe(map(res => res.json()));
+    return this.http.post(this.domain + 'subjects/addreview/'+id, subjectData,this.options).pipe(map(res => res.json()));
   }
 }
