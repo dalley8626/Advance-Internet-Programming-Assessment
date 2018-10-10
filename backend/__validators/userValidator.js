@@ -1,5 +1,6 @@
 //Server Side Validations
 //email validation
+//email length checker
 let emailLengthChecker = (email) => {
     if(!email){
         return false;
@@ -12,6 +13,7 @@ let emailLengthChecker = (email) => {
     }
 };
 
+//valid email checker
 let validEmailChecker = (email) => {
     if(!email){
         return false;
@@ -21,6 +23,7 @@ let validEmailChecker = (email) => {
     }
 };
 
+//variable to store the validator
 const emailValidators = [
     {
         validator: emailLengthChecker,
@@ -33,6 +36,7 @@ const emailValidators = [
 ];
 
 //Username Validation
+//username length checker
 let usernameLengthChecker = (username) => {
     if (!username) {
         return false;
@@ -45,6 +49,7 @@ let usernameLengthChecker = (username) => {
     }
 };
 
+//valid username checker
 let validUsernameChecker = (username) => {
     if (!username) {
         return false;
@@ -54,6 +59,7 @@ let validUsernameChecker = (username) => {
     }
 };
 
+//variable to store username validators
 const usernameValidators = [
     {
         validator: usernameLengthChecker,
@@ -66,6 +72,7 @@ const usernameValidators = [
 ];
 
 //Password Validation
+//passowrd length checker
 let passwordLengthChecker = (password) => {
     if (!password) {
         return false;
@@ -78,6 +85,7 @@ let passwordLengthChecker = (password) => {
     }
 };
 
+//valid password checker
 let validPasswordChecker = (password) => {
     if (!password) {
         return false;
@@ -87,6 +95,7 @@ let validPasswordChecker = (password) => {
     }
 };
 
+//variable to store the validators
 const passwordValidators = [
     {
         validator: passwordLengthChecker,
@@ -98,12 +107,13 @@ const passwordValidators = [
     }
 ];
 
-//f_name validation 
-let firstnameLengthChecker = (f_name) => {
-    if(!f_name){
+//first_name validation 
+//firstname length checker
+let firstnameLengthChecker = (first_name) => {
+    if(!first_name){
         return false;
     } else {
-        if (f_name.length < 2 || f_name.length > 50) {
+        if (first_name.length < 2 || first_name.length > 50) {
             return false;
         } else {
             return true;
@@ -111,15 +121,17 @@ let firstnameLengthChecker = (f_name) => {
     }
 };
 
-let validfirstnameChecker = (f_name) => {
-    if(!f_name){
+//valid first name checker
+let validfirstnameChecker = (first_name) => {
+    if(!first_name){
         return false;
     } else {
         const regExp = new RegExp(/^[a-zA-Z]+$/);
-        return regExp.test(f_name);
+        return regExp.test(first_name);
     }
 };
 
+//variable to store the validators
 const firstnameValidators = [
     {
         validator: firstnameLengthChecker,
@@ -131,12 +143,12 @@ const firstnameValidators = [
     }
 ];
 
-//l_name validation
-let lastnameLengthChecker = (l_name) => {
-    if(!l_name){
+//last_name validation
+let lastnameLengthChecker = (last_name) => {
+    if(!last_name){
         return false;
     } else {
-        if (l_name.length < 2 || l_name.length > 50) {
+        if (last_name.length < 2 || last_name.length > 50) {
             return false;
         } else {
             return true;
@@ -144,15 +156,17 @@ let lastnameLengthChecker = (l_name) => {
     }
 };
 
-let validlastnameChecker = (l_name) => {
-    if(!l_name){
+//valid last name
+let validlastnameChecker = (last_name) => {
+    if(!last_name){
         return false;
     } else {
         const regExp = new RegExp(/^[a-zA-Z]+$/);
-        return regExp.test(l_name);
+        return regExp.test(last_name);
     }
 };
 
+//storing last name validator
 const lastnameValidators = [
     {
         validator: lastnameLengthChecker,
@@ -164,4 +178,5 @@ const lastnameValidators = [
     }
 ];
 
+//exporting the user validators
 const validator = module.exports = { lastnameValidators, firstnameValidators, passwordValidators, usernameValidators, emailValidators }

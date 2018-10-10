@@ -1,25 +1,27 @@
 <div class="container">
   <!-- Display all the Subject content  -->
-
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-rotate">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
   <!-- User rating chart  -->
 
   <br/>
   <!-- Show all the reviews -->
   <div class="col-md-12 card-deck">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="card shadow subjectdetail" *ngIf="subject">
         <h5 class="card-header">{{subject.subjectNumber}} {{subject.subjectName}}</h5>
         <div class="card-body">
-          <h5 class="card-title">{{subject.description}}</h5>
+          <h5 class="card-title text-justify" style="font-size: 14px;">{{subject.description}}</h5>
         </div>
         <div class="card-footer">
-          <button [routerLink]="['/subjects/edit', subject._id]" class="btn btn-danger float-right btn-sm">Edit</button>
+          <button *ngIf="user.usertype === 'admin'" [routerLink]="['/subjects/edit', subject._id]" class="btn btn-danger float-right btn-sm">Edit</button>
         </div>
       </div>
     </div>
 
     <!-- Something to work on start -->
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="card shadow subjectdetail" *ngIf="subject">
         <div class="card-header">
           <div style="top:15px;">
@@ -160,11 +162,11 @@
               <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
             </fieldset>
           </div>
-          <textarea name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
+          <textarea [disabled]="hasRated === true" name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
                     id="ratingDescription"
-                    placeholder="Write a Review"></textarea>
+                    [placeholder]="hasRatedText"></textarea>
 
-          <button class="btn btn-primary w-100 addRatingButton" type="submit" (click)='open(content);'>Add
+          <button [disabled]="hasRated === true" class="btn btn-primary w-100 addRatingButton" type="submit" (click)='open(content)'>Add
             Rating
           </button>
 
@@ -198,7 +200,9 @@
             </div>
           </div>
         </div>
+
         <div *ngIf="rating.editFlag == true">
+          
           <form>
             <div class="form-group">
               <label for="username">User Name</label>
@@ -207,9 +211,9 @@
             </div>
             <div class="form-group">
               <label for="ratingDescription1">Rating Description</label>
-              <input name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
+              <textarea name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
                      id="ratingDescription1"
-                     placeholder="Enter Rating Description">
+                        placeholder="Enter Rating Description"></textarea>
             </div>
             <button class="btn btn-primary" type="submit" (click)='editRating(rating)'>Edit Rating</button>
           </form>

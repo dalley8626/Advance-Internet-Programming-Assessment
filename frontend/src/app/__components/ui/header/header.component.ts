@@ -3,6 +3,7 @@ import { AuthService } from '../../../__services/authService/auth.service';
 import { Router } from '@angular/router'
 
 import { FlashMessagesService } from 'angular2-flash-messages';
+import {User} from '../../../__models/user';
 
 /**
  * This component displays header to the root layout,
@@ -15,13 +16,15 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 })
 export class HeaderComponent implements OnInit {
 
+  user: User;
   constructor(
-    private authService : AuthService,
-    private router : Router,
+    private authService: AuthService,
+    private router: Router,
     private flashMessagesService: FlashMessagesService
   ) { }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user'));
   }
   //User logout function implemented here.
   onClickLogout() {

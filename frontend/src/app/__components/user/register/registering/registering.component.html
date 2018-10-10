@@ -15,41 +15,41 @@
         </div>
 
         <!-- First Name -->
-        <div class="inputBox" [ngClass]="{'has-error':(form.controls.f_name.errors && form.controls.f_name.dirty), 'has-success': !form.controls.f_name.errors}">
-          <input type="text" name="f_name" required="" autocomplete="off" formControlName="f_name" />
+        <div class="inputBox" [ngClass]="{'has-error':(form.controls.first_name.errors && form.controls.first_name.dirty), 'has-success': !form.controls.first_name.errors}">
+          <input type="text" name="first_name" required="" autocomplete="off" formControlName="first_name" />
           <label>First name</label>
           <!-- Error Block -->
           <div class="help-block">
             <!-- Required Error -->
-            <p class="text-danger text-right" *ngIf="form.controls.f_name.errors?.required && form.controls.f_name.dirty">*This
+            <p class="text-danger text-right" *ngIf="form.controls.first_name.errors?.required && form.controls.first_name.dirty">*This
               field is Required</p>
             <!-- Minimum and Maximum length of data error  -->
-            <p class="text-danger text-right" *ngIf="(form.controls.f_name.errors?.minlength || form.controls.f_name.errors?.maxlength) && form.controls.f_name.dirty">*Minimum
+            <p class="text-danger text-right" *ngIf="(form.controls.first_name.errors?.minlength || form.controls.first_name.errors?.maxlength) && form.controls.first_name.dirty">*Minimum
               characters: 2
               Maximum characters: 50
             </p>
             <!-- Invalid data error  -->
-            <p class="text-danger text-right" *ngIf="form.controls.f_name.errors?.validateName && form.controls.f_name.dirty && (form.controls.f_name.value.length != 0)">Invalid
+            <p class="text-danger text-right" *ngIf="form.controls.first_name.errors?.validateName && form.controls.first_name.dirty && (form.controls.first_name.value.length != 0)">Invalid
               Name
             </p>
           </div>
         </div>
 
         <!-- Last Name -->
-        <div class="inputBox" [ngClass]="{'has-error':(form.controls.l_name.errors && form.controls.l_name.dirty), 'has-success': !form.controls.l_name.errors}">
-          <input type="text" name="l_name" required="" autocomplete="off" formControlName="l_name" />
+        <div class="inputBox" [ngClass]="{'has-error':(form.controls.last_name.errors && form.controls.last_name.dirty), 'has-success': !form.controls.last_name.errors}">
+          <input type="text" name="last_name" required="" autocomplete="off" formControlName="last_name" />
           <label>Last name</label>
           <!-- Error Block -->
           <div class="help-block">
             <!-- Required Error -->
-            <p class="text-danger text-right" *ngIf="form.controls.l_name.errors?.required && form.controls.l_name.dirty">*This
+            <p class="text-danger text-right" *ngIf="form.controls.last_name.errors?.required && form.controls.last_name.dirty">*This
               field is Required</p>
             <!-- Minimum and Maximum length of data error  -->
-            <p class="text-danger text-right" *ngIf="(form.controls.l_name.errors?.minlength || form.controls.l_name.errors?.maxlength) && form.controls.l_name.dirty && form.controls.l_name.value.length != 0">*Minimum
+            <p class="text-danger text-right" *ngIf="(form.controls.last_name.errors?.minlength || form.controls.last_name.errors?.maxlength) && form.controls.last_name.dirty && form.controls.last_name.value.length != 0">*Minimum
               characters: 2, Maximum characters: 50
             </p>
             <!-- Invalid data error  -->
-            <p class="text-danger text-right" *ngIf="form.controls.l_name.errors?.validateName && form.controls.l_name.dirty && form.controls.l_name.dirty && form.controls.l_name.value.length != 0">Invalid
+            <p class="text-danger text-right" *ngIf="form.controls.last_name.errors?.validateName && form.controls.last_name.dirty && form.controls.last_name.dirty && form.controls.last_name.value.length != 0">Invalid
               Name
             </p>
           </div>
@@ -109,13 +109,13 @@
               field is required </p>
 
             <!-- Minimum and Maximum length of data error  -->
-            <p class="text-danger text-right" *ngIf="(form.controls.password.errors?.minlength || form.controls.password.errors?.maxlength) && form.controls.password.dirty && form.controls.password.value.length <= 5">*Minimum
-              characters: 5, Maximum characters: 50
+            <p class="text-danger text-right" *ngIf="(form.controls.password.errors?.minlength || form.controls.password.errors?.maxlength) && form.controls.password.dirty && form.controls.password.value.length <= 8">*Minimum
+              characters: 8<br> *Maximum characters: 50
             </p>
             
           </div>
           <!-- Invalid data error  -->
-          <p class="text-danger text-right" style="font-size:12px;" *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty && form.controls.password.value.length > 5">Passord
+          <p class="text-danger text-right" style="font-size:12px;" *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty && form.controls.password.value.length > 8">Passord
               must contain atleast 1 Uppercase, 1 lowercase, 1 number and 1 special character
             </p>
         </div>

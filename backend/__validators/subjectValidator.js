@@ -1,5 +1,6 @@
 //Server Side Validations
-//email validation
+
+//subject Number Length validation
 let subjectNumberLengthChecker = (subjectNumber) => {
     if(!subjectNumber){
         return false;
@@ -12,6 +13,7 @@ let subjectNumberLengthChecker = (subjectNumber) => {
     }
 };
 
+//subject Number Number Validation
 let validSubjectNumber = (subjectNumber) => {
     if(!subjectNumber){
         return false;
@@ -21,6 +23,7 @@ let validSubjectNumber = (subjectNumber) => {
     }
 };
 
+//variable to store subjectNumber validator
 const subjectNumberValidators = [
     {
         validator: subjectNumberLengthChecker,
@@ -32,7 +35,8 @@ const subjectNumberValidators = [
     }
 ];
 
-//Username Validation
+//subject Name Validation
+//subject name length checker
 let subjectNameLengthChecker = (subjectName) => {
     if (!subjectName) {
         return false;
@@ -45,6 +49,7 @@ let subjectNameLengthChecker = (subjectName) => {
     }
 };
 
+//valid Subjec name checker
 let validSubjectName = (subjectName) => {
     if (!subjectName) {
         return false;
@@ -54,6 +59,7 @@ let validSubjectName = (subjectName) => {
     }
 };
 
+//variable to store the validator
 const subjectNameValidators = [
     {
         validator: subjectNameLengthChecker,
@@ -65,7 +71,8 @@ const subjectNameValidators = [
     }
 ];
 
-//Password Validation
+//Description Validation
+//description length checker
 let descriptionLengthChecker = (description) => {
     if (!description) {
         return false;
@@ -78,6 +85,7 @@ let descriptionLengthChecker = (description) => {
     }
 };
 
+//variable to store the description validation
 const descriptionValidators = [
     {
         validator: descriptionLengthChecker,
@@ -85,4 +93,5 @@ const descriptionValidators = [
     }
 ];
 
+//exporting the validators
 const subjectValidator = module.exports = { subjectNameValidators, subjectNumberValidators, descriptionValidators }

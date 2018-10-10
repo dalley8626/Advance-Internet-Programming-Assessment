@@ -35,13 +35,13 @@ export class RegisteringComponent implements OnInit {
 
   createForm() {
     this.form = this.formBuilder.group({
-      f_name: ['', Validators.compose([
+      first_name: ['', Validators.compose([
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(50),
         this.validateName
       ])],
-      l_name: ['', Validators.compose([
+      last_name: ['', Validators.compose([
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(50),
@@ -75,8 +75,8 @@ export class RegisteringComponent implements OnInit {
   onRegisterSubmit() {
     this.processing = true;
     const user = {
-      f_name: this.form.get('f_name').value,
-      l_name: this.form.get('l_name').value,
+      first_name: this.form.get('first_name').value,
+      last_name: this.form.get('last_name').value,
       email: this.form.get('email').value,
       username: this.form.get('username').value,
       password: this.form.get('password').value,

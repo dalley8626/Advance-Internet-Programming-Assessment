@@ -8,19 +8,24 @@ const bcrypt = require('bcryptjs');
 //linking to the database
 const config = require('../__config/database');
 
-//
+//user validators extracted from the validator folder
 const validator = require('../__validators/userValidator');
 
-//Vaidation ends
+//Declare a user schema
+//The schema consists of the following attributes
+//- first name
+//- last name
+//- email
+//- username
+//- password
 
-//Declare a user schema that defines the shape of mongodb collection
 const UserSchema = mongoose.Schema({
-    f_name: {
+    first_name: {
         type: String,
         required: true,
         validate: validator.firstnameValidators
     },
-    l_name: {
+    last_name: {
         type: String,
         required: true,
         validate: validator.lastnameValidators
@@ -43,18 +48,22 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
         validate: validator.passwordValidators
+    },
+    usertype: {
+        type: String,
+        default: "user",
     }
 });
 
 //Expose the mongodb object as a module that would allow request
 const User = module.exports = mongoose.model('User', UserSchema);
 
-//Get the user ID from the generated mongodb database
+//Exporting the function to get the user ID from the generated mongodb database
 module.exports.getUserByID = (id, callback) => {
     User.findById(id,callback);
 }
 
-//Get email address that has been created by the user
+//Exporting the function to get email address that has been created by the user
 module.exports.getUserByEmailAddress = (email,callback) => {
     const query = {email: email}
     User.findOne(query,callback);
@@ -76,11 +85,12 @@ UserSchema.pre('save', function(next){
     })
 });
 
-//Add user to the mongodb database
+//Exporting the function to add user to the mongodb database
 module.exports.addUser = (newUser, callback) => {
     newUser.save(callback);
 }
 
+//Exporting the function to compare the password with the one stored in the database
 module.exports.comparePassword = function(candidatePassword, hash, callback) {
     //Compares if the user's credential in the database matches with the user's current input 
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {

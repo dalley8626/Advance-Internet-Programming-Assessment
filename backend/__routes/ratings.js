@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const config = require('../__config/database')
 const Rating = require('../__models/rating');
 
+//Get request to fetch all the available ratings in the database
 router.get('/', (req, res) => {
     mongoose.connect(config.database, { useNewUrlParser: true }, function(err){
         if(err) throw err;
@@ -16,6 +17,7 @@ router.get('/', (req, res) => {
         })
     });
 });
+//Get request to fetch all the ratings for the dashboard from the database
 router.get('/dashboard', (req,res) => {
     Rating.find({}, (err, ratings) => {
         if (err) {
@@ -29,6 +31,8 @@ router.get('/dashboard', (req,res) => {
         }
     }).sort({ created: -1 });
 })
+
+//Get request to fetch ratings with specific subject id.
 router.get('/:id', function(req, res){
     let id = req.params.id;
     const query = {_id: id}
@@ -45,27 +49,28 @@ router.get('/:id', function(req, res){
             })
   });
 })
+//Post request to add a rating
 router.post('/add', (req, res) => {
-    mongoose.connect(config.database, { useNewUrlParser: true }, function(err) {
+    //create new rating
+    const rating = new Rating({
+        ratingTitle: req.body.ratingTitle,
+        ratingDescription: req.body.ratingDescription,
+        subjectID: req.body.subjectID,
+        userID: req.body.userID,
+        username: req.body.username,
+        star: req.body.star,
+        created: req.body.created.toString(),
+    })
+    //save rating to the database
+    rating.save((err, doc) => {
         if(err) throw err;
-        const rating = new Rating({
-            ratingTitle: req.body.ratingTitle,
-            ratingDescription: req.body.ratingDescription,
-            subjectID: req.body.subjectID,
-            userID: req.body.userID,
-            username: req.body.username,
-            star: req.body.star,
-            created: req.body.created.toString(),
-        })
-        rating.save((err, doc) => {
-            if(err) throw err;
-            return res.status(200).json({
-                status: 'success',
-                data: doc
-            })
+        return res.status(200).json({
+            status: 'success',
+            data: doc
         })
     })
 })
+//Get request to get a rating with a specific id
 router.get('/detail/:id', function(req, res){
     let id = req.params.id;
     const query = {_id: id}
@@ -82,31 +87,27 @@ router.get('/detail/:id', function(req, res){
             })
   });
 })
+//Delete rating with a specific id
 router.delete('/delete/:id', (req, res) => {
-    mongoose.connect(config.database, { useNewUrlParser: true }, function(err){
+    Rating.findByIdAndRemove(req.params.id,
+        (err, doc) => {
         if(err) throw err;
-        Rating.findByIdAndRemove(req.params.id,
-            (err, doc) => {
-            if(err) throw err;
-            return res.status(200).json({
-                status: 'success',
-                data: doc
-            })
+        return res.status(200).json({
+            status: 'success',
+            data: doc
         })
-    });
+    })
 })
+//Put request that updates the rating with different information
 router.put('/update', (req, res) => {
-    mongoose.connect(config.database, { useNewUrlParser: true }, function(err){
+    Rating.update(req.body,
+        (err, doc) => {
         if(err) throw err;
-        Rating.update(req.body,
-            (err, doc) => {
-            if(err) throw err;
-            return res.status(200).json({
-                status: 'success',
-                data: doc
-            })
+        return res.status(200).json({
+            status: 'success',
+            data: doc
         })
-    });
+    })
 })
 module.exports = router;
 
