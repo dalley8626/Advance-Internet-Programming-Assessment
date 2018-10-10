@@ -17,14 +17,18 @@ import {User} from '../../../__models/user';
 export class HeaderComponent implements OnInit {
 
   user: User;
+
   constructor(
     public authService: AuthService,
     private router: Router,
     private flashMessagesService: FlashMessagesService
-  ) { }
+  ) {
+    
+   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user'));
+    this.user = JSON.parse(localStorage.getItem('user')); 
+    
   }
   //User logout function implemented here.
   onClickLogout() {
@@ -32,6 +36,14 @@ export class HeaderComponent implements OnInit {
     this.flashMessagesService.show('You are logged out', {cssClass: 'alert-success small'});
     console.log('You are logged out');
     this.router.navigate(['/login']);
+    return false;
+  }
+
+  checkUserType(){
+    if (this.user.usertype == "admin")
+    {
+      return true;
+    }
     return false;
   }
 

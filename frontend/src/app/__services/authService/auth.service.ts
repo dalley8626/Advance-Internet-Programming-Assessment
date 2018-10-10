@@ -95,6 +95,14 @@ export class AuthService {
     localStorage.clear(); 
   }
 
+  checkUserType(){
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (user.usertype == "admin")
+    {
+      return true;
+    }
+    return false;
+  }
   
   
 }
