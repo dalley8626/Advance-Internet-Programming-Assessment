@@ -59,7 +59,7 @@ export class LoggingComponent implements OnInit {
     this.authService.authenticateUser(user).subscribe(data => {
         if (data.success) {
           this.authService.storeUserData(data.token, data.user);
-          this.router.navigate(['/subjects']);
+          this.router.navigate(['/dashboard']);
         }
         else {
           this.messageClass = 'alert alert-danger';

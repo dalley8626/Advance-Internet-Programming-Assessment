@@ -37,6 +37,14 @@ export class AuthService {
     return this.http.get(this.domain + '/users/checkEmail/'+ email).pipe(map(res => res.json()));
   }
 
+  checkSubjectNumber(subjectNumber){
+    return this.http.get(this.domain + '/users/checkSubjectNumber/'+ subjectNumber).pipe(map(res => res.json()));
+  }
+
+  checkSubjectName(subjectName){
+    return this.http.get(this.domain + '/users/checkSubjectName/'+ subjectName).pipe(map(res => res.json()));
+  }
+
   authenticateUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

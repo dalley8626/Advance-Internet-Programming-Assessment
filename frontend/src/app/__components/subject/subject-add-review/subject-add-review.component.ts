@@ -217,6 +217,8 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   addRating(): void {
+    
+    this.spinner.show()
     if (this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
       this.rating.userID = this.user.id;
@@ -257,6 +259,9 @@ export class SubjectAddReviewComponent implements OnInit {
     } else {
       this.flashMessageService.show('Rating Description Required', {cssClass: 'alert-danger.', timeout: 1000});
     }
+    setTimeout( () =>
+    this.spinner.hide(), 1000
+    )
   }
 
   edit(rating: Rating): void {
@@ -276,7 +281,8 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   async delete(rating: Rating) {
-    console.log('asfsaas'+ rating);
+   
+    this.spinner.show()
     this.ratings = this.ratings.filter(r => r !== rating);
     if (this.subject.numberOfReview > 1) {
       this.subject.numberOfReview = await this.subject.numberOfReview - 1;
@@ -310,6 +316,9 @@ export class SubjectAddReviewComponent implements OnInit {
     }, error => {
       this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
     });
+    setTimeout( () =>
+    this.spinner.hide(), 1000
+  )
   }
 
   clearRatingStar(): void {
