@@ -56,6 +56,7 @@ export class SubjectAddReviewComponent implements OnInit {
   hasRated: boolean;
   hasRatedText = 'Write a Review';
 
+  deleteRating: Rating;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,6 +70,7 @@ export class SubjectAddReviewComponent implements OnInit {
     private spinner : NgxSpinnerService
   ) {
     this.rating = new Rating();
+    this.deleteRating = new Rating();
 
     this.createNewSubjectForm();
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -80,7 +82,8 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   //Open the confirmation dialog
-  open(content) {
+  open(content, rating) {
+    this.deleteRating = rating;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       console.log(`Closed with: ${result}`);
     }, (reason) => {
@@ -273,6 +276,7 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   async delete(rating: Rating) {
+    console.log('asfsaas'+ rating);
     this.ratings = this.ratings.filter(r => r !== rating);
     if (this.subject.numberOfReview > 1) {
       this.subject.numberOfReview = await this.subject.numberOfReview - 1;
@@ -288,7 +292,9 @@ export class SubjectAddReviewComponent implements OnInit {
       if (res['status'] === 'success') {
         this.ratingService.notifyRatingAddition();
         this.flashMessageService.show('Rating deleted', {cssClass: 'alert-success.', timeout: 1000});
-
+        this.hasRated = false;
+        this.hasRatedText = 'Write a Review.';
+ 
       } else {
         this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.', timeout: 1000});
       }
