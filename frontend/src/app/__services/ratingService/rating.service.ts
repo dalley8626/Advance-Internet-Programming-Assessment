@@ -16,7 +16,8 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 export class RatingService {
   public ratingAdded_Observable = new Subject();
-  private ratingsUrl = '/ratings';  // URL to web api
+  domain = this.authService.domain;// URL to web api
+  private ratingsUrl = this.domain + '/ratings';  // URL to web api
   options;
 
   constructor(
