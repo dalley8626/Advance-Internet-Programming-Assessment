@@ -48,6 +48,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
         validate: validator.passwordValidators
+    },
+    usertype: {
+        type: String,
+        default: "user",
     }
 });
 
