@@ -90,7 +90,8 @@ import { SubjectDeleteComponent } from './__components/subject/subject-delete/su
     HttpClientModule,
     ReactiveFormsModule,
     FlashMessagesModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgbModule
   ],
   
   providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard, FlashMessagesService],

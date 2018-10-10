@@ -111,11 +111,31 @@
 
     <br/>
 
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button> 
+        </div>
+        <p>Do you want to contiue?</p>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger" (click)="modal.close('Cancel click')">Cancel</button>
+          <button type="button" class="btn btn-outline-primary" (click)="modal.close('Save click'); addRating();">Save</button>
+        </div>
+        
+      </ng-template>
+      
+      <hr>
+      
+      
+      <pre>{{closeResult}}</pre>
+
     <!-- Card Body  -->
     <div class="col-md-12">
       <div class="card shadow">
         <div class="card-body">
-
+            
           <div style="margin-left: auto; margin-right: auto;">
             <fieldset class="rating ml-auto" style="zoom:2;">
               <input type="radio" id="star5" name="rating" value="5" (click)="updateStar(5)"/>
@@ -144,7 +164,7 @@
                     id="ratingDescription"
                     placeholder="Write a Review"></textarea>
 
-          <button class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();form.reset();'>Add
+          <button class="btn btn-primary w-100 addRatingButton" type="submit" (click)='open(content);'>Add
             Rating
           </button>
 

@@ -7,6 +7,8 @@ import {DatePipe, Location} from '@angular/common';
 import {RatingService} from '../../../__services/ratingService/rating.service';
 import {Subject} from '../../../__models/subject';
 import {FlashMessagesService} from 'angular2-flash-messages';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-subject-add-review',
@@ -21,6 +23,8 @@ export class SubjectAddReviewComponent implements OnInit {
   processing = false;
   currentUrl;
   form;
+
+  closeResult: string;
 
   subjectPosts;
 
@@ -57,6 +61,7 @@ export class SubjectAddReviewComponent implements OnInit {
     private location: Location,
     private flashMessageService: FlashMessagesService,
     private ratingService: RatingService,
+    private modalService: NgbModal
   ) {
     this.rating = new Rating();
 
@@ -67,6 +72,26 @@ export class SubjectAddReviewComponent implements OnInit {
 
   ngOnInit() {
     this.getSingleSubject();
+  }
+
+  //Open the confirmation dialog
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      console.log(`Closed with: ${result}`);
+    }, (reason) => {
+      console.log(`Dismissed ${this.getDismissReason(reason)}`);
+    });
+  }
+
+  //Close the confirmation Dialog with ESC 
+  private getDismissReason(reason: any): void {
+    if (reason === ModalDismissReasons.ESC) {
+      console.log('by pressing ESC');
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      console.log('by clicking on a backdrop');
+    } else {
+      console.log(`with: ${reason}`);
+    }
   }
 
   getSingleSubject() {
@@ -199,6 +224,7 @@ export class SubjectAddReviewComponent implements OnInit {
 
       this.ratingService.addRating(this.rating).subscribe(res => {
         console.log('response is ', res);
+        
         if (res['status'] === 'success') {
           this.ratingService.notifyRatingAddition();
           this.flashMessageService.show('Rating added', {cssClass: 'alert-success.', timeout: 1000});
