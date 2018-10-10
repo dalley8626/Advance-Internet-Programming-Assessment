@@ -4,8 +4,16 @@ mongoose.Promise = global.Promise;
 //linking to the database
 const config = require('../__config/database');
 
-//validators
+//subject validators extracted from the validator folder
 const subjectValidator = require('../__validators/subjectValidator');
+
+//Declaring a subject schema
+//The schema would have the following fields
+//- Subject Number
+//- Subject Name
+//- Description
+//- Number of Review (stores the total number of reviews of a subject)
+//- Percentage Rating (stores the total percentage of the rating)
 
 const subjectSchema = new mongoose.Schema({
     subjectNumber: {

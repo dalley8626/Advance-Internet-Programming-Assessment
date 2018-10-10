@@ -6,33 +6,21 @@ const jwt = require('jsonwebtoken');
 const config = require('../__config/database')
 const User = require('../__models/user');
 
-router.get('/', (req, res) => {
-    User.find()
-        .then(user => res.json(user))
-});
-
-router.get('/', (req, res) => {
-    User.find()
-        .then(user => res.json(user))
-});
-
 //This function is use for user registration
 //It requests the field as a JSON type
 //Then it adds the into the database as a new collection
 router.post('/register', (req, res, next) => {
 
-    
-                        //First, Initialize the input that has been entered as a new user
-                        let newUser = new User({
-                            f_name: req.body.f_name,
-                            l_name: req.body.l_name,
-                            email: req.body.email.toLowerCase(),
-                            username: req.body.username.toLowerCase(),
-                            password: req.body.password,
-                            usertype: req.body.usertype,
-                        });
+    //First, Initialize the input that has been entered as a new user
+    let newUser = new User({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email.toLowerCase(),
+        username: req.body.username.toLowerCase(),
+        password: req.body.password,
+        usertype: req.body.usertype,
+    });
 
-        
     //Then, Add the user to the database using a method defined in user model
     //If, there is an error in the database, provide error message
     //else, user is registered
@@ -48,7 +36,7 @@ router.post('/register', (req, res, next) => {
                 } else if (err.errors.password) {
                     res.json({ success: false, message: err.errors.password.message });
                 } else {
-                    res.json({ success: false, message: 'Failed to register user. Error: ', err });
+                    res.json({ success: false, message: 'Failed to register user. Error: ' + err });
                 }
             }
         } else {
@@ -104,7 +92,7 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
-//check for email
+//Get request to check for available email
 router.get('/checkEmail/:email', (req, res) => {
     if (!req.params.email) {
         res.json({ success: false, message: 'Email has not been provided' });
@@ -121,7 +109,7 @@ router.get('/checkEmail/:email', (req, res) => {
     }
 })
 
-//check for username
+//Get request to check for available username
 router.get('/checkUsername/:username', (req, res) => {
     if (!req.params.username) {
         res.json({ success: false, message: 'Username has not been provided' });
@@ -139,23 +127,6 @@ router.get('/checkUsername/:username', (req, res) => {
     }
 })
 
-//middleware to grab the tokens
-// router.use((req, res, next) => {
-//     const token = req.headers['Authorization'];
-//     if (!token) {
-//         res.json({ success: false, message: 'No token provided' });
-//     } else {
-//         jwt.verify(token, config.secret, (err, decoded) => {
-//             if (err) {
-//                 res.json({ success: false, message: 'Token invalid: ' + err });
-//             } else {
-//                 req.decoded = decoded;
-//                 next();
-//             }
-//         });
-//     }
-// });
-
 //A route way to access the webpage, therefore we have to encrypt with a passport authentication
 //If they have the correct authentication(token), therefore it would allow access
 //This is just get the user req and goes to authenticate, if authenticate successful
@@ -164,6 +135,7 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
     res.json({ success: true, user: req.user });
 });
 
+//Put request to update the profile 
 router.put('/profile/updateProfile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     User.findOne({ _id: req.body._id }, (err, user) => {
         if (err) {
@@ -172,24 +144,15 @@ router.put('/profile/updateProfile', passport.authenticate('jwt', { session: fal
             if (!user) {
                 res.json({ success: false, message: 'User not found' });
             } else {
-                //admin user?
-                // User.findOne({ _id: req.decoded.userId }, (err, user) => {
-                //     if (err) {
-                //         res.json({ success: false, message: err });
-                //     } else {
-                //         if (!user) {
-                //             res.json({ success: false, message: 'Unable to authenticate user' })
-                //         } else {
-                //             //only if you havea username ro123, you can update the thing
-                //             if (user.username !== "ro123") {
-                //                 res.json ({ success: false, message: 'Not authorized to update the subject' })
-                //             } else {
-                user.f_name = req.body.f_name;
-                user.l_name = req.body.l_name;
+                
+                //updating the user
+                user.first_name = req.body.first_name;
+                user.last_name = req.body.last_name;
                 user.email = req.body.email.toLowerCase();
                 user.username = req.body.username.toLowerCase();
                 user.password = req.body.password;
 
+                //saving the user
                 user.save((err) => {
                     if (err) {
                         res.json({ success: false, message: err });
@@ -197,11 +160,6 @@ router.put('/profile/updateProfile', passport.authenticate('jwt', { session: fal
                         res.json({ success: true, message: 'User Updated Successfully' });
                     }
                 });
-                //             }
-                //         }
-                //     }
-
-                // });
             }
         }
     });

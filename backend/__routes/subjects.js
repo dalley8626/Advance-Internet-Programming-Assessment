@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
+//link to the database
 const config = require('../__config/database');
 
+//link to the user model
 const User = require('../__models/user');
 
+//link to the subject model
 const Subject = require('../__models/subject');
 
-
+//Post request to add a subject
 router.post('/addSubject', (req, res, next) => {
+
+    //Required Validations
     if (!req.body.subjectNumber) {
         res.json({ success: false, message: 'Subject Number is required' });
     } else if (!req.body.subjectName) {
@@ -16,13 +21,17 @@ router.post('/addSubject', (req, res, next) => {
     } else if (!req.body.description) {
         res.json({ success: false, message: 'Description is required' });
     } else {
+
+        //Creating a new subject
         const subject = new Subject({
             subjectNumber: req.body.subjectNumber,
             subjectName: req.body.subjectName,
             description: req.body.description
         });
 
+        //Saving the subject to the database
         subject.save((err) => {
+            //display errors if there is any error
             if (err) {
                 if (err.errors.subjectNumber) {
                     res.json({ sucess: false, message: err.errors.subjectNumber.message });
@@ -33,7 +42,7 @@ router.post('/addSubject', (req, res, next) => {
                 } else {
                     res.json({ success: false, message: 'qweqwe' })
                 }
-
+                //success
             } else {
                 res.json({ success: true, message: 'Successfully added a subject' })
             }
@@ -41,8 +50,11 @@ router.post('/addSubject', (req, res, next) => {
     }
 })
 
+//Get request to fetch all the available subjects in the database
 router.get('/allSubjects', (req, res) => {
+    //fetching all the subject and sorting the subjects
     Subject.find({}, (err, subjects) => {
+        //displaying errors (if any)
         if (err) {
             res.json({ success: false, message: err });
         } else if (!subjects) {
@@ -50,29 +62,34 @@ router.get('/allSubjects', (req, res) => {
         } else {
             res.json({ success: true, subjects: subjects });
         }
+
     }).sort({ '_id': -1 });
 })
 
-router.get('/dashboard', (req,res) => {
+//Get request to fetch subjects for the dashboard which will be sorted according to the highest percentage rating
+router.get('/dashboard', (req, res) => {
     Subject.find({}, (err, subjects) => {
+        //display errors
         if (err) {
             res.json({ success: false, message: err });
-        } else {
-            if (!subjects) {
-                res.json({ success: false, message: 'Unable to fetch the subjects' });
-            } else {
-                res.json({ success: true, subjects: subjects });
-            }
+        } else if (!subjects) {
+            res.json({ success: false, message: 'Unable to fetch the subjects' });
         }
+        else {
+            res.json({ success: true, subjects: subjects });
+        }
+
     }).sort({ percentageRating: -1 });
 })
 
-router.get('/singleSubject/:id', (req,res) => {
-
+//get request to fetach a subject according to the passed id
+router.get('/singleSubject/:id', (req, res) => {
+    //validation to see of there is any subject id provided
     if (!req.params.id) {
         res.json({ success: false, message: 'No Subject Id has been provided.' });
     } else {
         Subject.findOne({ _id: req.params.id }, (err, subject) => {
+            //displaying errors while finding the subjects
             if (err) {
                 res.json({ success: false, message: 'Not a valid Id' });
             } else if (!subject) {
@@ -80,129 +97,71 @@ router.get('/singleSubject/:id', (req,res) => {
             } else {
                 res.json({ success: true, subject: subject });
             }
-
         });
     }
 });
 
+//Put request to update the subject
 router.put('/updateSubject', (req, res) => {
+    //if no id
     if (!req.body._id) {
         res.json({ success: false, message: 'No Subject Id has been provided.' });
     } else {
+        //If id is provided, we find the subject
         Subject.findOne({ _id: req.body._id }, (err, subject) => {
+            //if errors while requesting data from the database
             if (err) {
                 res.json({ success: false, message: 'Not a valid Id' });
             } else if (!subject) {
                 res.json({ success: false, message: 'Subject was not found' });
             } else {
-                //admin user?
-                // User.findOne({ _id: req.decoded.userId }, (err, user) => {
-                //     if (err) {
-                //         res.json({ success: false, message: err });
-                //     } else {
-                //         if (!user) {
-                //             res.json({ success: false, message: 'Unable to authenticate user' })
-                //         } else {
-                //             //only if you havea username ro123, you can update the thing
-                //             if (user.username !== "ro123") {
-                //                 res.json ({ success: false, message: 'Not authorized to update the subject' })
-                //             } else {
+                //assigning the respective values to the subject that has been found
                 subject.subjectNumber = req.body.subjectNumber;
                 subject.subjectName = req.body.subjectName;
                 subject.description = req.body.description;
                 subject.numberOfReview = req.body.numberOfReview;
                 subject.percentageRating = req.body.percentageRating;
+
+                //saving the subject
                 subject.save((err) => {
+                    //displaying errors
                     if (err) {
                         res.json({ success: false, message: err });
                         console.log("2")
-                    } else {
+                    } else { //success
                         res.json({ success: true, message: 'Subject Updated Successfully' });
                         console.log("3")
                     }
                 });
-                //             }
-                //         }
-                //     }
-
-                // });
             }
         });
     }
 })
 
+//delete request to delete the subject
 router.delete('/deleteSubject/:id', (req, res) => {
+    //if id parameter is not provided
     if (!req.params.id) {
         res.json({ success: false, message: 'No Subject Id has been provided.' });
     } else {
         Subject.findOne({ _id: req.params.id }, (err, subject) => {
+            //display error when finding the subject
             if (err) {
                 res.json({ success: false, message: 'Not a valid Id' });
+            } else if (!subject) {
+                res.json({ success: false, message: 'Subject Not Found' });
             } else {
-                if (!subject) {
-                    res.json({ success: false, message: 'Subject Not Found' });
-                } else {
-                    subject.remove((err) => {
-                        if (err) {
-                            res.json({ success: false, message: err });
-                        } else {
-                            res.json({ success: true, message: 'Deleted Subject!' });
-                        }
-                    })
-                }
+                //success
+                subject.remove((err) => {
+                    //display error if there is any while requesting the service from the datbase
+                    if (err) {
+                        res.json({ success: false, message: err });
+                    } else {
+                        res.json({ success: true, message: 'Deleted Subject!' });
+                    }
+                })
             }
         });
-    }
-})
-
-router.post('/addReview/:id', (req, res) => {
-    if (!req.body.reviewComment) {
-        res.json({ success: false, message: 'No review Provided' });
-    } else {
-        if (!req.body.id) {
-            res.json({ success: false, message: 'No id was Provided' });
-        } else {
-            Subject.findOne({ _id: req.body.id }, (err, subject) => {
-                if (err) {
-                    res.json({ success: false, message: 'Invalid subject Id' });
-                } else {
-                    if (!subject) {
-                        res.json({ success: false, message: 'Subject not Found.' });
-                    } else {
-                        User.findOne({ _id: req.params.id }, (err, user) => {
-                            if (err) {
-                                res.json({ success: false, message: 'Something is not right' });
-                            } else {
-                                if (!user) {
-                                    res.json({ success: false, message: 'User not found' });
-                                } else {
-                                    // const review = {
-                                    //     reviewComment: req.body.reviewComment,
-                                    //     reviewCreator: user.username,
-                                    //     reviewDate: Date.now(),
-                                    //     reviewRating: req.body.reviewRating};
-                                    //     subject.reviews.push(review);
-
-                                    // subject.numberOfReview = subject.numberOfReview + 1;
-                                    // res.send(''+ subject.reviews[reviewRating]);
-                                    // subject.rating = subject.rating + subject.reviews[reviewRating];
-
-                                    // subject.maximumRatingPossible = subject.numberOfReview * 5;
-                                    // subject.percentageRating = Math.round((subject.rating/subject.maximumRatingPossible)*10)/10;
-                                    subject.save((err) => {
-                                        if (err) {
-                                            res.json({ success: false, message: err });
-                                        } else {
-                                            res.json({ success: true, message: 'Review Successful' })
-                                        }
-                                    });
-                                }
-                            }
-                        })
-                    }
-                }
-            })
-        }
     }
 })
 
