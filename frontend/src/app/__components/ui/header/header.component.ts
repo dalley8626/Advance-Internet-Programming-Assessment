@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   user: User;
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private flashMessagesService: FlashMessagesService
   ) { }

@@ -55,7 +55,7 @@ export class SubjectAddReviewComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private subjectService: SubjectService,
+    public subjectService: SubjectService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,

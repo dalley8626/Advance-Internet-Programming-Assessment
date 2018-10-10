@@ -1,78 +1,97 @@
+<!-- Container -->
 <div class="container">
   <br><br>
-  <h3>High Rated Subjects</h3>
 
+  <!-- Spinner -->
   <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-rotate">
     <p style="font-size: 20px; color: white">Loading...</p>
   </ngx-spinner>
+
+  <!-- Highly Rated Subject -->
+  <h3>High Rated Subjects</h3>
+
+  <!-- Row -->
   <div class="row">
+
+    <!-- Show Each Subject  -->
     <div class="card shadow text-center" style="width: 15rem;" *ngFor="let subject of subjects">
+
+      <!-- Card Header -->
       <div class="card-header text-center">
         <h5>{{ subject.subjectNumber }}</h5>
       </div>
+
+      <!-- Card Body -->
       <div class="card-body">
         <h5 class="card-title">
-          <p class="card-title text-center" style="font-size:16px;"><span
-            class="badge badge-pill badge-danger">Hot!</span>
+          <p class="card-title text-center" style="font-size:16px;"><span class="badge badge-pill badge-danger">Hot!</span>
         </h5>
         <p class="card-text">{{ subject.subjectName }}</p>
-
       </div>
-      <!-- footer start -->
+
+      <!-- Card Footer Start -->
       <div class="card-footer">
         <div>
-
           <div class="stars-outer">
             <div class="stars-inner" [style.width]="subject.percentageRating + '%'">
-
             </div>
           </div>
-          <!-- Ratings --><br/>
-          {{subject.numberOfReview}} reviews <br>
 
-
-          <button [routerLink]="['/subjects/detail/', subject._id]" class="btn btn-primary">Rate Now!
-          </button>
+          <!-- Show Ratings -->
+          <br />
+          {{subject.numberOfReview}} reviews
+          <br>
+          <button [routerLink]="['/subjects/detail/', subject._id]" class="btn btn-primary">Find Out More </button>
         </div>
-        <!-- footer end-->
+
       </div>
     </div>
   </div>
+
   <br><br>
-  <h3>Most recent Ratings</h3>
+  
+  <!-- Most Recent Ratings  -->
+  <h3>Most recently Rated Subject</h3>
+
+  <!-- Row -->
   <div class="row">
+
+    <!-- Recent Ratings -->
     <div class="card shadow text-center" style="width: 15rem;" *ngFor="let rating of ratings">
+      <!-- Card Header -->
       <div class="card-header text-center">
         <h5>{{ rating.username }}</h5>
       </div>
+
+      <!-- Card Body -->
       <div class="card-body">
+
         <h5 class="card-title">
-          <p class="card-title text-center" style="font-size:16px;"><span
-            class="badge badge-pill badge-success">Recent!</span>
+          <p class="card-title text-center" style="font-size:16px;"><span class="badge badge-pill badge-success">Recent!</span>
         </h5>
+
         <div class="stars-outer">
           <div class="stars-inner" [style.width]="rating.star*20 + '%'">
           </div>
         </div>
+
         <br>
+
         <p class="card-text">{{ rating.ratingDescription }}</p>
         <p style="clear:left;float:bottom;font-size:10px">
           {{rating.created | date : "d MMM, y h:mm:ss a" : "en-AU"}}
         </p>
+
       </div>
       <!-- footer start -->
       <div class="card-footer">
-        <button [routerLink]="['/subjects/detail/', rating.subjectID]" class="btn btn-info">Read Now!
+        <button [routerLink]="['/subjects/detail/', rating.subjectID]" class="btn btn-info">Find Out More
         </button>
-        <!-- footer end-->
       </div>
+      <!-- footer end-->
+
     </div>
   </div>
+  <!-- Row End -->
+
 </div>
-
-
-<!--
-Copyright 2017-2018 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
--->

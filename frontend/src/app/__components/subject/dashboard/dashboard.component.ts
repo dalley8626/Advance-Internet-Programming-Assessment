@@ -5,6 +5,7 @@ import {RatingService} from '../../../__services/ratingService/rating.service';
 import {Rating} from '../../../__models/rating';
 // import { Subject } from '../../../__models/subject';
 // import { SubjectService } from '../../../__services/subjectService/subject.service';
+import { NgxSpinnerService } from 'ngx-spinner'
 
 /**
  * This component displays subject components.
@@ -18,7 +19,8 @@ export class DashboardComponent implements OnInit {
   subjects: Subject[] = [];
   ratings: Rating[] = [];
 
-  constructor(private subjectService: SubjectService, private ratingService: RatingService) { }
+  constructor(private subjectService: SubjectService, private ratingService: RatingService, private spinner : NgxSpinnerService
+    ) { }
 
   ngOnInit() {
     this.getSubjects();
@@ -26,13 +28,18 @@ export class DashboardComponent implements OnInit {
   }
 
   getSubjects(): void {
+    this.spinner.show();
     this.subjectService.getDashboardSubjects()
     // TODO, it is shoing first four subjects but later it is to display the best rated subjects
-      .subscribe(result => this.subjects = result['subjects'].slice(0, 8));
+      .subscribe(result => this.subjects = result['subjects'].slice(0, 4));
+
+      setTimeout( () =>
+      this.spinner.hide(), 1000
+    )
   }
   getRatings(): void {
     this.ratingService.getDashboardRatings()
     // TODO, it is shoing first four subjects but later it is to display the best rated subjects
-      .subscribe(result => this.ratings = result['ratings'].slice(0, 8));
+      .subscribe(result => this.ratings = result['ratings'].slice(0, 4));
   }
 }
