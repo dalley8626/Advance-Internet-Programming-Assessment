@@ -27,6 +27,9 @@ import { LayoutComponent } from './__components/ui/layout/layout.component';
 import { HeaderComponent } from './__components/ui/header/header.component';
 import { FooterComponent } from './__components/ui/footer/footer.component';
 
+//bootstrap
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 //user
 import { LoggingComponent } from './__components/user/login/logging/logging.component';
 import { ProfileComponent } from './__components/user/profile/profile.component';
@@ -87,7 +90,8 @@ import { SubjectDeleteComponent } from './__components/subject/subject-delete/su
     HttpClientModule,
     ReactiveFormsModule,
     FlashMessagesModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgbModule
   ],
   
   providers: [ValidateService, AuthService, JwtHelperService, AuthGuard, NotAuthGuard, FlashMessagesService],

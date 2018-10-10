@@ -5,7 +5,7 @@
   </ngx-spinner>
   <!-- User rating chart  -->
 
-  <br/>
+  <br />
   <!-- Show all the reviews -->
   <div class="col-md-12 card-deck">
     <div class="col-md-12">
@@ -29,7 +29,7 @@
               <small class="float-left"> Average User Rating of {{averageRating}}&emsp;</small>
             </h5>
           </div>
-          <div class="stars-outer" >
+          <div class="stars-outer">
             <div class="stars-inner" [style.width]="subject.percentageRating + '%'">
             </div>
           </div>
@@ -111,48 +111,97 @@
     </div>
     <!-- Something to work on end -->
 
-    <br/>
+    <br />
 
-    <!-- Card Body  -->
+
+    <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Confirmation</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <label for="dateOfBirth">Are you sure you want to delete this rating?</label>
+          
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Cancel click')">Cancel</button>
+            <button type="button" class="btn btn-outline-danger" (click)="delete(deleteRating); modal.close('Save click');">Delete</button>
+        </div>
+      </ng-template>
+      
+      <hr>
+      
+      <pre>{{closeResult}}</pre>
+
+<!-- 
+    <ng-template #content let-modal>
+      <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmation</h5>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete?</p>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <hr>
+
+
+    <pre>{{closeResult}}</pre> -->
+
     <div class="col-md-12">
       <div class="card shadow">
         <div class="card-body">
 
           <div style="margin-left: auto; margin-right: auto;">
             <fieldset class="rating ml-auto" style="zoom:2;">
-              <input type="radio" id="star5" name="rating" value="5" (click)="updateStar(5)"/>
+              <input type="radio" id="star5" name="rating" value="5" (click)="updateStar(5)" />
               <label class="full" for="star5" title="Awesome - 5 stars"></label>
-              <input type="radio" id="star4half" name="rating" value="4.5" (click)="updateStar(4.5)"/>
+              <input type="radio" id="star4half" name="rating" value="4.5" (click)="updateStar(4.5)" />
               <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-              <input type="radio" id="star4" name="rating" value="4" (click)="updateStar(4)"/>
+              <input type="radio" id="star4" name="rating" value="4" (click)="updateStar(4)" />
               <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-              <input type="radio" id="star3half" name="rating" value="3.5" (click)="updateStar(3.5)"/>
+              <input type="radio" id="star3half" name="rating" value="3.5" (click)="updateStar(3.5)" />
               <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-              <input type="radio" id="star3" name="rating" value="3" (click)="updateStar(3)"/>
+              <input type="radio" id="star3" name="rating" value="3" (click)="updateStar(3)" />
               <label class="full" for="star3" title="Meh - 3 stars"></label>
-              <input type="radio" id="star2half" name="rating" value="2.5" (click)="updateStar(2.5)"/>
+              <input type="radio" id="star2half" name="rating" value="2.5" (click)="updateStar(2.5)" />
               <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-              <input type="radio" id="star2" name="rating" value="2" (click)="updateStar(2)"/>
+              <input type="radio" id="star2" name="rating" value="2" (click)="updateStar(2)" />
               <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-              <input type="radio" id="star1half" name="rating" value="1.5" (click)="updateStar(1.5)"/>
+              <input type="radio" id="star1half" name="rating" value="1.5" (click)="updateStar(1.5)" />
               <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-              <input type="radio" id="star1" name="rating" value="1" (click)="updateStar(1)"/>
+              <input type="radio" id="star1" name="rating" value="1" (click)="updateStar(1)" />
               <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-              <input type="radio" id="starhalf" name="rating" value="0.5" (click)="updateStar(0.5)"/>
+              <input type="radio" id="starhalf" name="rating" value="0.5" (click)="updateStar(0.5)" />
               <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
             </fieldset>
           </div>
-          <textarea [disabled]="hasRated === true" name="ratingDescription" [(ngModel)]="rating.ratingDescription" class="form-control"
-                    id="ratingDescription"
-                    [placeholder]="hasRatedText"></textarea>
+          <textarea [disabled]="hasRated === true" name="ratingDescription" [(ngModel)]="rating.ratingDescription"
+            class="form-control" id="ratingDescription" [placeholder]="hasRatedText"></textarea>
 
-          <button [disabled]="hasRated === true" class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();form.reset();'>Add
+          <button [disabled]="hasRated === true" class="btn btn-primary w-100 addRatingButton" type="submit" (click)='addRating();'>Add
             Rating
           </button>
 
         </div>
       </div>
     </div>
+
+
 
     <!-- Review -->
     <div class="col-md-12">
@@ -173,7 +222,7 @@
               written: {{rating.created | date : "d MMM, y h:mm:ss a" : "en-AU"}}
             </p>
             <div class="reviewComment float-right" *ngIf="rating.userID == user.id">
-              <button class="btn btn-danger" title="delete rating" (click)="delete(rating)">Delete
+              <button class="btn btn-danger" title="delete rating" (click)="open(content, rating)">Delete
               </button>
               <button class="btn btn-primary" title="edit rating" (click)="edit(rating)">Edit
               </button>
@@ -182,18 +231,17 @@
         </div>
 
         <div *ngIf="rating.editFlag == true">
-          
+
           <form>
             <div class="form-group">
               <label for="username">User Name</label>
               <input name="username" [(ngModel)]="user.username" type="text" class="form-control" id="username"
-                     disabled>
+                disabled>
             </div>
             <div class="form-group">
               <label for="ratingDescription1">Rating Description</label>
-              <textarea name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control"
-                     id="ratingDescription1"
-                        placeholder="Enter Rating Description"></textarea>
+              <textarea name="ratingDescription1" [(ngModel)]="rating.ratingDescription" class="form-control" id="ratingDescription1"
+                placeholder="Enter Rating Description"></textarea>
             </div>
             <button class="btn btn-primary" type="submit" (click)='editRating(rating)'>Edit Rating</button>
           </form>
