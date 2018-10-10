@@ -282,7 +282,6 @@ export class SubjectAddReviewComponent implements OnInit {
 
   async delete(rating: Rating) {
    
-    this.spinner.show()
     this.ratings = this.ratings.filter(r => r !== rating);
     if (this.subject.numberOfReview > 1) {
       this.subject.numberOfReview = await this.subject.numberOfReview - 1;
@@ -316,9 +315,6 @@ export class SubjectAddReviewComponent implements OnInit {
     }, error => {
       this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
     });
-    setTimeout( () =>
-    this.spinner.hide(), 1000
-  )
   }
 
   clearRatingStar(): void {

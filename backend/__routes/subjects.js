@@ -63,7 +63,7 @@ router.get('/allSubjects', (req, res) => {
             res.json({ success: true, subjects: subjects });
         }
 
-    }).sort({ '_id': -1 });
+    }).sort({ 'subjectName': 1 });
 })
 
 //Get request to fetch subjects for the dashboard which will be sorted according to the highest percentage rating
