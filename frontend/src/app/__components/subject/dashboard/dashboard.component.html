@@ -1,14 +1,63 @@
 <!-- Container -->
 <div class="container">
-  <br><br>
+  <br>
 
   <!-- Spinner -->
   <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-rotate">
     <p style="font-size: 20px; color: white">Loading...</p>
   </ngx-spinner>
 
+  <!-- Search Bar -->
+  <h3>Search For Subjects</h3>
+  <div class="row" style="margin-bottom: 10px;">
+    <form [formGroup]="form" style="width:100%;">
+      <div class="col-md-12">
+        <div class="form-group">
+          <select class="float-left col-md-3" style="height:38px;" name="searchType" formControlName="searchType">
+            <option value="" disabled selected>Filter By</option>
+            <option value="subjectNumber">Subject Number</option>
+            <option value="subjectName">Subject Name</option>
+          </select>
+          <input style="width:100%;" type="text" class="form-control float-left col-md-8" placeholder="Search subject..."
+            name="subjectDetail" formControlName="subjectDetail">
+          <button class="btn btn-primary float-left" type="button" (click)="checkSubject()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- Search Bar end-->
+
+  <!-- Search Results Start -->
+  <div *ngIf="displaySearch">
+    <h3 class="text-success"> {{searchedSubject.length}} Subjects Found </h3>
+    <div class="row">
+      <div class="card shadow text-center" style="width: 15rem;" *ngFor="let subject of searchedSubject">
+        <div class="card-header text-center">
+          <h5>{{ subject.subjectNumber }}</h5>
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{ subject.subjectName }}</p>
+        </div>
+        <div class="card-footer">
+          <div>
+            <div class="stars-outer">
+              <div class="stars-inner" [style.width]="subject.percentageRating + '%'">
+              </div>
+            </div>
+            <br />
+            {{subject.numberOfReview}} reviews
+            <br>
+            <button [routerLink]="['/subjects/detail/', subject._id]" class="btn btn-primary">Find Out More </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1 class="text-center text-danger" *ngIf="doNotDisplaySearch">No Results Found</h1>
+  <!-- Search Results End -->
+
   <!-- Highly Rated Subject -->
-  <h3>High Rated Subjects</h3>
+  <h3 style="margin-top: 50px;">High Rated Subjects</h3>
 
   <!-- Row -->
   <div class="row">
@@ -49,9 +98,9 @@
   </div>
 
   <br><br>
-  
+
   <!-- Most Recent Ratings  -->
-  <h3>Most recently Rated Subject</h3>
+  <h3>Most recent Ratings</h3>
 
   <!-- Row -->
   <div class="row">

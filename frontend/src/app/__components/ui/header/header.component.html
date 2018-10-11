@@ -21,7 +21,7 @@
           <i class="fa fa-user fixed-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" *ngIf="user.usertype == 'admin'" [routerLink]="['/subjects/add']">Add Subject</a>
+          <a class="dropdown-item" *ngIf="authService.checkUserType()" [routerLink]="['/subjects/add']">Add Subject</a>
           <a class="dropdown-item" [routerLink]="['/profile']">Profile</a>
           <a class="dropdown-item" (click)="onClickLogout()" href="#">Logout</a>
         </div>

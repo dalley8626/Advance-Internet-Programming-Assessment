@@ -127,10 +127,8 @@ router.put('/updateSubject', (req, res) => {
                     //displaying errors
                     if (err) {
                         res.json({ success: false, message: err });
-                        console.log("2")
                     } else { //success
                         res.json({ success: true, message: 'Subject Updated Successfully' });
-                        console.log("3")
                     }
                 });
             }

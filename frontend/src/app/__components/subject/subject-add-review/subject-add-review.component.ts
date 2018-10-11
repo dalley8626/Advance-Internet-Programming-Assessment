@@ -217,6 +217,7 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   addRating(): void {
+    
     if (this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
       this.rating.userID = this.user.id;
@@ -238,7 +239,7 @@ export class SubjectAddReviewComponent implements OnInit {
           this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger', timeout: 1000});
         }
       }, error => {
-        this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
+        this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger', timeout: 1000});
       });
 
       this.ratingService.addRating(this.rating).subscribe(res => {
@@ -246,16 +247,17 @@ export class SubjectAddReviewComponent implements OnInit {
         
         if (res['status'] === 'success') {
           this.ratingService.notifyRatingAddition();
-          this.flashMessageService.show('Rating added', {cssClass: 'alert-success.', timeout: 1000});
+          this.flashMessageService.show('Rating added', {cssClass: 'alert-success', timeout: 1000});
           this.rating.ratingDescription = '';
         } else {
-          this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.', timeout: 1000});
+
+          this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger', timeout: 1000});
         }
       }, error => {
-        this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
+        this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger', timeout: 1000});
       });
     } else {
-      this.flashMessageService.show('Rating Description Required', {cssClass: 'alert-danger.', timeout: 1000});
+      this.flashMessageService.show('Rating Description Required', {cssClass: 'alert-danger', timeout: 1000});
     }
   }
 
@@ -270,13 +272,13 @@ export class SubjectAddReviewComponent implements OnInit {
         rating.editFlag = false;
         this.message = 'Rating edited.';
       } else {
-        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.', timeout: 1000});
+        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger', timeout: 1000});
       }
     });
   }
 
   async delete(rating: Rating) {
-    console.log('asfsaas'+ rating);
+   
     this.ratings = this.ratings.filter(r => r !== rating);
     if (this.subject.numberOfReview > 1) {
       this.subject.numberOfReview = await this.subject.numberOfReview - 1;
@@ -291,15 +293,15 @@ export class SubjectAddReviewComponent implements OnInit {
       console.log('response is ', res);
       if (res['status'] === 'success') {
         this.ratingService.notifyRatingAddition();
-        this.flashMessageService.show('Rating deleted', {cssClass: 'alert-success.', timeout: 1000});
+        this.flashMessageService.show('Rating deleted', {cssClass: 'alert-success', timeout: 1000});
         this.hasRated = false;
         this.hasRatedText = 'Write a Review.';
  
       } else {
-        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger.', timeout: 1000});
+        this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger', timeout: 1000});
       }
     }, error => {
-      this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
+      this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger', timeout: 1000});
     });
     this.subjectService.editSubject(this.subject).subscribe(res => {
       if (res['success'] === true) {
@@ -308,7 +310,7 @@ export class SubjectAddReviewComponent implements OnInit {
         this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger', timeout: 1000});
       }
     }, error => {
-      this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger.', timeout: 1000});
+      this.flashMessageService.show('Error: ' + error, {cssClass: 'alert-danger', timeout: 1000});
     });
   }
 

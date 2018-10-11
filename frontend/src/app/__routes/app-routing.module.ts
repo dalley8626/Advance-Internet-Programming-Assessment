@@ -23,11 +23,10 @@ import { NotAuthGuard } from '../__guards/notAuth.guard';
 import { AuthGuard } from '../__guards/auth.guard';
 
 const routes: Routes = [  
-  { path: '', component:SubjectFeedComponent, canActivate:[AuthGuard]},
+  { path: '', component:DashboardComponent, canActivate:[AuthGuard]},
   { path: 'login', component: LoggingComponent, canActivate:[NotAuthGuard]},
   { path: 'register', component: RegisteringComponent, canActivate:[NotAuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
-  // { path: 'subjects/detail/:id', component: SubjectDetailComponent, canActivate:[AuthGuard] },
    { path: 'subjects', component: SubjectFeedComponent, canActivate:[AuthGuard] },
    { path: 'subjects/add', component: SubjectAddComponent, canActivate:[AuthGuard]},
    { path: 'subjects/detail/:id', component: SubjectAddReviewComponent, canActivate:[AuthGuard]},
@@ -35,7 +34,8 @@ const routes: Routes = [
    { path: 'subjects/delete/:id', component: SubjectDeleteComponent, canActivate:[AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard]},
-  { path: '**', component: LoggingComponent }, // The "Catch-All" Route and send to login
+  { path: '**', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: '**', component: LoggingComponent } // The "Catch-All" Route and send to login
 
 ]
 @NgModule({

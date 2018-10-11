@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const config = require('../__config/database')
 const User = require('../__models/user');
 
+const Subject = require('../__models/subject')
+
 //This function is use for user registration
 //It requests the field as a JSON type
 //Then it adds the into the database as a new collection
@@ -126,6 +128,35 @@ router.get('/checkUsername/:username', (req, res) => {
 
         })
     }
+})
+
+//Get request to check for available username
+router.get('/checkSubjectNumber/:subjectNumber', (req, res) => {
+    if (!req.params.subjectNumber) {
+        res.json({ success: false, message: 'SubjectNumber has not been provided' });
+    } else {
+        Subject.find({ subjectNumber: req.params.subjectNumber }, (err, subjects) => {
+            if (err) {
+                res.json({ success: false, message: err });
+            } else 
+                res.json({success: true, subjects: subjects});
+            }
+    ).sort({ '_id': -1 });
+}
+})
+
+router.get('/checkSubjectName/:subjectName', (req, res) => {
+    if (!req.params.subjectName) {
+        res.json({ success: false, message: 'SubjectName has not been provided' });
+    } else {
+        Subject.find({ subjectName: { "$regex": req.params.subjectName , "$options": "i" }}, (err, subjects) => {
+            if (err) {
+                res.json({ success: false, message: err });
+            } else 
+                res.json({success: true, subjects: subjects});
+            }
+    ).sort({ '_id': -1 });
+}
 })
 
 //A route way to access the webpage, therefore we have to encrypt with a passport authentication

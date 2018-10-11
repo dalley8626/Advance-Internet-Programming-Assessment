@@ -42,9 +42,9 @@ app.use(express.static(path.join(__dirname,'public')))
 //middleware
 app.use(bodyParser.json()); //Body parse that allows forms to be accepted as data
 app.use(dollarDefender(/* optionional config object */));
-app.use(cors({
-    origin: "http://localhost:4200"
-}));//cors middleware
+// app.use(cors({
+//     origin: "http://localhost:4200"
+// }));//cors middleware
 
 //Initialize the passport
 //Use the session
