@@ -24,7 +24,10 @@ export class SubjectFeedComponent implements OnInit{
   numberOfreview;
   percentageRating;
   percentageRatingRounded;
-  
+  input;
+  filter;
+  subjects;
+
   constructor(
     private subjectService: SubjectService,
     private authService: AuthService,
@@ -42,9 +45,12 @@ export class SubjectFeedComponent implements OnInit{
       this.subjectPosts.forEach(function (subjectPost) {
         if (subjectPost.description.length > 100 ) {
           subjectPost.description = subjectPost.description.substring(0, 100) + '...';
+          subjectPost.isVisible = true;
         }
       });
       this.spinner.hide();
+      this.subjects = [...this.subjectPosts];
+
     })
 
   }
@@ -53,8 +59,17 @@ export class SubjectFeedComponent implements OnInit{
     this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
     });
-    
     this.getAllSubjects();
+  }
+
+  search(value) {
+    this.subjects = [];
+    this.subjectPosts.forEach((element, index) => {
+      if (element.subjectName.toUpperCase().indexOf(value.toUpperCase()) !== -1) {
+        console.log(element.subjectName.toUpperCase());
+        this.subjects.push(element);
+      } else {}
+    });
   }
 
 }
