@@ -102,7 +102,5 @@ export class AuthService {
       return true;
     }
     return false;
-  }
-  
-  
+  }  
 }

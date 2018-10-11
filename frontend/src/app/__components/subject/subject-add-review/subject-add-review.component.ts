@@ -217,7 +217,7 @@ export class SubjectAddReviewComponent implements OnInit {
   }
 
   addRating(): void {
-    
+    this.spinner.show();
     if (this.rating.ratingDescription) {
       this.rating.subjectID = this.subject._id;
       this.rating.userID = this.user.id;
@@ -249,6 +249,7 @@ export class SubjectAddReviewComponent implements OnInit {
           this.ratingService.notifyRatingAddition();
           this.flashMessageService.show('Rating added', {cssClass: 'alert-success', timeout: 1000});
           this.rating.ratingDescription = '';
+          this.hasRated = false;
         } else {
 
           this.flashMessageService.show('Attempt failed, try again.', {cssClass: 'alert-danger', timeout: 1000});
@@ -259,6 +260,9 @@ export class SubjectAddReviewComponent implements OnInit {
     } else {
       this.flashMessageService.show('Rating Description Required', {cssClass: 'alert-danger', timeout: 1000});
     }
+    setTimeout( ()=> {
+      this.spinner.hide();
+    }, 1000)
   }
 
   edit(rating: Rating): void {

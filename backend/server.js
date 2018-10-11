@@ -39,6 +39,7 @@ var port = process.env.PORT || 8080;
 //prociding a static directory for front-end
 app.use(express.static(path.join(__dirname,'public')))
 
+app.use(bodyParser.urlencoded({ extended: false }))
 //middleware
 app.use(bodyParser.json()); //Body parse that allows forms to be accepted as data
 app.use(dollarDefender(/* optionional config object */));
