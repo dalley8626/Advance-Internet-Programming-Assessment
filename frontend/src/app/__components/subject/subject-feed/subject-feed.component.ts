@@ -64,7 +64,6 @@ export class SubjectFeedComponent implements OnInit{
     this.subjects = [];
     this.subjectPosts.forEach((element, index) => {
       if (element.subjectName.toUpperCase().indexOf(value.toUpperCase()) !== -1) {
-        console.log(element.subjectName.toUpperCase());
         this.subjects.push(element);
       } else {}
     });
