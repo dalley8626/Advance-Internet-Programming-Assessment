@@ -24,8 +24,6 @@ export class SubjectFeedComponent implements OnInit{
   numberOfreview;
   percentageRating;
   percentageRatingRounded;
-  input;
-  filter;
   subjects;
 
   constructor(
