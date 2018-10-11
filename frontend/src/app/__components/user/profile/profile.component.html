@@ -1,12 +1,6 @@
 <div class="container">
   <!-- Message Display -->
   <br />
-  <div class="row show-hide-message">
-    <div [ngClass]="messageClass" style="width:100%;" class="text-center">
-      {{ message }}
-    </div>
-  </div>
-
   <div *ngIf="loadEditForm">
     <div *ngIf="user">
       
