@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SubjectService } from './../../../__services/subjectService/subject.service';
-import { AuthService } from './../../../__services/authService/auth.service';
-
-import { NgxSpinnerService } from 'ngx-spinner'
+import { SubjectService } from './../../../__services/subjectService/subject.service';  // subject service component
+import { AuthService } from './../../../__services/authService/auth.service'; // authentication service component
+import { NgxSpinnerService } from 'ngx-spinner';  //spinner service
 
 
 @Component({
@@ -11,37 +9,67 @@ import { NgxSpinnerService } from 'ngx-spinner'
   templateUrl: './subject-feed.component.html',
   styleUrls: ['./subject-feed.component.css']
 })
-export class SubjectFeedComponent implements OnInit{
+export class SubjectFeedComponent implements OnInit {
 
+  //message variable stores the feedback message for the user
   message;
+  //message class defines the CSS class for message to be displayed
   messageClass;
+
+  //variable to store the instance of the user model
   user;
-  
+
   subjectPosts;
 
+  //variable to store the instance of the rating model
   rating;
+
+  //maximum possible rating is the maximum rating a subject can receive based on total number of people that reviewed
   maximumPossibleRating;
+
+  //variable to store the total number of reviews
   numberOfreview;
+
+  //variable to store the rating percentage
   percentageRating;
+
+  //variable to store the rounded rating percentage
   percentageRatingRounded;
+
+  //variable to store the subject instances of subject model; an array
   subjects;
 
   constructor(
-    private subjectService: SubjectService,
-    private authService: AuthService,
-    private spinner : NgxSpinnerService
-  ) 
-  {
-    
+    private subjectService: SubjectService, //subject service
+    private authService: AuthService, // authentication service
+    private spinner: NgxSpinnerService  // spinner service
+  ) {
   }
 
+  ngOnInit() {
+    //getting the profile of the user
+    this.authService.getProfile().subscribe(profile => {
+      this.user = profile.user;
+    });
+
+    //getting all the subejcts form the database
+    this.getAllSubjects();
+  }
+
+
+  //function to get all the subjects from the databse
   getAllSubjects() {
     this.spinner.show();
-    
+
+    //invoking the function from subject service to retrieve all data
     this.subjectService.getAllSubjects().subscribe(data => {
+      //assigning the subjects to the array variable defined in the class
       this.subjectPosts = data.subjects;
+
+      //looping through those data
       this.subjectPosts.forEach(function (subjectPost) {
-        if (subjectPost.description.length > 100 ) {
+        //minifying the description of the subject
+        if (subjectPost.description.length > 100) {
           subjectPost.description = subjectPost.description.substring(0, 100) + '...';
           subjectPost.isVisible = true;
         }
@@ -53,19 +81,16 @@ export class SubjectFeedComponent implements OnInit{
 
   }
 
-  ngOnInit() {
-    this.authService.getProfile().subscribe(profile => {
-      this.user = profile.user;
-    });
-    this.getAllSubjects();
-  }
-
+  //function to search the subject with respect to subject name
   search(value) {
+    //emptying the array
     this.subjects = [];
+    //looping through all the subjects
     this.subjectPosts.forEach((element, index) => {
       if (element.subjectName.toUpperCase().indexOf(value.toUpperCase()) !== -1) {
+        //adding into the array
         this.subjects.push(element);
-      } else {}
+      } else { }
     });
   }
 
