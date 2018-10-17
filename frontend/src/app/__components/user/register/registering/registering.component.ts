@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ValidateService } from '../../../../__services/validateService/validate.service';
-import { AuthService } from '../../../../__services/authService/auth.service';
-import { Router } from '@angular/router';
+import { ValidateService } from '../../../../__services/validateService/validate.service'; //validation service
+import { AuthService } from '../../../../__services/authService/auth.service';  //authentication service
+import { Router } from '@angular/router'; //router module
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';  //module for creating reactive forms
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+/**
+ * This Component displays a register page and has functions for registering a user
+ */
 @Component({
   selector: 'app-registering',
   templateUrl: './registering.component.html',
@@ -12,16 +14,27 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisteringComponent implements OnInit {
 
+  //instance of formGroup
   form: FormGroup;
+
+  //message variable stores the feedback message for the user
   message;
+  //message class defines the CSS class for message to be displayed
   messageClass;
 
+  //variable to disable or enable form so that user does not edit or submit the form simultaneously while the form is being procesed
+  //false means user can edit or click
+  //true means user cannot
   processing;
 
+  //variable to store boolean values reagarding the validity of the email
   emailValid;
+  //error message or confirmation message
   emailMessage;
 
+  //variable to store boolean values regarding the validity of the username
   usernameValid;
+  //variable to store the message on the validity of username
   usernameMessage;
 
   constructor(
@@ -29,10 +42,10 @@ export class RegisteringComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
-    this.createForm();
+    this.createForm(); //creating the form at startt
   }
 
-
+  //function to create form
   createForm() {
     this.form = this.formBuilder.group({
       first_name: ['', Validators.compose([
@@ -69,11 +82,16 @@ export class RegisteringComponent implements OnInit {
     }, { validator: this.matchingPasswords('password', 'confirm_password') })
   }
 
+  //Initialization
   ngOnInit() {
   }
 
+  //On Register
   onRegisterSubmit() {
+    //disabling the form
     this.processing = true;
+
+    //creating a instance of the user
     const user = {
       first_name: this.form.get('first_name').value,
       last_name: this.form.get('last_name').value,
@@ -82,6 +100,7 @@ export class RegisteringComponent implements OnInit {
       password: this.form.get('password').value,
     }
 
+    //registering a new user
     this.authService.registerUser(user).subscribe(data => {
       if (!data.success) {
         this.messageClass = 'alert alert-danger';
@@ -98,6 +117,7 @@ export class RegisteringComponent implements OnInit {
     });
   }
 
+  //validation for emails
   validateEmails(controls) {
     const regExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     if (regExp.test(String(controls.value))) {
@@ -107,6 +127,7 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
+  //validation for username
   validateUsername(controls) {
     const regExp = new RegExp(/^[a-zA-Z0-9]+$/);
     if (regExp.test(controls.value)) {
@@ -116,6 +137,7 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
+  //validation for first name and last name
   validateName(controls) {
     const regExp = new RegExp(/^[a-zA-Z]+$/);
     if (regExp.test(controls.value)) {
@@ -125,6 +147,7 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
+  //validation for password
   validatePassword(controls) {
     const regExp = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/);
     if (regExp.test(controls.value)) {
@@ -134,7 +157,7 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
-
+  //matching the passwords for confirmaiton
   matchingPasswords(password, confirm_password) {
     return (group: FormGroup) => {
       if (group.controls[password].value === group.controls[confirm_password].value) {
@@ -145,6 +168,7 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
+  //check the availability of the email
   checkEmail() {
     const email = this.form.get('email').value;
     if (email.length != 0) {
@@ -160,6 +184,7 @@ export class RegisteringComponent implements OnInit {
     }
   }
 
+  //checks the availability of the username
   checkUsername() {
     const username = this.form.get('username').value;
     if (username.length != 0) {
