@@ -6,43 +6,45 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from '../messageService/message.service';
 import {Rating} from '../../__models/rating';
-import {Headers, RequestOptions} from '@angular/http';
+// import {Headers, RequestOptions} from '@angular/http';
 import {AuthService} from '../authService/auth.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+// const httpOptions = {
+//   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+// };
 
 @Injectable({ providedIn: 'root' })
 export class RatingService {
   public ratingAdded_Observable = new Subject();
   domain = this.authService.domain;// URL to web api
   private ratingsUrl = this.domain + '/ratings';  // URL to web api
-  options;
+  // options;
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private messageService: MessageService) { }
 
-  createAuthenticationHeaders() {
-    this.authService.loadToken();
-    this.options = new RequestOptions({
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        'authorization': this.authService.authToken
-      })
-    });
-  }
+  // createAuthenticationHeaders() {
+  //   this.authService.loadToken();
+  //   this.options = new RequestOptions({
+  //     headers: new Headers({
+  //       'Content-Type': 'application/json',
+  //       'authorization': this.authService.authToken
+  //     })
+  //   });
+  // }
   /** GET ratings from the server */
   getRatings (): Observable<Rating[]> {
-    return this.http.get<Rating[]>(this.ratingsUrl);
+    this.authService.loadAuthenticationHeaders();
+    return this.http.get<Rating[]>(this.ratingsUrl,{headers:this.authService.headers});
   }
 
   /** GET rating by id. Return `undefined` when id not found */
   getRatingNo404<Data>(_id: number): Observable<Rating> {
+    this.authService.loadAuthenticationHeaders();
     const url = `${this.ratingsUrl}/?id=${_id}`;
-    return this.http.get<Rating[]>(url)
+    return this.http.get<Rating[]>(url,{headers:this.authService.headers})
       .pipe(
         map(ratings => ratings[0]), // returns a {0|1} element array
         tap(h => {
@@ -54,15 +56,15 @@ export class RatingService {
   }
   /** GET ratings from the server */
   getRatingsbySubjectID (subjectID: number): Observable<Rating[]> {
-    this.createAuthenticationHeaders();
+    this.authService.loadAuthenticationHeaders();
     const url = `${this.ratingsUrl}/${subjectID}`;
-    return this.http.get<Rating[]>(url);
+    return this.http.get<Rating[]>(url,{headers:this.authService.headers});
   }
   
   /** GET rating by id. Will 404 if id not found */
   getRating(_id: number): Observable<Rating> {
     const url = `${this.ratingsUrl}/detail/${_id}`;
-    return this.http.get<Rating>(url).pipe(
+    return this.http.get<Rating>(url,{headers:this.authService.headers}).pipe(
       tap(_ => this.log(`fetched rating id=${_id}`)),
       catchError(this.handleError<Rating>(`getRating id=${_id}`))
     );
@@ -72,8 +74,9 @@ export class RatingService {
 
   /** POST: add a new rating to the server */
   addRating (rating: Rating): Observable<Rating> {
-    console.log(rating);
-    return this.http.post<Rating>(`${this.ratingsUrl}/add/`, rating, httpOptions).pipe(
+    this.authService.loadAuthenticationHeaders();
+    console.log(rating,{headers:this.authService.headers});
+    return this.http.post<Rating>(`${this.ratingsUrl}/add/`, rating, {headers:this.authService.headers}).pipe(
       tap((rating: Rating) => this.log(`added rating w/ id=${rating._id}`)),
       catchError(this.handleError<Rating>('addRating'))
     );
@@ -81,9 +84,9 @@ export class RatingService {
 
   /** DELETE: delete the rating from the server */
   deleteRating (rating: Rating): Observable<Rating> {
-    console.log(rating);
+    console.log(rating,{headers:this.authService.headers});
     const url = `${this.ratingsUrl}/delete/${rating._id}`;
-    return this.http.delete<Rating>(url, httpOptions).pipe(
+    return this.http.delete<Rating>(url, {headers:this.authService.headers}).pipe(
       tap(_ => this.log(`deleted rating _id=${rating._id}`)),
       catchError(this.handleError<Rating>('deleteRating'))
     );
@@ -91,7 +94,7 @@ export class RatingService {
 
   /** PUT: update the rating on the server */
   updateRating (rating: Rating): Observable<any> {
-    return this.http.put(`${this.ratingsUrl}/update`, rating, httpOptions).pipe(
+    return this.http.put(`${this.ratingsUrl}/update`, rating, {headers:this.authService.headers}).pipe(
       tap(_ => this.log(`updated rating _id=${rating._id}`)),
       catchError(this.handleError<any>('updateRating'))
     );
@@ -125,6 +128,7 @@ export class RatingService {
   }
 
   getDashboardRatings() {
-    this.createAuthenticationHeaders();
-    return this.http.get(this.ratingsUrl + '/dashboard', this.options);
+    console.log(this.authService.headers);
+    this.authService.loadAuthenticationHeaders();    
+    return this.http.get(this.ratingsUrl + '/dashboard', {headers:this.authService.headers});
   }}
