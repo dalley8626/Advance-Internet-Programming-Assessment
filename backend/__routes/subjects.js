@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 //link to the database
 const config = require('../__config/database');
@@ -11,7 +13,7 @@ const User = require('../__models/user');
 const Subject = require('../__models/subject');
 
 //Post request to add a subject
-router.post('/addSubject', (req, res, next) => {
+router.post('/addSubject', passport.authenticate('jwt', { session: false }) , (req, res, next) => {
 
     //Required Validations
     if (!req.body.subjectNumber) {
@@ -51,7 +53,7 @@ router.post('/addSubject', (req, res, next) => {
 })
 
 //Get request to fetch all the available subjects in the database
-router.get('/allSubjects', (req, res) => {
+router.get('/allSubjects', passport.authenticate('jwt', { session: false }) , (req, res) => {
     //fetching all the subject and sorting the subjects
     Subject.find({}, (err, subjects) => {
         //displaying errors (if any)
@@ -67,7 +69,7 @@ router.get('/allSubjects', (req, res) => {
 })
 
 //Get request to fetch subjects for the dashboard which will be sorted according to the highest percentage rating
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', passport.authenticate('jwt', { session: false }) , (req, res) => {
     Subject.find({}, (err, subjects) => {
         //display errors
         if (err) {
@@ -83,7 +85,7 @@ router.get('/dashboard', (req, res) => {
 })
 
 //get request to fetach a subject according to the passed id
-router.get('/singleSubject/:id', (req, res) => {
+router.get('/singleSubject/:id', passport.authenticate('jwt', { session: false }) , (req, res) => {
     //validation to see of there is any subject id provided
     if (!req.params.id) {
         res.json({ success: false, message: 'No Subject Id has been provided.' });
@@ -102,7 +104,7 @@ router.get('/singleSubject/:id', (req, res) => {
 });
 
 //Put request to update the subject
-router.put('/updateSubject', (req, res) => {
+router.put('/updateSubject', passport.authenticate('jwt', { session: false }) , (req, res) => {
     //if no id
     if (!req.body._id) {
         res.json({ success: false, message: 'No Subject Id has been provided.' });
@@ -137,7 +139,7 @@ router.put('/updateSubject', (req, res) => {
 })
 
 //delete request to delete the subject
-router.delete('/deleteSubject/:id', (req, res) => {
+router.delete('/deleteSubject/:id', passport.authenticate('jwt', { session: false }) , (req, res) => {
     //if id parameter is not provided
     if (!req.params.id) {
         res.json({ success: false, message: 'No Subject Id has been provided.' });

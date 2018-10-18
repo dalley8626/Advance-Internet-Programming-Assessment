@@ -140,7 +140,7 @@ router.get('/checkUsername/:username', (req, res) => {
 //It checks if you have entered an subjectNumber
 //Then check if there is an error, or an subjectNumber has been registered, or available
 //Provide back with a response
-router.get('/checkSubjectNumber/:subjectNumber', (req, res) => {
+router.get('/checkSubjectNumber/:subjectNumber', passport.authenticate('jwt', { session: false }) , (req, res) => {
     if (!req.params.subjectNumber) {
         res.json({ success: false, message: 'SubjectNumber has not been provided' });
     } else {
@@ -158,7 +158,7 @@ router.get('/checkSubjectNumber/:subjectNumber', (req, res) => {
 //It checks if you have entered an subjectName
 //Then check if there is an error, or an subjectName has been registered, or available
 //Provide back with a response
-router.get('/checkSubjectName/:subjectName', (req, res) => {
+router.get('/checkSubjectName/:subjectName', passport.authenticate('jwt', { session: false }) , (req, res) => {
     if (!req.params.subjectName) {
         res.json({ success: false, message: 'SubjectName has not been provided' });
     } else {

@@ -13,7 +13,7 @@ let emailLengthChecker = (email) => {
     }
 };
 
-//valid email checker
+//Validation an email address using regex expressions
 let validEmailChecker = (email) => {
     if(!email){
         return false;
@@ -49,7 +49,7 @@ let usernameLengthChecker = (username) => {
     }
 };
 
-//valid username checker
+//Validation username using regex expressions
 let validUsernameChecker = (username) => {
     if (!username) {
         return false;
