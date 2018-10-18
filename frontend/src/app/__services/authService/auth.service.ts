@@ -15,6 +15,7 @@ export class AuthService {
   domain = "http://localhost:8080";
   authToken: any;
   user: any;
+  headers;
 
   constructor(
     private http : Http,
@@ -59,6 +60,13 @@ export class AuthService {
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
     return this.http.put(this.domain + '/users/profile/updateProfile', user, {headers : headers}).pipe(map(res => res.json()));
+  }
+
+  loadAuthenticationHeaders() {
+    this.headers = new Headers();
+    this.loadToken();
+    this.headers.append('Authorization', this.authToken);
+    this.headers.append('Content-Type', 'application/json');
   }
 
   getProfile() {
