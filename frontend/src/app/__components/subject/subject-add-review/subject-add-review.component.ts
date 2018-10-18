@@ -166,7 +166,7 @@ export class SubjectAddReviewComponent implements OnInit {
         this.getRatingsbySubjectID();
 
         //
-        this.ratingService.ratingAdded_Observable.subscribe(res => {
+        this.ratingService.rating_Observable.subscribe(res => {
           this.clearRatingStar();
           this.getRatingsbySubjectID();
         });
@@ -305,7 +305,7 @@ export class SubjectAddReviewComponent implements OnInit {
       this.subjectService.editSubject(this.subject).subscribe(res => {
 
         if (res['success'] === true) {
-          this.subjectService.notifySubjectAddition();
+          this.subjectService.notifySubject();
         } else {
           this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger', timeout: 1000 });
         }
@@ -317,7 +317,7 @@ export class SubjectAddReviewComponent implements OnInit {
         console.log('response is ', res);
 
         if (res['status'] === 'success') {
-          this.ratingService.notifyRatingAddition();
+          this.ratingService.notifyRating();
           this.flashMessageService.show('Rating added', { cssClass: 'alert-success', timeout: 1000 });
           this.rating.ratingDescription = '';
           this.hasRated = false;
@@ -345,7 +345,7 @@ export class SubjectAddReviewComponent implements OnInit {
   editRating(rating: Rating): void {
     this.ratingService.updateRating(rating).subscribe(res => {
       if (res['status'] === 'success') {
-        this.ratingService.notifyRatingAddition();
+        this.ratingService.notifyRating();
         rating.editFlag = false;
         this.message = 'Rating edited.';
       } else {
@@ -370,7 +370,7 @@ export class SubjectAddReviewComponent implements OnInit {
     this.ratingService.deleteRating(rating).subscribe(res => {
       console.log('response is ', res);
       if (res['status'] === 'success') {
-        this.ratingService.notifyRatingAddition();
+        this.ratingService.notifyRating();
         this.flashMessageService.show('Rating deleted', { cssClass: 'alert-success', timeout: 1000 });
         this.hasRated = false;
         this.hasRatedText = 'Write a Review.';
@@ -383,7 +383,7 @@ export class SubjectAddReviewComponent implements OnInit {
     });
     this.subjectService.editSubject(this.subject).subscribe(res => {
       if (res['success'] === true) {
-        this.subjectService.notifySubjectAddition();
+        this.subjectService.notifySubject();
       } else {
         this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger', timeout: 1000 });
       }

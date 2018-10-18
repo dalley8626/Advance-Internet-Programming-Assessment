@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const config = require('../__config/database')
 const Rating = require('../__models/rating');
-
+const performance = require('performance-now');
 //Get request to fetch all the available ratings in the database
 router.get('/', (req, res) => {
     mongoose.connect(config.database, { useNewUrlParser: true }, function(err){
@@ -93,21 +93,22 @@ router.delete('/delete/:id', (req, res) => {
         (err, doc) => {
         if(err) throw err;
         return res.status(200).json({
-            status: 'success',
-            data: doc
+            status: 'success'
         })
     })
 })
 //Put request that updates the rating with different information
 router.put('/update', (req, res) => {
+    const start = performance();
+    console.log(start);
     Rating.update(req.body,
-        (err, doc) => {
+        (err) => {
         if(err) throw err;
         return res.status(200).json({
-            status: 'success',
-            data: doc
-        })
+            status: 'success'
+        });
     })
+    console.log(performance() -start);
 })
 module.exports = router;
 
