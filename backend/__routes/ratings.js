@@ -95,20 +95,19 @@ router.delete('/delete/:id',passport.authenticate('jwt', { session: false }), (r
         (err, doc) => {
         if(err) throw err;
         return res.status(200).json({
-            status: 'success',
-            data: doc
+            status: 'success'
         })
     })
 })
 //Put request that updates the rating with different information
-router.put('/update',passport.authenticate('jwt', { session: false }), (req, res) => {
+router.put('/update', passport.authenticate('jwt', { session: false }), (req, res) => {
     Rating.update(req.body,
         (err, doc) => {
         if(err) throw err;
         return res.status(200).json({
             status: 'success',
-            data: doc
-        })
+            doc: doc
+        });
     })
 })
 module.exports = router;
