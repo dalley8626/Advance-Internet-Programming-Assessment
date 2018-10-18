@@ -95,7 +95,10 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
-//Get request to check for available email
+//This function is to check if there is an email has already been registered in the system
+//It checks if you have entered an email address
+//Then check if there is an error, or an email has been registered, or available
+//Provide back with a response
 router.get('/checkEmail/:email', (req, res) => {
     if (!req.params.email) {
         res.json({ success: false, message: 'Email has not been provided' });
@@ -112,7 +115,10 @@ router.get('/checkEmail/:email', (req, res) => {
     }
 })
 
-//Get request to check for available username
+//This function is to check if there is an username has already been registered in the system
+//It checks if you have entered an username
+//Then check if there is an error, or an username has been registered, or available
+//Provide back with a response
 router.get('/checkUsername/:username', (req, res) => {
     if (!req.params.username) {
         res.json({ success: false, message: 'Username has not been provided' });
@@ -130,7 +136,10 @@ router.get('/checkUsername/:username', (req, res) => {
     }
 })
 
-//Get request to check for available username
+//This function is to check if there is an subjectNumber has already been registered in the system
+//It checks if you have entered an subjectNumber
+//Then check if there is an error, or an subjectNumber has been registered, or available
+//Provide back with a response
 router.get('/checkSubjectNumber/:subjectNumber', (req, res) => {
     if (!req.params.subjectNumber) {
         res.json({ success: false, message: 'SubjectNumber has not been provided' });
@@ -145,6 +154,10 @@ router.get('/checkSubjectNumber/:subjectNumber', (req, res) => {
 }
 })
 
+//This function is to check if there is an subjectName has already been registered in the system
+//It checks if you have entered an subjectName
+//Then check if there is an error, or an subjectName has been registered, or available
+//Provide back with a response
 router.get('/checkSubjectName/:subjectName', (req, res) => {
     if (!req.params.subjectName) {
         res.json({ success: false, message: 'SubjectName has not been provided' });
