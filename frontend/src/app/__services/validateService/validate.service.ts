@@ -7,6 +7,8 @@ export class ValidateService {
 
   constructor() { }
 
+  //This method validations the input form in the registration of the user
+  //It checks if the user name,email, and password is undefined
   validateRegister(user) {
     if (user.name == undefined || user.email == undefined || user.password == undefined) {
       console.log('no Error');
@@ -16,10 +18,4 @@ export class ValidateService {
       return true;
     }     
   }
-
-  //Regex email validation to ensure that it uses correct email format
-  // validateEmail(controls) {
-  //   //Regex email validation
-  //   console.log("hello");
-  // }
 }

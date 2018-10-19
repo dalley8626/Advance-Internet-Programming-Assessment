@@ -63,6 +63,7 @@ export class RatingService {
     this.rating_Observable.next();
   }
 
+  //This method gets the recent ratings that were made
   getDashboardRatings() {
     this.authService.loadAuthenticationHeaders();
     return this.http.get(this.ratingsUrl + '/dashboard', {headers: this.authService.headers})
