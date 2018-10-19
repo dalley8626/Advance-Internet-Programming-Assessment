@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "server": "nodemon sever.js",
     "client": "cd ../frontend/src/ && ng serve",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -32,5 +32,9 @@
   "bugs": {
     "url": "https://github.com/dalley8626/Advance-Internet-Programming-Assessment/issues"
   },
-  "homepage": "https://github.com/dalley8626/Advance-Internet-Programming-Assessment#readme"
+  "homepage": "https://github.com/dalley8626/Advance-Internet-Programming-Assessment#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
 }
