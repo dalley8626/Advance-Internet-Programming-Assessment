@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
     });
 });
 //Get request to fetch all the ratings for the dashboard from the database
-router.get('/dashboard',passport.authenticate('jwt', { session: false }), (req,res) => {
+router.get('/dashboard', (req,res) => {
     Rating.find({}, (err, ratings) => {
         if (err) {
             res.json({ success: false, message: err });
