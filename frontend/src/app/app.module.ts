@@ -18,7 +18,6 @@ import { DashboardComponent } from './__components/subject/dashboard/dashboard.c
 //ui
 import { LayoutComponent } from './__components/ui/layout/layout.component';
 import { HeaderComponent } from './__components/ui/header/header.component';
-import { FooterComponent } from './__components/ui/footer/footer.component';
 
 //bootstrap
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -62,7 +61,6 @@ import { SubjectDeleteComponent } from './__components/subject/subject-delete/su
     LoggingComponent,
     LayoutComponent,
     HeaderComponent,
-    FooterComponent,
     SubjectAddComponent,
     DashboardComponent,
     SubjectFeedComponent,

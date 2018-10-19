@@ -43,7 +43,7 @@ router.post('/addSubject',passport.authenticate('jwt', { session: false }), (req
                 } else if (err.errors.description) {
                     res.json({ success: false, message: err.errors.description.message })
                 } else {
-                    res.json({ success: false, message: 'qweqwe' })
+                    res.json({ success: false, message: 'An error has occurred' })
                 }
                 //success
             } else {
@@ -60,8 +60,6 @@ router.get('/allSubjects',passport.authenticate('jwt', { session: false }), (req
         //displaying errors (if any)
         if (err) {
             res.json({ success: false, message: err });
-        } else if (!subjects) {
-            res.json({ success: false, message: 'Unable to fetch the subjects' });
         } else if(subjects){
             res.json({ success: true, subjects: subjects });
         } else {
@@ -77,8 +75,6 @@ router.get('/dashboard',passport.authenticate('jwt', { session: false }), (req, 
         //display errors
         if (err) {
             res.json({ success: false, message: err });
-        } else if (!subjects) {
-            res.json({ success: false, message: 'Unable to fetch the subjects' });
         } else if(subjects){
             res.json({ success: true, subjects: subjects });
         } else {
