@@ -179,4 +179,4 @@ const lastnameValidators = [
 ];
 
 //exporting the user validators
-const validator = module.exports = { lastnameValidators, firstnameValidators, passwordValidators, usernameValidators, emailValidators }
+const validator = module.exports = { lastnameValidators, firstnameValidators, passwordValidators, usernameValidators, emailValidators, validEmailChecker }

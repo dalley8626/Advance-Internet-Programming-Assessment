@@ -94,4 +94,4 @@ const descriptionValidators = [
 ];
 
 //exporting the validators
-const subjectValidator = module.exports = { subjectNameValidators, subjectNumberValidators, descriptionValidators }
+const subjectValidator = module.exports = { subjectNameValidators, subjectNumberValidators, descriptionValidators, validSubjectNumber }
