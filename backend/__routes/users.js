@@ -186,10 +186,9 @@ router.put('/profile/updateProfile', passport.authenticate('jwt', { session: fal
         if (err) {
             res.json({ success: false, message: 'Not a authorized user' });
         } else {
-            if (!user) {
-                res.json({ success: false, message: 'User not found' });
-            } else {
-                
+            if (err) {
+                res.json({ success: false, message: err });
+            } else if(user) {
                 //updating the user
                 user.first_name = req.body.first_name;
                 user.last_name = req.body.last_name;
@@ -205,6 +204,10 @@ router.put('/profile/updateProfile', passport.authenticate('jwt', { session: fal
                         res.json({ success: true, message: 'User Updated Successfully' });
                     }
                 });
+            } else {
+                res.json({ success: false, message: 'User not found' });
+
+                
             }
         }
     });
