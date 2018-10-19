@@ -171,7 +171,7 @@ export class RegisteringComponent implements OnInit {
   //check the availability of the email
   checkEmail() {
     const email = this.form.get('email').value;
-    if (email.length != 0) {
+    if (email.length !== 0) {
       this.authService.checkEmail(email).subscribe(data => {
         if (!data.success) {
           this.emailValid = false;
@@ -187,7 +187,7 @@ export class RegisteringComponent implements OnInit {
   //checks the availability of the username
   checkUsername() {
     const username = this.form.get('username').value;
-    if (username.length != 0) {
+    if (username.length !== 0) {
       this.authService.checkUsername(username).subscribe(data => {
         if (!data.success) {
           this.usernameValid = false;

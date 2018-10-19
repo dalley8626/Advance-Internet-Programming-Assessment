@@ -26,16 +26,9 @@ export class SubjectAddComponent implements OnInit {
 
   //form instance stored in a variable 
   form;
-
-  //user instance
-  user;
-  
-  //subject posts
-  subjectPosts;
-
   
   constructor(
-    private formBuilder : FormBuilder, // instance of formbuilder for reactive forms
+    private formBuilder: FormBuilder, // instance of formbuilder for reactive forms
     private subjectService: SubjectService, // instance of subject service
     private authService: AuthService, // instance of authentication service
     private router: Router  // instance of router module

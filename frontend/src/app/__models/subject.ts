@@ -7,7 +7,6 @@ export class Subject {
   public numberOfReview;
   public percentageRating;
   public description;
-  public ratingIDs: Array<string>;
 
   constructor() {
     this._id = '';
@@ -16,6 +15,5 @@ export class Subject {
     this.numberOfReview = 0;
     this.percentageRating = 0;
     this.description = '';
-    this.ratingIDs = [];
   }
 }

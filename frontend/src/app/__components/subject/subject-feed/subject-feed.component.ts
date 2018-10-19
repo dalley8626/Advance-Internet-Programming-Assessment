@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SubjectService } from './../../../__services/subjectService/subject.service';  // subject service component
 import { AuthService } from './../../../__services/authService/auth.service'; // authentication service component
-import { NgxSpinnerService } from 'ngx-spinner';  //spinner service
+import { NgxSpinnerService } from 'ngx-spinner'; //spinner service
+import {Subject} from '../../../__models/subject';
+import {Rating} from '../../../__models/rating';
 
 
 @Component({
@@ -19,25 +21,16 @@ export class SubjectFeedComponent implements OnInit {
   //variable to store the instance of the user model
   user;
 
-  subjectPosts;
 
   //variable to store the instance of the rating model
-  rating;
-
-  //maximum possible rating is the maximum rating a subject can receive based on total number of people that reviewed
-  maximumPossibleRating;
-
-  //variable to store the total number of reviews
-  numberOfreview;
+  rating: Rating;
 
   //variable to store the rating percentage
   percentageRating;
 
-  //variable to store the rounded rating percentage
-  percentageRatingRounded;
-
   //variable to store the subject instances of subject model; an array
-  subjects;
+  subjects: Subject[];
+  subjectPosts: Subject[];
 
   constructor(
     private subjectService: SubjectService, //subject service
@@ -71,13 +64,11 @@ export class SubjectFeedComponent implements OnInit {
         //minifying the description of the subject
         if (subjectPost.description.length > 100) {
           subjectPost.description = subjectPost.description.substring(0, 100) + '...';
-          subjectPost.isVisible = true;
         }
       });
       this.spinner.hide();
       this.subjects = [...this.subjectPosts];
-
-    })
+    });
 
   }
 

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../__services/authService/auth.service'; //authentication service
 import { ActivatedRoute, Router } from '@angular/router'; // Module to get the URL
 import { Location } from '@angular/common'; // Location Module
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'; // Form Module
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {Subject} from '../../../__models/subject'; // Form Module
 /**
  * This Component displays the user details and has functions to update/edit the profile of the user
  */
@@ -23,8 +24,6 @@ export class ProfileComponent implements OnInit {
   //true means user cannot
   processing = false;
 
-  //variable to store current URL
-  currentUrl;
   //instance of the form
   form;
 
@@ -44,7 +43,7 @@ export class ProfileComponent implements OnInit {
   loadEditForm = true;
 
   //variable to store the subject model
-  subject;
+  subject: Subject;
 
   constructor(
     private formBuilder : FormBuilder, 
@@ -52,7 +51,7 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private location: Location,
     private authService: AuthService
-  ) 
+  )
   {
     this.createForm(); // create form at the start
   }
@@ -61,9 +60,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     //get profile
     this.authService.getProfile().subscribe(data => {
-    if(!data.success){
-      this.messageClass= 'alert alert-danger';
-        this.message = "User Not found";
+    if(!data.success) {
+      this.messageClass = 'alert alert-danger';
+        this.message = 'User Not found';
     } else {
       //success
       this.user = data.user;
@@ -111,13 +110,13 @@ export class ProfileComponent implements OnInit {
         this.validatePassword
       ])],
       confirm_password: ['', Validators.required]
-    }, { validator: this.matchingPasswords('password', 'confirm_password') })
+    }, { validator: this.matchingPasswords('password', 'confirm_password') });
   }
 
   //function to go back
   goBack()
   {
-    this.loadEditForm=true;
+    this.loadEditForm = true;
   }
 
   //function to update the user
@@ -198,7 +197,7 @@ export class ProfileComponent implements OnInit {
   //checking email if it is present or not
   checkEmail() {
     const email = this.form.get('email').value;
-    if (email.length != 0) {
+    if (email.length !== 0) {
       this.authService.checkEmail(email).subscribe(data => {
         if (!data.success) {
           this.emailValid = false;
@@ -214,7 +213,7 @@ export class ProfileComponent implements OnInit {
   //checking username if it is available or not
   checkUsername() {
     const username = this.form.get('username').value;
-    if (username.length != 0) {
+    if (username.length !== 0) {
       this.authService.checkUsername(username).subscribe(data => {
         if (!data.success) {
           this.usernameValid = false;
@@ -226,7 +225,4 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
-
-  
-
 }

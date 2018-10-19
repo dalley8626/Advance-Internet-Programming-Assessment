@@ -1,24 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
-
 import {Observable, Subject} from 'rxjs';
-
 import {Rating} from '../../__models/rating';
-// import {Headers, RequestOptions} from '@angular/http';
 import {AuthService} from '../authService/auth.service';
 import {map} from 'rxjs/operators';
-
-// const httpOptions = {
-//   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-// };
 
 @Injectable({ providedIn: 'root' })
 export class RatingService {
   public rating_Observable = new Subject();
   domain = this.authService.domain; // URL to web api
   private ratingsUrl = this.domain + '/ratings';  // URL to web api
-  // options;
 
   constructor(
     private http: Http,

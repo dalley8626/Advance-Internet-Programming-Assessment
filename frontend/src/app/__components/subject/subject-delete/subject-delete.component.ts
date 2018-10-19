@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SubjectService } from './../../../__services/subjectService/subject.service'; // subject service
 import { Location } from '@angular/common'; //location module
-import { Router, ActivatedRoute } from '@angular/router'; // router module
+import { Router, ActivatedRoute } from '@angular/router';
+import {Subject} from '../../../__models/subject'; // router module
 
 @Component({
   selector: 'app-subject-delete',
@@ -16,7 +17,7 @@ export class SubjectDeleteComponent implements OnInit {
   messageClass;
 
   //variable to store the subject that is to be deleted
-  subject;
+  subject: Subject;
 
   //variable to store boolean that represents if the subject is present in the database
   foundSubject = false;
@@ -41,7 +42,7 @@ export class SubjectDeleteComponent implements OnInit {
       //display message
       this.messageClass = 'alert-danger';
       this.message = 'No id provided';
-    } 
+    }
       //flag to respresent success
     else {
       this.foundSubject = true;
@@ -57,7 +58,7 @@ export class SubjectDeleteComponent implements OnInit {
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
       }
-      //success 
+      //success
       else {
         //success message
         this.messageClass = 'alert alert-success';

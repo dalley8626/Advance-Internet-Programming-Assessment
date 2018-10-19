@@ -38,13 +38,11 @@ export class SubjectEditComponent implements OnInit {
   //user variable to store user model
   user;
 
-  subjectPosts;
-
   //edit form
   loadEditForm = true;
 
   //subject variable to store the subject model instance
-  subject;
+  subject: Subject;
 
   constructor(
     private formBuilder : FormBuilder,  //instance of form builder
