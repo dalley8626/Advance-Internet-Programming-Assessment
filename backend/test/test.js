@@ -51,7 +51,7 @@ describe('Ratings', () => {
     });
 
         /*
-    * Test the /GET/:id route so that it retrieves ratings for the dashboard
+    * Test the /GET/dashboard so that it retrieves ratings for the dashboard
     */
    describe('/GET rating', () => {
     it('it should GET the ratings that is to be displayed to the dashboard', (done) => {
