@@ -7,7 +7,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 //Get request to fetch all the available ratings in the database
-router.get('/',passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/', (req, res) => {
     mongoose.connect(config.database, { useNewUrlParser: true }, function(err){
         if(err) throw err;
         Rating.find({},[],(err, doc) => {
@@ -35,7 +35,7 @@ router.get('/dashboard',passport.authenticate('jwt', { session: false }), (req,r
 })
 
 //Get request to fetch ratings with specific subject id.
-router.get('/:id',passport.authenticate('jwt', { session: false }), function(req, res){
+router.get('/:id', function(req, res){
     let id = req.params.id;
     const query = {_id: id}
     //Verifies the user email address with the database collection

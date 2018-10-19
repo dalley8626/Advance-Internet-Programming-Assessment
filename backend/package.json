@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "chai-http": "^4.2.0",
     "concurrently": "^4.0.1",
     "cors": "^2.8.4",
     "dollar-defender-middleware": "0.0.2",
@@ -35,6 +36,7 @@
   "homepage": "https://github.com/dalley8626/Advance-Internet-Programming-Assessment#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "should": "^13.2.3"
   }
 }

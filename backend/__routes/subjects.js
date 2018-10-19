@@ -54,7 +54,7 @@ router.post('/addSubject',passport.authenticate('jwt', { session: false }), (req
 })
 
 //Get request to fetch all the available subjects in the database
-router.get('/allSubjects',passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/allSubjects', (req, res) => {
     //fetching all the subject and sorting the subjects
     Subject.find({}, (err, subjects) => {
         //displaying errors (if any)
