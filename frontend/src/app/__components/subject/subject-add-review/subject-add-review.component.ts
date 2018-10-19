@@ -55,9 +55,6 @@ export class SubjectAddReviewComponent implements OnInit {
   //variable to store array of ratings
   ratings: Rating[];
 
-  //variable to store the date
-  pipe = new DatePipe('en-US');
-
   // Variables to store the number of users that rated the subject
   //for example: there is one star rating by 5 user; the oneRating will be equal to 5 
   oneRating: number = 0;
@@ -176,7 +173,7 @@ export class SubjectAddReviewComponent implements OnInit {
     //spinner hide
     setTimeout(() =>
       this.spinner.hide(), 1000
-    )
+    );
   }
 
   // function for validation of subject Number
@@ -230,11 +227,6 @@ export class SubjectAddReviewComponent implements OnInit {
     this.rating.star = star;
   }
 
-  //function to go back
-  goBack() {
-    this.location.back();
-  }
-
   //function to get the rating according to the subject id
   getRatingsbySubjectID() {
     this.ratingService.getRatingsbySubjectID(this.subject._id)
@@ -242,6 +234,8 @@ export class SubjectAddReviewComponent implements OnInit {
         this.ratings = result['data'];
         this.getRatingPercentages(this.ratings);
 
+        // calculate each star's percentage from ratings
+        this.calculatePercentageOfStars();
       });
   }
 
@@ -260,15 +254,19 @@ export class SubjectAddReviewComponent implements OnInit {
       } else if (element.star === 1 || element.star === 0.5 || element.star === 0) {
         this.oneRating = this.oneRating + 1;
       }
-      element.editFlag = false;
-      // Check if there is any rating that has been rated by current user;
-      if (element.username === this.user.username) {
-        this.hasRated = true;
-        this.hasRatedText = 'You have already rated this subject.';
-      }
+      this.checkIfRated(element);
     });
-
-    //Calculating the rating percentage and storing them in the variable defined above
+  }
+  // Check if there is any rating that has been rated by current user;
+  checkIfRated(rating: Rating): void {
+    rating.editFlag = false;
+    if (rating.username === this.user.username) {
+      this.hasRated = true;
+      this.hasRatedText = 'You have already rated this subject.';
+    }
+  }
+  //calculating the rating percentage for each number of stars and storing them in the variable defined above
+  calculatePercentageOfStars(): void {
     //percentage of 5 ratings
     this.fiveRatingPercentage = `${Math.round(((this.fiveRating / this.subject.numberOfReview) * 100 / 10) * 10)}%`;
     //percentage of 4 ratings
@@ -289,11 +287,13 @@ export class SubjectAddReviewComponent implements OnInit {
     this.spinner.show();
 
     if (this.rating.ratingDescription) {
+      // fillout rating attributes
       this.rating.subjectID = this.subject._id;
       this.rating.userID = this.user.id;
       this.rating.username = this.user.username;
       this.rating.created = Date();
-      
+
+      //calculate subject attributes when adding a Rating i.e. numberOfReview & percentageRating.
       if (this.subject.numberOfReview && this.subject.percentageRating) {
         this.subject.numberOfReview = this.subject.numberOfReview + 1;
         this.subject.percentageRating =
@@ -302,27 +302,18 @@ export class SubjectAddReviewComponent implements OnInit {
         this.subject.numberOfReview = 1;
         this.subject.percentageRating = this.rating.star * 20;
       }
-      this.subjectService.editSubject(this.subject).subscribe(res => {
 
-        if (res['success'] === true) {
-          this.subjectService.notifySubject();
-        } else {
-          this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger', timeout: 1000 });
-        }
-      }, error => {
-        this.flashMessageService.show('Error: ' + error, { cssClass: 'alert-danger', timeout: 1000 });
-      });
+      //update the subject because deleting the rating affects the subject's attribute i.e. numberOfReview, and percentageRating.
+      this.editSubject(this.subject);
 
+      //add rating to the database
       this.ratingService.addRating(this.rating).subscribe(res => {
-        console.log('response is ', res);
-
         if (res['status'] === 'success') {
           this.ratingService.notifyRating();
           this.flashMessageService.show('Rating added', { cssClass: 'alert-success', timeout: 1000 });
           this.rating.ratingDescription = '';
           this.hasRated = false;
         } else {
-
           this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger', timeout: 1000 });
         }
       }, error => {
@@ -331,9 +322,11 @@ export class SubjectAddReviewComponent implements OnInit {
     } else {
       this.flashMessageService.show('Rating Description Required', { cssClass: 'alert-danger', timeout: 1000 });
     }
+
+    // disable spinner
     setTimeout(() => {
       this.spinner.hide();
-    }, 1000)
+    }, 1000);
   }
 
   //function to either display or hide the edit form
@@ -362,26 +355,30 @@ export class SubjectAddReviewComponent implements OnInit {
       this.subject.numberOfReview = await this.subject.numberOfReview - 1;
       this.subject.percentageRating =
         await (this.subject.percentageRating * (this.subject.numberOfReview + 1) - (this.rating.star * 20)) / this.subject.numberOfReview;
-    } else {
+    } else { // if the subject has one review, just make number of review and percentage to be '0'.
       this.subject.numberOfReview = 0;
       this.subject.percentageRating = 0;
     }
 
+    //delete the rating from the database
     this.ratingService.deleteRating(rating).subscribe(res => {
-      console.log('response is ', res);
       if (res['status'] === 'success') {
         this.ratingService.notifyRating();
         this.flashMessageService.show('Rating deleted', { cssClass: 'alert-success', timeout: 1000 });
         this.hasRated = false;
         this.hasRatedText = 'Write a Review.';
-
       } else {
         this.flashMessageService.show('Attempt failed, try again.', { cssClass: 'alert-danger', timeout: 1000 });
       }
     }, error => {
       this.flashMessageService.show('Error: ' + error, { cssClass: 'alert-danger', timeout: 1000 });
     });
-    this.subjectService.editSubject(this.subject).subscribe(res => {
+    //update the subject because deleting the rating affects the subject's attribute i.e. numberOfReview, and percentageRating.
+    this.editSubject(this.subject);
+  }
+  // update subject when rating is changed(added or deleted).
+  editSubject(subject: Subject): void {
+    this.subjectService.editSubject(subject).subscribe(res => {
       if (res['success'] === true) {
         this.subjectService.notifySubject();
       } else {
